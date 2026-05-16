@@ -20,6 +20,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 
 | Skill | skills.sh | Source | Date |
 |-------|-----------|--------|------|
+| [chrome-devtools-mcp-automation](skills/chrome-devtools-mcp-automation/) | [install](https://skills.sh/aradotso/mcp-skills/chrome-devtools-mcp-automation) | [ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp) | 2026-05-16 |
 <!-- SKILL_INDEX -->
 
 ---
