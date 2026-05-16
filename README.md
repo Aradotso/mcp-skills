@@ -40,6 +40,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [anysearch-mcp-server](skills/anysearch-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/anysearch-mcp-server) | [anysearch-ai/anysearch-mcp-server](https://github.com/anysearch-ai/anysearch-mcp-server) | 2026-05-16 |
 | [ableton-live-mcp-control](skills/ableton-live-mcp-control/) | [install](https://skills.sh/aradotso/mcp-skills/ableton-live-mcp-control) | [bschoepke/ableton-live-mcp](https://github.com/bschoepke/ableton-live-mcp) | 2026-05-16 |
 | [iida-mcp-ida-integration](skills/iida-mcp-ida-integration/) | [install](https://skills.sh/aradotso/mcp-skills/iida-mcp-ida-integration) | [saileaxh/iida-mcp](https://github.com/saileaxh/iida-mcp) | 2026-05-16 |
+| [iai-mcp-memory-server](skills/iai-mcp-memory-server/) | [install](https://skills.sh/aradotso/mcp-skills/iai-mcp-memory-server) | [CodeAbra/iai-mcp](https://github.com/CodeAbra/iai-mcp) | 2026-05-16 |
 <!-- SKILL_INDEX -->
 
 ---
