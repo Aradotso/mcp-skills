@@ -23,6 +23,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [chrome-devtools-mcp-automation](skills/chrome-devtools-mcp-automation/) | [install](https://skills.sh/aradotso/mcp-skills/chrome-devtools-mcp-automation) | [ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp) | 2026-05-16 |
 | [playwright-mcp-server](skills/playwright-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/playwright-mcp-server) | [microsoft/playwright-mcp](https://github.com/microsoft/playwright-mcp) | 2026-05-16 |
 | [github-mcp-server](skills/github-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/github-mcp-server) | [github/github-mcp-server](https://github.com/github/github-mcp-server) | 2026-05-16 |
+| [n8n-mcp-workflow-builder](skills/n8n-mcp-workflow-builder/) | [install](https://skills.sh/aradotso/mcp-skills/n8n-mcp-workflow-builder) | [czlonkowski/n8n-mcp](https://github.com/czlonkowski/n8n-mcp) | 2026-05-16 |
 <!-- SKILL_INDEX -->
 
 ---
