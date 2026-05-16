@@ -29,6 +29,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [excalidraw-mcp-server](skills/excalidraw-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/excalidraw-mcp-server) | [excalidraw/excalidraw-mcp](https://github.com/excalidraw/excalidraw-mcp) | 2026-05-16 |
 | [claude-peers-mcp-inter-instance-messaging](skills/claude-peers-mcp-inter-instance-messaging/) | [install](https://skills.sh/aradotso/mcp-skills/claude-peers-mcp-inter-instance-messaging) | [louislva/claude-peers-mcp](https://github.com/louislva/claude-peers-mcp) | 2026-05-16 |
 | [pal-mcp-server-multi-model-orchestration](skills/pal-mcp-server-multi-model-orchestration/) | [install](https://skills.sh/aradotso/mcp-skills/pal-mcp-server-multi-model-orchestration) | [BeehiveInnovations/pal-mcp-server](https://github.com/BeehiveInnovations/pal-mcp-server) | 2026-05-16 |
+| [mcp2cli-api-to-cli](skills/mcp2cli-api-to-cli/) | [install](https://skills.sh/aradotso/mcp-skills/mcp2cli-api-to-cli) | [knowsuchagency/mcp2cli](https://github.com/knowsuchagency/mcp2cli) | 2026-05-16 |
 <!-- SKILL_INDEX -->
 
 ---
