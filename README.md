@@ -25,6 +25,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [github-mcp-server](skills/github-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/github-mcp-server) | [github/github-mcp-server](https://github.com/github/github-mcp-server) | 2026-05-16 |
 | [n8n-mcp-workflow-builder](skills/n8n-mcp-workflow-builder/) | [install](https://skills.sh/aradotso/mcp-skills/n8n-mcp-workflow-builder) | [czlonkowski/n8n-mcp](https://github.com/czlonkowski/n8n-mcp) | 2026-05-16 |
 | [tradingview-mcp-assistant](skills/tradingview-mcp-assistant/) | [install](https://skills.sh/aradotso/mcp-skills/tradingview-mcp-assistant) | [tradesdontlie/tradingview-mcp](https://github.com/tradesdontlie/tradingview-mcp) | 2026-05-16 |
+| [xiaohongshu-mcp-integration](skills/xiaohongshu-mcp-integration/) | [install](https://skills.sh/aradotso/mcp-skills/xiaohongshu-mcp-integration) | [xpzouying/xiaohongshu-mcp](https://github.com/xpzouying/xiaohongshu-mcp) | 2026-05-16 |
 <!-- SKILL_INDEX -->
 
 ---
