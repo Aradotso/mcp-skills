@@ -37,6 +37,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [cve-mcp-server-security-intelligence](skills/cve-mcp-server-security-intelligence/) | [install](https://skills.sh/aradotso/mcp-skills/cve-mcp-server-security-intelligence) | [mukul975/cve-mcp-server](https://github.com/mukul975/cve-mcp-server) | 2026-05-16 |
 | [figma-mcp-go](skills/figma-mcp-go/) | [install](https://skills.sh/aradotso/mcp-skills/figma-mcp-go) | [vkhanhqui/figma-mcp-go](https://github.com/vkhanhqui/figma-mcp-go) | 2026-05-16 |
 | [opennews-mcp-news-aggregation](skills/opennews-mcp-news-aggregation/) | [install](https://skills.sh/aradotso/mcp-skills/opennews-mcp-news-aggregation) | [6551Team/opennews-mcp](https://github.com/6551Team/opennews-mcp) | 2026-05-16 |
+| [anysearch-mcp-server](skills/anysearch-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/anysearch-mcp-server) | [anysearch-ai/anysearch-mcp-server](https://github.com/anysearch-ai/anysearch-mcp-server) | 2026-05-16 |
 <!-- SKILL_INDEX -->
 
 ---
