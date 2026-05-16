@@ -33,6 +33,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [mcp-brasil-server](skills/mcp-brasil-server/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-brasil-server) | [Mcp-Brasil/mcp-brasil](https://github.com/Mcp-Brasil/mcp-brasil) | 2026-05-16 |
 | [codebase-memory-mcp-intelligence](skills/codebase-memory-mcp-intelligence/) | [install](https://skills.sh/aradotso/mcp-skills/codebase-memory-mcp-intelligence) | [DeusData/codebase-memory-mcp](https://github.com/DeusData/codebase-memory-mcp) | 2026-05-16 |
 | [google-meta-ads-ga4-mcp](skills/google-meta-ads-ga4-mcp/) | [install](https://skills.sh/aradotso/mcp-skills/google-meta-ads-ga4-mcp) | [irinabuht12-oss/google-meta-ads-ga4-mcp](https://github.com/irinabuht12-oss/google-meta-ads-ga4-mcp) | 2026-05-16 |
+| [jcodemunch-mcp-code-retrieval](skills/jcodemunch-mcp-code-retrieval/) | [install](https://skills.sh/aradotso/mcp-skills/jcodemunch-mcp-code-retrieval) | [jgravelle/jcodemunch-mcp](https://github.com/jgravelle/jcodemunch-mcp) | 2026-05-16 |
 <!-- SKILL_INDEX -->
 
 ---
