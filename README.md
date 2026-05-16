@@ -36,6 +36,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [jcodemunch-mcp-code-retrieval](skills/jcodemunch-mcp-code-retrieval/) | [install](https://skills.sh/aradotso/mcp-skills/jcodemunch-mcp-code-retrieval) | [jgravelle/jcodemunch-mcp](https://github.com/jgravelle/jcodemunch-mcp) | 2026-05-16 |
 | [cve-mcp-server-security-intelligence](skills/cve-mcp-server-security-intelligence/) | [install](https://skills.sh/aradotso/mcp-skills/cve-mcp-server-security-intelligence) | [mukul975/cve-mcp-server](https://github.com/mukul975/cve-mcp-server) | 2026-05-16 |
 | [figma-mcp-go](skills/figma-mcp-go/) | [install](https://skills.sh/aradotso/mcp-skills/figma-mcp-go) | [vkhanhqui/figma-mcp-go](https://github.com/vkhanhqui/figma-mcp-go) | 2026-05-16 |
+| [opennews-mcp-news-aggregation](skills/opennews-mcp-news-aggregation/) | [install](https://skills.sh/aradotso/mcp-skills/opennews-mcp-news-aggregation) | [6551Team/opennews-mcp](https://github.com/6551Team/opennews-mcp) | 2026-05-16 |
 <!-- SKILL_INDEX -->
 
 ---
