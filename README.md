@@ -54,6 +54,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [mcp-cli-tool](skills/mcp-cli-tool/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-cli-tool) | [philschmid/mcp-cli](https://github.com/philschmid/mcp-cli) | 2026-05-17 |
 | [godot-mcp-native](skills/godot-mcp-native/) | [install](https://skills.sh/aradotso/mcp-skills/godot-mcp-native) | [yurineko73/Godot-MCP-Native](https://github.com/yurineko73/Godot-MCP-Native) | 2026-05-17 |
 | [jsreverser-mcp-javascript-reverse-engineering](skills/jsreverser-mcp-javascript-reverse-engineering/) | [install](https://skills.sh/aradotso/mcp-skills/jsreverser-mcp-javascript-reverse-engineering) | [NoOne-hub/JSReverser-MCP](https://github.com/NoOne-hub/JSReverser-MCP) | 2026-05-17 |
+| [stitch-mcp-cli](skills/stitch-mcp-cli/) | [install](https://skills.sh/aradotso/mcp-skills/stitch-mcp-cli) | [davideast/stitch-mcp](https://github.com/davideast/stitch-mcp) | 2026-05-17 |
 <!-- SKILL_INDEX -->
 
 ---
