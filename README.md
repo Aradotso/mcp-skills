@@ -53,6 +53,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [idea-reality-mcp-validation](skills/idea-reality-mcp-validation/) | [install](https://skills.sh/aradotso/mcp-skills/idea-reality-mcp-validation) | [mnemox-ai/idea-reality-mcp](https://github.com/mnemox-ai/idea-reality-mcp) | 2026-05-17 |
 | [mcp-cli-tool](skills/mcp-cli-tool/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-cli-tool) | [philschmid/mcp-cli](https://github.com/philschmid/mcp-cli) | 2026-05-17 |
 | [godot-mcp-native](skills/godot-mcp-native/) | [install](https://skills.sh/aradotso/mcp-skills/godot-mcp-native) | [yurineko73/Godot-MCP-Native](https://github.com/yurineko73/Godot-MCP-Native) | 2026-05-17 |
+| [jsreverser-mcp-javascript-reverse-engineering](skills/jsreverser-mcp-javascript-reverse-engineering/) | [install](https://skills.sh/aradotso/mcp-skills/jsreverser-mcp-javascript-reverse-engineering) | [NoOne-hub/JSReverser-MCP](https://github.com/NoOne-hub/JSReverser-MCP) | 2026-05-17 |
 <!-- SKILL_INDEX -->
 
 ---
