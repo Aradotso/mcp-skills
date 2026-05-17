@@ -42,6 +42,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [iida-mcp-ida-integration](skills/iida-mcp-ida-integration/) | [install](https://skills.sh/aradotso/mcp-skills/iida-mcp-ida-integration) | [saileaxh/iida-mcp](https://github.com/saileaxh/iida-mcp) | 2026-05-16 |
 | [iai-mcp-memory-server](skills/iai-mcp-memory-server/) | [install](https://skills.sh/aradotso/mcp-skills/iai-mcp-memory-server) | [CodeAbra/iai-mcp](https://github.com/CodeAbra/iai-mcp) | 2026-05-16 |
 | [korean-law-mcp](skills/korean-law-mcp/) | [install](https://skills.sh/aradotso/mcp-skills/korean-law-mcp) | [chrisryugj/korean-law-mcp](https://github.com/chrisryugj/korean-law-mcp) | 2026-05-17 |
+| [meigen-ai-design-mcp](skills/meigen-ai-design-mcp/) | [install](https://skills.sh/aradotso/mcp-skills/meigen-ai-design-mcp) | [jau123/MeiGen-AI-Design-MCP](https://github.com/jau123/MeiGen-AI-Design-MCP) | 2026-05-17 |
 <!-- SKILL_INDEX -->
 
 ---
