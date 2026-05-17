@@ -46,6 +46,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [opentwitter-mcp-server](skills/opentwitter-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/opentwitter-mcp-server) | [6551Team/opentwitter-mcp](https://github.com/6551Team/opentwitter-mcp) | 2026-05-17 |
 | [google-surf-mcp-search](skills/google-surf-mcp-search/) | [install](https://skills.sh/aradotso/mcp-skills/google-surf-mcp-search) | [HarimxChoi/google-surf-mcp](https://github.com/HarimxChoi/google-surf-mcp) | 2026-05-17 |
 | [lanhu-mcp-collaboration](skills/lanhu-mcp-collaboration/) | [install](https://skills.sh/aradotso/mcp-skills/lanhu-mcp-collaboration) | [dsphper/lanhu-mcp](https://github.com/dsphper/lanhu-mcp) | 2026-05-17 |
+| [kagi-session2api-mcp-server](skills/kagi-session2api-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/kagi-session2api-mcp-server) | [KSroido/Kagi-Session2API-MCP](https://github.com/KSroido/Kagi-Session2API-MCP) | 2026-05-17 |
 <!-- SKILL_INDEX -->
 
 ---
