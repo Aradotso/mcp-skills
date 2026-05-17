@@ -48,6 +48,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [lanhu-mcp-collaboration](skills/lanhu-mcp-collaboration/) | [install](https://skills.sh/aradotso/mcp-skills/lanhu-mcp-collaboration) | [dsphper/lanhu-mcp](https://github.com/dsphper/lanhu-mcp) | 2026-05-17 |
 | [kagi-session2api-mcp-server](skills/kagi-session2api-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/kagi-session2api-mcp-server) | [KSroido/Kagi-Session2API-MCP](https://github.com/KSroido/Kagi-Session2API-MCP) | 2026-05-17 |
 | [ida-no-mcp-decompiler-exporter](skills/ida-no-mcp-decompiler-exporter/) | [install](https://skills.sh/aradotso/mcp-skills/ida-no-mcp-decompiler-exporter) | [P4nda0s/IDA-NO-MCP](https://github.com/P4nda0s/IDA-NO-MCP) | 2026-05-17 |
+| [cdp-bridge-mcp-browser-control](skills/cdp-bridge-mcp-browser-control/) | [install](https://skills.sh/aradotso/mcp-skills/cdp-bridge-mcp-browser-control) | [Unagi-cq/cdp-bridge-mcp](https://github.com/Unagi-cq/cdp-bridge-mcp) | 2026-05-17 |
 <!-- SKILL_INDEX -->
 
 ---
