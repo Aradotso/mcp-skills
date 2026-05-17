@@ -71,6 +71,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [kindly-web-search-mcp-server](skills/kindly-web-search-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/kindly-web-search-mcp-server) | [Shelpuk-AI-Technology-Consulting/kindly-web-search-mcp-server](https://github.com/Shelpuk-AI-Technology-Consulting/kindly-web-search-mcp-server) | 2026-05-17 |
 | [alpaca-trading-mcp-server](skills/alpaca-trading-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/alpaca-trading-mcp-server) | [alpacahq/alpaca-mcp-server](https://github.com/alpacahq/alpaca-mcp-server) | 2026-05-17 |
 | [alpaca-mcp-server-trading](skills/alpaca-mcp-server-trading/) | [install](https://skills.sh/aradotso/mcp-skills/alpaca-mcp-server-trading) | [alpacahq/alpaca-mcp-server](https://github.com/alpacahq/alpaca-mcp-server) | 2026-05-17 |
+| [atlassian-mcp-server](skills/atlassian-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/atlassian-mcp-server) | [atlassian/atlassian-mcp-server](https://github.com/atlassian/atlassian-mcp-server) | 2026-05-17 |
 <!-- SKILL_INDEX -->
 
 ---
