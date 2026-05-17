@@ -44,6 +44,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [korean-law-mcp](skills/korean-law-mcp/) | [install](https://skills.sh/aradotso/mcp-skills/korean-law-mcp) | [chrisryugj/korean-law-mcp](https://github.com/chrisryugj/korean-law-mcp) | 2026-05-17 |
 | [meigen-ai-design-mcp](skills/meigen-ai-design-mcp/) | [install](https://skills.sh/aradotso/mcp-skills/meigen-ai-design-mcp) | [jau123/MeiGen-AI-Design-MCP](https://github.com/jau123/MeiGen-AI-Design-MCP) | 2026-05-17 |
 | [opentwitter-mcp-server](skills/opentwitter-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/opentwitter-mcp-server) | [6551Team/opentwitter-mcp](https://github.com/6551Team/opentwitter-mcp) | 2026-05-17 |
+| [google-surf-mcp-search](skills/google-surf-mcp-search/) | [install](https://skills.sh/aradotso/mcp-skills/google-surf-mcp-search) | [HarimxChoi/google-surf-mcp](https://github.com/HarimxChoi/google-surf-mcp) | 2026-05-17 |
 <!-- SKILL_INDEX -->
 
 ---
