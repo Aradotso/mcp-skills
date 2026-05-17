@@ -52,6 +52,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [datagouv-mcp-server](skills/datagouv-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/datagouv-mcp-server) | [datagouv/datagouv-mcp](https://github.com/datagouv/datagouv-mcp) | 2026-05-17 |
 | [idea-reality-mcp-validation](skills/idea-reality-mcp-validation/) | [install](https://skills.sh/aradotso/mcp-skills/idea-reality-mcp-validation) | [mnemox-ai/idea-reality-mcp](https://github.com/mnemox-ai/idea-reality-mcp) | 2026-05-17 |
 | [mcp-cli-tool](skills/mcp-cli-tool/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-cli-tool) | [philschmid/mcp-cli](https://github.com/philschmid/mcp-cli) | 2026-05-17 |
+| [godot-mcp-native](skills/godot-mcp-native/) | [install](https://skills.sh/aradotso/mcp-skills/godot-mcp-native) | [yurineko73/Godot-MCP-Native](https://github.com/yurineko73/Godot-MCP-Native) | 2026-05-17 |
 <!-- SKILL_INDEX -->
 
 ---
