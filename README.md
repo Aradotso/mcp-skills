@@ -64,6 +64,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [pi-mcp-adapter](skills/pi-mcp-adapter/) | [install](https://skills.sh/aradotso/mcp-skills/pi-mcp-adapter) | [nicobailon/pi-mcp-adapter](https://github.com/nicobailon/pi-mcp-adapter) | 2026-05-17 |
 | [cheatengine-mcp-automation](skills/cheatengine-mcp-automation/) | [install](https://skills.sh/aradotso/mcp-skills/cheatengine-mcp-automation) | [miscusi-peek/cheatengine-mcp-bridge](https://github.com/miscusi-peek/cheatengine-mcp-bridge) | 2026-05-17 |
 | [blueprint-mcp-diagram-generation](skills/blueprint-mcp-diagram-generation/) | [install](https://skills.sh/aradotso/mcp-skills/blueprint-mcp-diagram-generation) | [ArcadeAI/blueprint-mcp](https://github.com/ArcadeAI/blueprint-mcp) | 2026-05-17 |
+| [cocos-creator-mcp-server](skills/cocos-creator-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/cocos-creator-mcp-server) | [DaxianLee/cocos-mcp-server](https://github.com/DaxianLee/cocos-mcp-server) | 2026-05-17 |
 <!-- SKILL_INDEX -->
 
 ---
