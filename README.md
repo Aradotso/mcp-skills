@@ -62,6 +62,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [awesome-mcp-servers-discovery](skills/awesome-mcp-servers-discovery/) | [install](https://skills.sh/aradotso/mcp-skills/awesome-mcp-servers-discovery) | [YuzeHao2023/Awesome-MCP-Servers](https://github.com/YuzeHao2023/Awesome-MCP-Servers) | 2026-05-17 |
 | [figma-mcp-server](skills/figma-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/figma-mcp-server) | [figma/mcp-server-guide](https://github.com/figma/mcp-server-guide) | 2026-05-17 |
 | [pi-mcp-adapter](skills/pi-mcp-adapter/) | [install](https://skills.sh/aradotso/mcp-skills/pi-mcp-adapter) | [nicobailon/pi-mcp-adapter](https://github.com/nicobailon/pi-mcp-adapter) | 2026-05-17 |
+| [cheatengine-mcp-automation](skills/cheatengine-mcp-automation/) | [install](https://skills.sh/aradotso/mcp-skills/cheatengine-mcp-automation) | [miscusi-peek/cheatengine-mcp-bridge](https://github.com/miscusi-peek/cheatengine-mcp-bridge) | 2026-05-17 |
 <!-- SKILL_INDEX -->
 
 ---
