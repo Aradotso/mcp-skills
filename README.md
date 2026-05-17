@@ -67,6 +67,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [cocos-creator-mcp-server](skills/cocos-creator-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/cocos-creator-mcp-server) | [DaxianLee/cocos-mcp-server](https://github.com/DaxianLee/cocos-mcp-server) | 2026-05-17 |
 | [mcpc-mcp-client](skills/mcpc-mcp-client/) | [install](https://skills.sh/aradotso/mcp-skills/mcpc-mcp-client) | [apify/mcpc](https://github.com/apify/mcpc) | 2026-05-17 |
 | [sap-ai-mcp-servers-registry](skills/sap-ai-mcp-servers-registry/) | [install](https://skills.sh/aradotso/mcp-skills/sap-ai-mcp-servers-registry) | [marianfoo/sap-ai-mcp-servers](https://github.com/marianfoo/sap-ai-mcp-servers) | 2026-05-17 |
+| [matlab-mcp-core-server](skills/matlab-mcp-core-server/) | [install](https://skills.sh/aradotso/mcp-skills/matlab-mcp-core-server) | [matlab/matlab-mcp-core-server](https://github.com/matlab/matlab-mcp-core-server) | 2026-05-17 |
 <!-- SKILL_INDEX -->
 
 ---
