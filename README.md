@@ -57,6 +57,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [stitch-mcp-cli](skills/stitch-mcp-cli/) | [install](https://skills.sh/aradotso/mcp-skills/stitch-mcp-cli) | [davideast/stitch-mcp](https://github.com/davideast/stitch-mcp) | 2026-05-17 |
 | [modular-rag-mcp-server](skills/modular-rag-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/modular-rag-mcp-server) | [jerry-ai-dev/MODULAR-RAG-MCP-SERVER](https://github.com/jerry-ai-dev/MODULAR-RAG-MCP-SERVER) | 2026-05-17 |
 | [js-reverse-mcp-debugging](skills/js-reverse-mcp-debugging/) | [install](https://skills.sh/aradotso/mcp-skills/js-reverse-mcp-debugging) | [zhizhuodemao/js-reverse-mcp](https://github.com/zhizhuodemao/js-reverse-mcp) | 2026-05-17 |
+| [universal-db-mcp-connector](skills/universal-db-mcp-connector/) | [install](https://skills.sh/aradotso/mcp-skills/universal-db-mcp-connector) | [Anarkh-Lee/universal-db-mcp](https://github.com/Anarkh-Lee/universal-db-mcp) | 2026-05-17 |
 <!-- SKILL_INDEX -->
 
 ---
