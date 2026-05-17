@@ -60,6 +60,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [universal-db-mcp-connector](skills/universal-db-mcp-connector/) | [install](https://skills.sh/aradotso/mcp-skills/universal-db-mcp-connector) | [Anarkh-Lee/universal-db-mcp](https://github.com/Anarkh-Lee/universal-db-mcp) | 2026-05-17 |
 | [homeassistant-mcp-server](skills/homeassistant-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/homeassistant-mcp-server) | [robbrad/homeassistant-mcp](https://github.com/robbrad/homeassistant-mcp) | 2026-05-17 |
 | [awesome-mcp-servers-discovery](skills/awesome-mcp-servers-discovery/) | [install](https://skills.sh/aradotso/mcp-skills/awesome-mcp-servers-discovery) | [YuzeHao2023/Awesome-MCP-Servers](https://github.com/YuzeHao2023/Awesome-MCP-Servers) | 2026-05-17 |
+| [figma-mcp-server](skills/figma-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/figma-mcp-server) | [figma/mcp-server-guide](https://github.com/figma/mcp-server-guide) | 2026-05-17 |
 <!-- SKILL_INDEX -->
 
 ---
