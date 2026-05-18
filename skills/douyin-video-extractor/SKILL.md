@@ -1,67 +1,85 @@
 ---
 name: douyin-video-extractor
-description: Extract watermark-free Douyin/TikTok videos and AI-powered transcripts using MCP server, WebUI, or CLI
+description: Extract watermark-free Douyin/TikTok videos and transcribe audio content using AI speech recognition
 triggers:
-  - extract douyin video text
+  - extract text from a douyin video
   - download watermark-free douyin video
   - get douyin video transcript
   - parse douyin share link
-  - extract tiktok video captions
-  - download douyin without watermark
   - transcribe douyin video audio
-  - setup douyin mcp server
+  - extract douyin video captions
+  - download tiktok video without watermark
+  - get video text from douyin url
 ---
 
 # Douyin Video Extractor Skill
 
 > Skill by [ara.so](https://ara.so) — MCP Skills collection.
 
-Extract watermark-free videos and AI-powered transcripts from Douyin (抖音) share links. Supports MCP server integration, WebUI, and CLI modes with automatic audio splitting for large files.
+## Overview
 
-## What This Project Does
+`douyin-mcp-server` extracts watermark-free videos from Douyin (Chinese TikTok) share links and uses AI to transcribe audio content into text. It supports three usage modes: WebUI, MCP server integration, and command-line interface.
 
-- **Watermark-free downloads**: Get high-quality video download links without watermarks
-- **AI transcription**: Extract video captions using SiliconFlow's SenseVoice ASR
-- **Large file support**: Automatically splits audio >1 hour or >50MB into segments
-- **Multiple interfaces**: WebUI, MCP server (Claude Desktop), and CLI
+**Key Features:**
+- Extract high-quality watermark-free video download links
+- AI-powered speech-to-text transcription using SenseVoice
+- Automatic chunking for large audio files (>1 hour or >50MB)
+- MCP integration for Claude Desktop and other AI assistants
+- Web interface for browser-based usage
 
 ## Installation
 
-### Basic Setup
+### Prerequisites
 
 ```bash
-# Clone repository
+# Install uv (Python package manager)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install FFmpeg (required for audio processing)
+# macOS
+brew install ffmpeg
+
+# Ubuntu/Debian
+apt install ffmpeg
+
+# Windows (with chocolatey)
+choco install ffmpeg
+```
+
+### Setup
+
+```bash
+# Clone the repository
 git clone https://github.com/yzfly/douyin-mcp-server.git
 cd douyin-mcp-server
 
 # Install dependencies
 uv sync
 
-# Set API key (for transcription features)
+# Set API key for transcription (optional, only needed for text extraction)
 export API_KEY="sk-xxxxxxxxxxxxxxxx"
 ```
 
-### System Requirements
+## Usage Modes
 
-- Python 3.10+
-- FFmpeg (for audio processing)
-- uv package manager
+### 1. WebUI (Recommended for Interactive Use)
 
-Install FFmpeg:
 ```bash
-# macOS
-brew install ffmpeg
+# Start the web server
+uv run python web/app.py
 
-# Ubuntu/Debian
-sudo apt install ffmpeg
-
-# Windows (with Chocolatey)
-choco install ffmpeg
+# Access in browser: http://localhost:8080
 ```
 
-## MCP Server Configuration
+**WebUI Features:**
+- Parse video info without API key
+- Extract transcripts with API key (configured in browser or env var)
+- Download videos directly
+- Export transcripts as Markdown
 
-Add to Claude Desktop or compatible MCP client config:
+### 2. MCP Server (For AI Assistants)
+
+Configure in `claude_desktop_config.json` or similar MCP client config:
 
 ```json
 {
@@ -75,36 +93,18 @@ Add to Claude Desktop or compatible MCP client config:
     }
   }
 }
-
 ```
 
-### Available MCP Tools
+**Available MCP Tools:**
 
-| Tool Name | Function | Requires API Key |
-|-----------|----------|------------------|
-| `parse_douyin_video_info` | Parse video metadata | No |
-| `get_douyin_download_link` | Get watermark-free download URL | No |
-| `extract_douyin_text` | Extract video transcript | Yes |
+- `parse_douyin_video_info` - Parse video metadata (no API key needed)
+- `get_douyin_download_link` - Get watermark-free download URL (no API key needed)
+- `extract_douyin_text` - Extract video transcript via AI (requires API key)
 
-### MCP Usage Example
-
-```
-User: Extract the transcript from https://v.douyin.com/xxxxx/
-
-Claude: [Calls extract_douyin_text tool]
-I've extracted the video transcript. Here's the content:
-...
-```
-
-## CLI Usage
-
-### Basic Commands
+### 3. Command Line Interface
 
 ```bash
-# Show help
-uv run python douyin-video/scripts/douyin_downloader.py --help
-
-# Get video information only (no API key needed)
+# Get video information (no API key required)
 uv run python douyin-video/scripts/douyin_downloader.py \
   -l "https://v.douyin.com/xxxxx/" \
   -a info
@@ -116,13 +116,12 @@ uv run python douyin-video/scripts/douyin_downloader.py \
   -o ./videos
 
 # Extract transcript (requires API_KEY)
-export API_KEY="sk-xxxxxxxxxxxxxxxx"
 uv run python douyin-video/scripts/douyin_downloader.py \
   -l "https://v.douyin.com/xxxxx/" \
   -a extract \
   -o ./output
 
-# Extract transcript AND save video
+# Extract transcript and save video
 uv run python douyin-video/scripts/douyin_downloader.py \
   -l "https://v.douyin.com/xxxxx/" \
   -a extract \
@@ -130,272 +129,289 @@ uv run python douyin-video/scripts/douyin_downloader.py \
   --save-video
 ```
 
-### CLI Arguments
+**CLI Arguments:**
+- `-l, --link` - Douyin share link (required)
+- `-a, --action` - Action: `info`, `download`, or `extract` (required)
+- `-o, --output` - Output directory (default: `./output`)
+- `--save-video` - Save video file when extracting transcript
+- `--api-key` - Override API key from environment
 
-```
--l, --link        Douyin share link (required)
--a, --action      Action: info|download|extract (default: info)
--o, --output      Output directory (default: ./output)
---save-video      Save video when extracting transcript
-```
+## Python Integration
 
-## WebUI Usage
-
-### Start WebUI Server
-
-```bash
-# Method 1: With environment variable API key
-export API_KEY="sk-xxxxxxxxxxxxxxxx"
-uv run python web/app.py
-
-# Method 2: Configure API key in browser UI
-uv run python web/app.py
-```
-
-Access at **http://localhost:8080**
-
-### WebUI Features
-
-1. **Paste Share Link** - Input Douyin/TikTok share URL
-2. **Get Info** - Parses video metadata and download link (no API needed)
-3. **Extract Transcript** - Downloads video, extracts audio, runs ASR (requires API)
-4. **Download/Copy** - Download video or copy transcript as Markdown
-
-API key can be configured in-browser (persisted in localStorage) or via environment variable.
-
-## Code Examples
-
-### Python Integration
+### Parse Video Info
 
 ```python
-from douyin_video.core import DouyinVideoProcessor
+from douyin_video.parser import DouyinParser
 
-# Initialize processor
-processor = DouyinVideoProcessor(api_key="sk-xxxxxxxxxxxxxxxx")
+# Initialize parser
+parser = DouyinParser()
 
-# Parse video info
+# Parse video information
 share_link = "https://v.douyin.com/xxxxx/"
-video_info = processor.parse_video_info(share_link)
-print(f"Title: {video_info['title']}")
-print(f"Download: {video_info['download_url']}")
+video_info = parser.parse_video_info(share_link)
 
-# Extract transcript
-transcript = processor.extract_transcript(
-    share_link=share_link,
-    output_dir="./output",
-    save_video=True
-)
-print(transcript)
+print(f"Title: {video_info['title']}")
+print(f"Video ID: {video_info['video_id']}")
+print(f"Download URL: {video_info['download_url']}")
 ```
 
-### Batch Processing Script
+### Download Video
 
 ```python
+from douyin_video.downloader import DouyinDownloader
+
+downloader = DouyinDownloader()
+
+# Download watermark-free video
+video_url = "https://v.douyin.com/xxxxx/"
+output_path = "./videos"
+file_path = downloader.download_video(video_url, output_path)
+print(f"Video saved to: {file_path}")
+```
+
+### Extract Transcript
+
+```python
+from douyin_video.transcriber import VideoTranscriber
 import os
-from pathlib import Path
-from douyin_video.core import DouyinVideoProcessor
 
-# Read API key from environment
+# Initialize with API key
 api_key = os.getenv("API_KEY")
-processor = DouyinVideoProcessor(api_key=api_key)
+transcriber = VideoTranscriber(api_key=api_key)
 
-# Process multiple videos
-links = [
-    "https://v.douyin.com/xxxxx/",
-    "https://v.douyin.com/yyyyy/",
-]
+# Extract transcript from video URL
+video_url = "https://v.douyin.com/xxxxx/"
+transcript = transcriber.extract_transcript(video_url)
 
-output_dir = Path("./batch_output")
-output_dir.mkdir(exist_ok=True)
+print(f"Transcript: {transcript['text']}")
+print(f"Video ID: {transcript['video_id']}")
+print(f"Title: {transcript['title']}")
 
-for link in links:
-    try:
-        result = processor.extract_transcript(
-            share_link=link,
-            output_dir=str(output_dir),
-            save_video=True
-        )
-        print(f"✓ Processed: {link}")
-    except Exception as e:
-        print(f"✗ Failed {link}: {e}")
+# Save as Markdown
+transcriber.save_markdown(
+    transcript=transcript,
+    output_dir="./output"
+)
 ```
 
-## Output Format
+### Handle Large Files
 
-When extracting transcripts, output is saved as:
+The library automatically handles large audio files:
 
-```
-output/
-└── {video_id}/
-    ├── transcript.md    # Markdown transcript
-    └── video.mp4        # Video file (if --save-video used)
-```
-
-**transcript.md structure:**
-
-```markdown
-# {Video Title}
-
-| Attribute | Value |
-|-----------|-------|
-| Video ID | `7600361826030865707` |
-| Extracted | 2026-01-30 14:19:00 |
-| Download | [Click to download](url) |
-
----
-
-## Transcript
-
-Transcribed text content from AI speech recognition...
-```
-
-## Large File Handling
-
-For audio files exceeding API limits (1 hour or 50MB):
-
-1. **Auto-detection**: Checks audio duration and file size
-2. **FFmpeg splitting**: Divides into 9-minute segments
-3. **Sequential processing**: Transcribes each segment
-4. **Merging**: Combines all transcripts
-
-Example FFmpeg split command used internally:
-
-```bash
-ffmpeg -i input.mp3 -f segment -segment_time 540 -c copy output_%03d.mp3
+```python
+# Files >1 hour or >50MB are automatically chunked
+# No special configuration needed
+transcript = transcriber.extract_transcript(long_video_url)
+# Chunks are processed and merged automatically
 ```
 
 ## Configuration
 
-### Environment Variables
+### API Key Setup
 
+Get a free API key from [SiliconFlow](https://cloud.siliconflow.cn/i/TxUlXG3u) (new users get free credits).
+
+**Option 1: Environment Variable**
 ```bash
-# Required for transcription features
 export API_KEY="sk-xxxxxxxxxxxxxxxx"
-
-# Optional: Custom WebUI port
-export PORT=8080
 ```
 
-### Get Free API Key
+**Option 2: WebUI Browser Storage**
+1. Open WebUI
+2. Click "API 未配置" button
+3. Enter and save API key
+4. Key persists in browser localStorage
 
-1. Sign up at [SiliconFlow](https://cloud.siliconflow.cn/i/TxUlXG3u)
-2. New users get free quota for testing
-3. Uses `FunAudioLLM/SenseVoiceSmall` model
+**Option 3: CLI Argument**
+```bash
+uv run python douyin-video/scripts/douyin_downloader.py \
+  --api-key "sk-xxxxxxxxxxxxxxxx" \
+  -l "https://v.douyin.com/xxxxx/" \
+  -a extract
+```
+
+### Output Format
+
+Extracted transcripts are saved as Markdown:
+
+```markdown
+# Video Title
+
+| 属性 | 值 |
+|------|-----|
+| 视频ID | `7600361826030865707` |
+| 提取时间 | 2026-01-30 14:19:00 |
+| 下载链接 | [点击下载](url) |
+
+---
+
+## 文案内容
+
+Transcribed text content appears here...
+```
 
 ## Common Patterns
 
-### Extract Multiple Videos with Custom Output
+### Batch Processing Multiple Videos
 
 ```python
-from pathlib import Path
-from douyin_video.core import DouyinVideoProcessor
+from douyin_video.transcriber import VideoTranscriber
+import os
 
-processor = DouyinVideoProcessor()
+api_key = os.getenv("API_KEY")
+transcriber = VideoTranscriber(api_key=api_key)
 
-videos = {
-    "tutorial": "https://v.douyin.com/xxxxx/",
-    "review": "https://v.douyin.com/yyyyy/",
-}
+video_urls = [
+    "https://v.douyin.com/xxxxx1/",
+    "https://v.douyin.com/xxxxx2/",
+    "https://v.douyin.com/xxxxx3/",
+]
 
-for name, link in videos.items():
-    output_path = Path(f"./transcripts/{name}")
-    output_path.mkdir(parents=True, exist_ok=True)
-    
-    processor.extract_transcript(
-        share_link=link,
-        output_dir=str(output_path),
-        save_video=False
-    )
+for url in video_urls:
+    try:
+        transcript = transcriber.extract_transcript(url)
+        transcriber.save_markdown(transcript, "./batch_output")
+        print(f"✓ Processed: {transcript['title']}")
+    except Exception as e:
+        print(f"✗ Failed {url}: {e}")
 ```
 
-### Info Only (No Download)
+### Error Handling
 
 ```python
-# Quick metadata extraction without downloading
-processor = DouyinVideoProcessor()
-info = processor.parse_video_info("https://v.douyin.com/xxxxx/")
+from douyin_video.parser import DouyinParser
+from douyin_video.exceptions import ParseError, DownloadError
 
-print(f"ID: {info['video_id']}")
-print(f"Title: {info['title']}")
-print(f"Download URL: {info['download_url']}")
+parser = DouyinParser()
+
+try:
+    video_info = parser.parse_video_info(share_link)
+except ParseError as e:
+    print(f"Failed to parse video: {e}")
+except DownloadError as e:
+    print(f"Failed to download: {e}")
+except Exception as e:
+    print(f"Unexpected error: {e}")
+```
+
+### Custom Output Handling
+
+```python
+from douyin_video.transcriber import VideoTranscriber
+import json
+
+transcriber = VideoTranscriber(api_key=os.getenv("API_KEY"))
+transcript = transcriber.extract_transcript(video_url)
+
+# Save as JSON
+with open("transcript.json", "w", encoding="utf-8") as f:
+    json.dump(transcript, f, ensure_ascii=False, indent=2)
+
+# Extract specific fields
+video_id = transcript["video_id"]
+text_content = transcript["text"]
+download_url = transcript["download_url"]
 ```
 
 ## Troubleshooting
 
 ### FFmpeg Not Found
 
+**Error:** `FileNotFoundError: [Errno 2] No such file or directory: 'ffmpeg'`
+
+**Solution:**
 ```bash
 # Verify FFmpeg installation
 ffmpeg -version
 
-# If not installed, install it:
-# macOS: brew install ffmpeg
-# Ubuntu: sudo apt install ffmpeg
+# If not installed, install via package manager
+brew install ffmpeg  # macOS
+apt install ffmpeg   # Ubuntu
 ```
 
-### API Key Errors
+### API Key Not Working
 
-```python
-# Verify API key is set
-import os
-print(os.getenv("API_KEY"))  # Should not be None
+**Error:** `Unauthorized: Invalid API key`
 
-# If using WebUI, check browser console for API configuration
-```
+**Solution:**
+1. Verify API key is correct
+2. Check environment variable: `echo $API_KEY`
+3. Ensure API key has sufficient credits at [SiliconFlow](https://cloud.siliconflow.cn)
 
-### Share Link Parsing Fails
+### Large File Processing Fails
 
-- Ensure link is complete (e.g., `https://v.douyin.com/xxxxx/`)
-- Try copying link again from Douyin app
-- Check if video is public/accessible
+**Error:** `Request Entity Too Large` or timeout errors
 
-### Audio Extraction Fails
+**Solution:** The library automatically chunks large files, but ensure:
+- FFmpeg is installed and accessible
+- Sufficient disk space for temporary files
+- Stable network connection for multiple API calls
 
+### Video Link Not Parsing
+
+**Error:** `Failed to parse video link`
+
+**Solution:**
+1. Ensure link is a valid Douyin share link (starts with `https://v.douyin.com/`)
+2. Try copying the share link again from the Douyin app
+3. Check if video is still available (not deleted)
+
+### Permission Denied on Output Directory
+
+**Error:** `PermissionError: [Errno 13] Permission denied`
+
+**Solution:**
 ```bash
-# Test FFmpeg manually
-ffmpeg -i video.mp4 -vn -acodec libmp3lame audio.mp3
+# Ensure output directory exists and is writable
+mkdir -p ./output
+chmod 755 ./output
 
-# Check video file integrity
-ffmpeg -i video.mp4 -v error -f null -
+# Or specify a different output directory
+uv run python douyin-video/scripts/douyin_downloader.py \
+  -l "url" -a extract -o ~/Documents/douyin_output
 ```
 
-### Large File Timeout
+### WebUI Not Loading
 
-For very long videos (>2 hours), consider:
+**Error:** Browser shows connection refused or 404
+
+**Solution:**
+```bash
+# Ensure server is running
+uv run python web/app.py
+
+# Check if port 8080 is available
+lsof -i :8080
+
+# Use different port if needed
+PORT=8081 uv run python web/app.py
+```
+
+## Advanced Usage
+
+### Custom Transcription Settings
 
 ```python
-# Split manually into smaller time ranges
-processor.extract_transcript(
-    share_link=link,
-    output_dir="./output",
-    max_segment_minutes=5  # Smaller segments
+from douyin_video.transcriber import VideoTranscriber
+
+transcriber = VideoTranscriber(
+    api_key=os.getenv("API_KEY"),
+    model="FunAudioLLM/SenseVoiceSmall",  # Default model
+    chunk_duration=540  # 9 minutes per chunk (default)
 )
 ```
 
-## API Reference
-
-### DouyinVideoProcessor Class
+### Programmatic MCP Server
 
 ```python
-class DouyinVideoProcessor:
-    def __init__(self, api_key: str = None):
-        """Initialize processor with optional API key"""
-        
-    def parse_video_info(self, share_link: str) -> dict:
-        """Extract video metadata without downloading"""
-        
-    def get_download_link(self, share_link: str) -> str:
-        """Get watermark-free download URL"""
-        
-    def extract_transcript(
-        self,
-        share_link: str,
-        output_dir: str = "./output",
-        save_video: bool = False
-    ) -> str:
-        """Extract video transcript using AI ASR"""
+from douyin_video.mcp_server import DouyinMCPServer
+
+server = DouyinMCPServer(api_key=os.getenv("API_KEY"))
+await server.run()
 ```
 
-## License
+## Related Resources
 
-Apache License 2.0 - See project repository for details.
+- [SiliconFlow API Documentation](https://cloud.siliconflow.cn/)
+- [MCP Protocol Specification](https://modelcontextprotocol.io/)
+- [Project Repository](https://github.com/yzfly/douyin-mcp-server)
