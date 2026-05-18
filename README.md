@@ -79,6 +79,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [mcp-code-execution-mode](skills/mcp-code-execution-mode/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-code-execution-mode) | [elusznik/mcp-server-code-execution-mode](https://github.com/elusznik/mcp-server-code-execution-mode) | 2026-05-18 |
 | [mcp-server-spec-driven-development](skills/mcp-server-spec-driven-development/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-server-spec-driven-development) | [formulahendry/mcp-server-spec-driven-development](https://github.com/formulahendry/mcp-server-spec-driven-development) | 2026-05-18 |
 | [mcp-server-bash-sdk](skills/mcp-server-bash-sdk/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-server-bash-sdk) | [muthuishere/mcp-server-bash-sdk](https://github.com/muthuishere/mcp-server-bash-sdk) | 2026-05-18 |
+| [linux-mcp-server-administration](skills/linux-mcp-server-administration/) | [install](https://skills.sh/aradotso/mcp-skills/linux-mcp-server-administration) | [rhel-lightspeed/linux-mcp-server](https://github.com/rhel-lightspeed/linux-mcp-server) | 2026-05-18 |
 <!-- SKILL_INDEX -->
 
 ---
