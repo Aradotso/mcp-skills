@@ -75,6 +75,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [polymarket-mcp-server](skills/polymarket-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/polymarket-mcp-server) | [caiovicentino/polymarket-mcp-server](https://github.com/caiovicentino/polymarket-mcp-server) | 2026-05-18 |
 | [douyin-video-extractor](skills/douyin-video-extractor/) | [install](https://skills.sh/aradotso/mcp-skills/douyin-video-extractor) | [yzfly/douyin-mcp-server](https://github.com/yzfly/douyin-mcp-server) | 2026-05-18 |
 | [anki-mcp-server-integration](skills/anki-mcp-server-integration/) | [install](https://skills.sh/aradotso/mcp-skills/anki-mcp-server-integration) | [ankimcp/anki-mcp-server](https://github.com/ankimcp/anki-mcp-server) | 2026-05-18 |
+| [vulnerable-mcp-servers-lab](skills/vulnerable-mcp-servers-lab/) | [install](https://skills.sh/aradotso/mcp-skills/vulnerable-mcp-servers-lab) | [appsecco/vulnerable-mcp-servers-lab](https://github.com/appsecco/vulnerable-mcp-servers-lab) | 2026-05-18 |
 <!-- SKILL_INDEX -->
 
 ---
