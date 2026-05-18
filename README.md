@@ -84,6 +84,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [nanobanana-mcp-image-generation](skills/nanobanana-mcp-image-generation/) | [install](https://skills.sh/aradotso/mcp-skills/nanobanana-mcp-image-generation) | [zhongweili/nanobanana-mcp-server](https://github.com/zhongweili/nanobanana-mcp-server) | 2026-05-18 |
 | [data-go-mcp-servers](skills/data-go-mcp-servers/) | [install](https://skills.sh/aradotso/mcp-skills/data-go-mcp-servers) | [Koomook/data-go-mcp-servers](https://github.com/Koomook/data-go-mcp-servers) | 2026-05-18 |
 | [mcp-documentation-server](skills/mcp-documentation-server/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-documentation-server) | [andrea9293/mcp-documentation-server](https://github.com/andrea9293/mcp-documentation-server) | 2026-05-18 |
+| [remote-mcp-server-with-auth](skills/remote-mcp-server-with-auth/) | [install](https://skills.sh/aradotso/mcp-skills/remote-mcp-server-with-auth) | [coleam00/remote-mcp-server-with-auth](https://github.com/coleam00/remote-mcp-server-with-auth) | 2026-05-18 |
 <!-- SKILL_INDEX -->
 
 ---
