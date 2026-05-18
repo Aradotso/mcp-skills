@@ -73,6 +73,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [alpaca-mcp-server-trading](skills/alpaca-mcp-server-trading/) | [install](https://skills.sh/aradotso/mcp-skills/alpaca-mcp-server-trading) | [alpacahq/alpaca-mcp-server](https://github.com/alpacahq/alpaca-mcp-server) | 2026-05-17 |
 | [atlassian-mcp-server](skills/atlassian-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/atlassian-mcp-server) | [atlassian/atlassian-mcp-server](https://github.com/atlassian/atlassian-mcp-server) | 2026-05-17 |
 | [polymarket-mcp-server](skills/polymarket-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/polymarket-mcp-server) | [caiovicentino/polymarket-mcp-server](https://github.com/caiovicentino/polymarket-mcp-server) | 2026-05-18 |
+| [douyin-video-extractor](skills/douyin-video-extractor/) | [install](https://skills.sh/aradotso/mcp-skills/douyin-video-extractor) | [yzfly/douyin-mcp-server](https://github.com/yzfly/douyin-mcp-server) | 2026-05-18 |
 <!-- SKILL_INDEX -->
 
 ---
