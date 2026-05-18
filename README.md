@@ -83,6 +83,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [codex-mcp-server-integration](skills/codex-mcp-server-integration/) | [install](https://skills.sh/aradotso/mcp-skills/codex-mcp-server-integration) | [tuannvm/codex-mcp-server](https://github.com/tuannvm/codex-mcp-server) | 2026-05-18 |
 | [nanobanana-mcp-image-generation](skills/nanobanana-mcp-image-generation/) | [install](https://skills.sh/aradotso/mcp-skills/nanobanana-mcp-image-generation) | [zhongweili/nanobanana-mcp-server](https://github.com/zhongweili/nanobanana-mcp-server) | 2026-05-18 |
 | [data-go-mcp-servers](skills/data-go-mcp-servers/) | [install](https://skills.sh/aradotso/mcp-skills/data-go-mcp-servers) | [Koomook/data-go-mcp-servers](https://github.com/Koomook/data-go-mcp-servers) | 2026-05-18 |
+| [mcp-documentation-server](skills/mcp-documentation-server/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-documentation-server) | [andrea9293/mcp-documentation-server](https://github.com/andrea9293/mcp-documentation-server) | 2026-05-18 |
 <!-- SKILL_INDEX -->
 
 ---
