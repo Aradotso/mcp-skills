@@ -87,6 +87,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [remote-mcp-server-with-auth](skills/remote-mcp-server-with-auth/) | [install](https://skills.sh/aradotso/mcp-skills/remote-mcp-server-with-auth) | [coleam00/remote-mcp-server-with-auth](https://github.com/coleam00/remote-mcp-server-with-auth) | 2026-05-18 |
 | [mcp-server-12306](skills/mcp-server-12306/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-server-12306) | [drfccv/mcp-server-12306](https://github.com/drfccv/mcp-server-12306) | 2026-05-18 |
 | [postman-mcp-server](skills/postman-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/postman-mcp-server) | [postmanlabs/postman-mcp-server](https://github.com/postmanlabs/postman-mcp-server) | 2026-05-18 |
+| [quickbooks-online-mcp-server](skills/quickbooks-online-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/quickbooks-online-mcp-server) | [intuit/quickbooks-online-mcp-server](https://github.com/intuit/quickbooks-online-mcp-server) | 2026-05-20 |
 <!-- SKILL_INDEX -->
 
 ---
