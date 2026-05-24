@@ -89,6 +89,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [postman-mcp-server](skills/postman-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/postman-mcp-server) | [postmanlabs/postman-mcp-server](https://github.com/postmanlabs/postman-mcp-server) | 2026-05-18 |
 | [quickbooks-online-mcp-server](skills/quickbooks-online-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/quickbooks-online-mcp-server) | [intuit/quickbooks-online-mcp-server](https://github.com/intuit/quickbooks-online-mcp-server) | 2026-05-20 |
 | [mcp-security-hub](skills/mcp-security-hub/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-security-hub) | [FuzzingLabs/mcp-security-hub](https://github.com/FuzzingLabs/mcp-security-hub) | 2026-05-24 |
+| [monarch-money-mcp-server](skills/monarch-money-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/monarch-money-mcp-server) | [robcerda/monarch-mcp-server](https://github.com/robcerda/monarch-mcp-server) | 2026-05-24 |
 <!-- SKILL_INDEX -->
 
 ---
