@@ -91,6 +91,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [mcp-security-hub](skills/mcp-security-hub/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-security-hub) | [FuzzingLabs/mcp-security-hub](https://github.com/FuzzingLabs/mcp-security-hub) | 2026-05-24 |
 | [monarch-money-mcp-server](skills/monarch-money-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/monarch-money-mcp-server) | [robcerda/monarch-mcp-server](https://github.com/robcerda/monarch-mcp-server) | 2026-05-24 |
 | [ktx-data-agent-context-layer](skills/ktx-data-agent-context-layer/) | [install](https://skills.sh/aradotso/mcp-skills/ktx-data-agent-context-layer) | [Kaelio/ktx-ai-data-agents-mcp-context-skills](https://github.com/Kaelio/ktx-ai-data-agents-mcp-context-skills) | 2026-05-29 |
+| [ktx-ai-data-agents-context-layer](skills/ktx-ai-data-agents-context-layer/) | [install](https://skills.sh/aradotso/mcp-skills/ktx-ai-data-agents-context-layer) | [Kaelio/ktx-ai-data-agents-mcp-context-skills](https://github.com/Kaelio/ktx-ai-data-agents-mcp-context-skills) | 2026-05-29 |
 <!-- SKILL_INDEX -->
 
 ---
