@@ -92,6 +92,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [monarch-money-mcp-server](skills/monarch-money-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/monarch-money-mcp-server) | [robcerda/monarch-mcp-server](https://github.com/robcerda/monarch-mcp-server) | 2026-05-24 |
 | [ktx-data-agent-context-layer](skills/ktx-data-agent-context-layer/) | [install](https://skills.sh/aradotso/mcp-skills/ktx-data-agent-context-layer) | [Kaelio/ktx-ai-data-agents-mcp-context-skills](https://github.com/Kaelio/ktx-ai-data-agents-mcp-context-skills) | 2026-05-29 |
 | [ktx-ai-data-agents-context-layer](skills/ktx-ai-data-agents-context-layer/) | [install](https://skills.sh/aradotso/mcp-skills/ktx-ai-data-agents-context-layer) | [Kaelio/ktx-ai-data-agents-mcp-context-skills](https://github.com/Kaelio/ktx-ai-data-agents-mcp-context-skills) | 2026-05-29 |
+| [ktx-ai-data-context-layer](skills/ktx-ai-data-context-layer/) | [install](https://skills.sh/aradotso/mcp-skills/ktx-ai-data-context-layer) | [Kaelio/ktx-ai-data-agents-mcp-context-skills](https://github.com/Kaelio/ktx-ai-data-agents-mcp-context-skills) | 2026-05-30 |
 <!-- SKILL_INDEX -->
 
 ---
