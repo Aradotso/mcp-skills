@@ -93,6 +93,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [ktx-data-agent-context-layer](skills/ktx-data-agent-context-layer/) | [install](https://skills.sh/aradotso/mcp-skills/ktx-data-agent-context-layer) | [Kaelio/ktx-ai-data-agents-mcp-context-skills](https://github.com/Kaelio/ktx-ai-data-agents-mcp-context-skills) | 2026-05-29 |
 | [ktx-ai-data-agents-context-layer](skills/ktx-ai-data-agents-context-layer/) | [install](https://skills.sh/aradotso/mcp-skills/ktx-ai-data-agents-context-layer) | [Kaelio/ktx-ai-data-agents-mcp-context-skills](https://github.com/Kaelio/ktx-ai-data-agents-mcp-context-skills) | 2026-05-29 |
 | [ktx-ai-data-context-layer](skills/ktx-ai-data-context-layer/) | [install](https://skills.sh/aradotso/mcp-skills/ktx-ai-data-context-layer) | [Kaelio/ktx-ai-data-agents-mcp-context-skills](https://github.com/Kaelio/ktx-ai-data-agents-mcp-context-skills) | 2026-05-30 |
+| [ktx-context-layer-data-agents](skills/ktx-context-layer-data-agents/) | [install](https://skills.sh/aradotso/mcp-skills/ktx-context-layer-data-agents) | [Kaelio/ktx-ai-data-agents-mcp-context-skills](https://github.com/Kaelio/ktx-ai-data-agents-mcp-context-skills) | 2026-05-30 |
 <!-- SKILL_INDEX -->
 
 ---
