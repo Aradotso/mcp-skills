@@ -1,75 +1,84 @@
 ---
 name: ktx-ai-data-context-layer
-description: Build and maintain an executable context layer for data and analytics agents using ktx's semantic layer, wiki knowledge, and MCP integration
+description: Expert in ktx - the executable context layer for data and analytics agents with skills, memory and semantic layer
 triggers:
-  - set up ktx for data agent queries
-  - configure ktx semantic layer for warehouse
-  - ingest database schema into ktx context
-  - search ktx wiki or semantic layer
-  - connect Claude Code to warehouse with ktx
-  - build ktx context from dbt and database
-  - configure ktx MCP server for agents
-  - troubleshoot ktx ingestion or setup
+  - set up ktx for my data warehouse
+  - configure ktx semantic layer for my database
+  - how do I use ktx with Claude Code
+  - help me ingest data sources into ktx
+  - configure ktx to read my dbt models
+  - troubleshoot ktx MCP server connection
+  - search ktx semantic layer and wiki
+  - build ktx context from my warehouse
 ---
 
-# ktx AI Data Context Layer
+# ktx AI Data Context Layer Skill
 
 > Skill by [ara.so](https://ara.so) — MCP Skills collection.
 
-**ktx** is a self-improving context layer that teaches AI agents how to query your data warehouse accurately. It combines approved metric definitions, joinable columns, wiki content, and business knowledge into a single searchable surface that agents can access via MCP (Model Context Protocol) or CLI.
+## What is ktx?
 
-## What ktx Does
+**ktx** is a self-improving context layer that teaches AI agents how to query your data warehouse accurately. It automatically:
 
-- **Learns from company knowledge**: Ingests wiki content (Notion, Markdown), organizes it, removes duplicates, flags contradictions
-- **Maps the data stack**: Samples tables, captures metadata and usage patterns, detects joinable columns
-- **Builds a semantic layer**: Combines raw tables and high-level metrics through a join graph that resolves fan and chasm traps
-- **Serves agents at execution**: Exposes CLI and MCP tools with full-text and semantic search across wiki and semantic-layer entities
+- **Learns from company knowledge** - ingests wiki content, organizes it, removes duplicates, flags contradictions
+- **Maps the data stack** - samples tables, captures metadata, detects joinable columns
+- **Builds a semantic layer** - combines raw tables and metrics through a join graph that resolves chasm and fan traps
+- **Serves agents at execution** - exposes CLI and MCP tools with combined full-text and semantic search
+
+Works with PostgreSQL, Snowflake, BigQuery, ClickHouse, MySQL, SQL Server, and SQLite. Integrates with dbt, MetricFlow, LookML, Looker, Metabase, and Notion.
 
 ## Installation
 
-Install globally via npm:
+### Global CLI Installation
 
 ```bash
 npm install -g @kaelio/ktx
 ```
 
-Or use in a specific project:
+### Project-Specific Installation
 
 ```bash
 npm install @kaelio/ktx
 ```
 
-Verify installation:
-
-```bash
-ktx --version
-```
-
-## Initial Setup
-
-Run the interactive setup wizard:
+### Quick Setup
 
 ```bash
 ktx setup
 ```
 
-This will:
-1. Create or resume a local ktx project
-2. Configure LLM and embedding providers
-3. Set up database connections
-4. Configure context sources (dbt, Looker, Metabase, Notion)
-5. Build initial context
-6. Install agent integration
+This interactive command:
+1. Creates or resumes a local ktx project
+2. Configures LLM and embedding providers
+3. Sets up database connections
+4. Configures context sources (dbt, Looker, etc.)
+5. Builds initial context
+6. Installs agent integration
 
-Check project status:
+## Project Structure
+
+```
+my-project/
+├── ktx.yaml                         # Project configuration
+├── semantic-layer/<connection-id>/  # YAML semantic sources
+├── wiki/global/                     # Shared business context
+├── wiki/user/<user-id>/             # User-scoped notes
+├── raw-sources/<connection-id>/     # Ingest artifacts and reports
+└── .ktx/                            # Local state and secrets (git-ignored)
+```
+
+**Important**: Commit `ktx.yaml`, `semantic-layer/`, and `wiki/`. Keep `.ktx/` local and git-ignored.
+
+## Core Commands
+
+### Check Project Status
 
 ```bash
 ktx status
 ```
 
 Example output:
-
-```text
+```
 ktx project: /home/user/analytics
 Project ready: yes
 LLM ready: yes (claude-sonnet-4-6)
@@ -80,594 +89,793 @@ ktx context built: yes
 Agent integration ready: yes (codex:project)
 ```
 
-## Project Structure
+### Build Context
 
-```text
-my-project/
-├── ktx.yaml                         # Project configuration
-├── semantic-layer/<connection-id>/  # YAML semantic sources
-├── wiki/global/                     # Shared business context
-├── wiki/user/<user-id>/             # User-scoped notes
-├── raw-sources/<connection-id>/     # Ingest artifacts and reports
-└── .ktx/                            # Local state and secrets (git-ignored)
+```bash
+# Ingest all configured sources
+ktx ingest
+
+# Ingest specific connection
+ktx ingest --connection warehouse
+
+# Ingest specific source
+ktx ingest --source dbt_main
 ```
 
-Commit `ktx.yaml`, `semantic-layer/`, and `wiki/`. Keep `.ktx/` local.
+### Search Semantic Layer
+
+```bash
+# Search for metrics and dimensions
+ktx sl "revenue"
+
+# Search with JSON output
+ktx sl "customer lifetime value" --json
+```
+
+### Search Wiki
+
+```bash
+# Search wiki pages
+ktx wiki "refund policy"
+
+# Search with context
+ktx wiki "how do we calculate churn"
+```
+
+### MCP Server
+
+```bash
+# Start MCP server for agent clients
+ktx mcp start
+
+# Start with specific project
+ktx mcp start --project-dir /path/to/project
+
+# Check MCP status
+ktx mcp status
+```
 
 ## Configuration
 
 ### ktx.yaml Structure
 
 ```yaml
-version: 1
-project_name: analytics
+version: "1"
+project:
+  name: "analytics"
+  description: "Company analytics warehouse"
 
-# LLM configuration
 llm:
-  provider: anthropic
-  model: claude-sonnet-4-6
-  api_key_env: ANTHROPIC_API_KEY
+  provider: "anthropic"
+  model: "claude-sonnet-4-6"
+  apiKeyEnvVar: "ANTHROPIC_API_KEY"
 
-# Embedding configuration
 embeddings:
-  provider: openai
-  model: text-embedding-3-small
-  api_key_env: OPENAI_API_KEY
+  provider: "openai"
+  model: "text-embedding-3-small"
+  apiKeyEnvVar: "OPENAI_API_KEY"
 
-# Database connections
 connections:
   warehouse:
-    type: postgres
-    host: localhost
+    type: "postgres"
+    host: "localhost"
     port: 5432
-    database: analytics
-    schema: public
-    user_env: POSTGRES_USER
-    password_env: POSTGRES_PASSWORD
+    database: "analytics"
+    user: "readonly_user"
+    passwordEnvVar: "DB_PASSWORD"
+    ssl: false
 
-# Context sources
-context_sources:
-  - id: dbt_main
-    type: dbt
-    path: ./dbt_project
-  - id: notion_wiki
-    type: notion
-    api_key_env: NOTION_API_KEY
-    database_ids:
-      - abc123def456
+sources:
+  dbt_main:
+    type: "dbt"
+    connection: "warehouse"
+    manifestPath: "./target/manifest.json"
+    catalogPath: "./target/catalog.json"
 ```
 
-### LLM Provider Options
+### Environment Variables
+
+Create a `.env` file in your project root:
 
 ```bash
-# Anthropic API
-ktx config set llm.provider anthropic
-ktx config set llm.api_key_env ANTHROPIC_API_KEY
+# LLM Provider
+ANTHROPIC_API_KEY=your_key_here
 
-# Google Vertex AI
-ktx config set llm.provider vertex
-ktx config set llm.project_id my-gcp-project
+# Embeddings Provider
+OPENAI_API_KEY=your_key_here
 
-# AI Gateway
-ktx config set llm.provider ai-gateway
-ktx config set llm.gateway_url https://gateway.example.com
+# Database Credentials
+DB_PASSWORD=your_db_password_here
+
+# Optional: Project directory override
+KTX_PROJECT_DIR=/path/to/project
 ```
 
-### Database Connections
+### LLM Provider Configuration
 
-Add a database connection:
-
-```bash
-ktx connection add warehouse \
-  --type postgres \
-  --host localhost \
-  --port 5432 \
-  --database analytics \
-  --user-env POSTGRES_USER \
-  --password-env POSTGRES_PASSWORD
-```
-
-Supported databases: PostgreSQL, Snowflake, BigQuery, ClickHouse, MySQL, SQL Server, SQLite
-
-Test a connection:
-
-```bash
-ktx connection test warehouse
-```
-
-## Building Context
-
-### Ingest All Sources
-
-Run ingestion for all configured connections and context sources:
-
-```bash
-ktx ingest
-```
-
-### Ingest Specific Connection
-
-```bash
-ktx ingest --connection warehouse
-```
-
-### Ingest with Options
-
-```bash
-# Sample more tables (default 100)
-ktx ingest --sample-size 500
-
-# Skip expensive operations
-ktx ingest --skip-column-profiling
-
-# Force re-ingest even if unchanged
-ktx ingest --force
-```
-
-### What Ingestion Does
-
-1. **Database scanning**: Samples tables, profiles columns, detects data types, patterns, and constraints
-2. **Join detection**: Identifies foreign key relationships and candidate join columns via value overlap
-3. **Metadata extraction**: Pulls table comments, column descriptions, and usage stats
-4. **Context source parsing**: Reads dbt models, LookML views, Metabase questions, Notion pages
-5. **Deduplication & validation**: Removes duplicate content, flags contradictions
-6. **Embedding generation**: Creates vector embeddings for semantic search
-
-## CLI Commands
-
-### Search Commands
-
-Search semantic layer (metrics, dimensions, entities):
-
-```bash
-ktx sl "revenue"
-ktx sl "monthly active users"
-```
-
-Search wiki content:
-
-```bash
-ktx wiki "refund policy"
-ktx wiki "how to calculate churn"
-```
-
-### Context Management
-
-View semantic sources:
-
-```bash
-ktx semantic list
-```
-
-Show specific source details:
-
-```bash
-ktx semantic show users
-```
-
-Edit a semantic source:
-
-```bash
-ktx semantic edit users
-```
-
-### Wiki Management
-
-Create a wiki page:
-
-```bash
-ktx wiki create --title "Metric Definitions" --content-file metrics.md
-```
-
-List wiki pages:
-
-```bash
-ktx wiki list
-```
-
-Edit a wiki page:
-
-```bash
-ktx wiki edit "Metric Definitions"
-```
-
-### MCP Server
-
-Start the MCP server for agent clients:
-
-```bash
-ktx mcp start
-```
-
-Start with specific project directory:
-
-```bash
-ktx mcp start --project-dir /path/to/analytics
-```
-
-## MCP Integration
-
-### Agent Configuration
-
-For **Claude Code**, **Codex**, **Cursor**, or **OpenCode**:
-
-1. Install ktx skill:
-
-```bash
-npx skills add Kaelio/ktx --skill ktx
-```
-
-2. Start MCP server (if not auto-started):
-
-```bash
-ktx mcp start --project-dir /path/to/project
-```
-
-3. Ask your agent to use ktx tools:
-
-```text
-Use ktx to search for revenue metrics and show me the SQL definition
-```
-
-### MCP Tools Available
-
-- `search_semantic_layer`: Search metrics, dimensions, entities
-- `search_wiki`: Search wiki pages and business context
-- `get_table_schema`: Get column details and sample data
-- `get_metric_definition`: Get canonical SQL for a metric
-- `detect_joins`: Find joinable paths between tables
-- `validate_query`: Check a SQL query against schema and metrics
-
-## Code Examples
-
-### TypeScript: Using ktx CLI Programmatically
-
-```typescript
-import { spawn } from 'child_process';
-
-async function searchSemanticLayer(query: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const ktx = spawn('ktx', ['sl', query]);
-    let output = '';
-    
-    ktx.stdout.on('data', (data) => {
-      output += data.toString();
-    });
-    
-    ktx.on('close', (code) => {
-      if (code === 0) {
-        resolve(output);
-      } else {
-        reject(new Error(`ktx exited with code ${code}`));
-      }
-    });
-  });
-}
-
-// Usage
-const revenueMetrics = await searchSemanticLayer('revenue');
-console.log(revenueMetrics);
-```
-
-### TypeScript: MCP Client Integration
-
-```typescript
-import { Client } from '@modelcontextprotocol/sdk/client/index.js';
-import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
-
-async function initKtxMcpClient() {
-  const transport = new StdioClientTransport({
-    command: 'ktx',
-    args: ['mcp', 'start', '--project-dir', process.cwd()]
-  });
-  
-  const client = new Client({
-    name: 'my-data-agent',
-    version: '1.0.0'
-  }, {
-    capabilities: {}
-  });
-  
-  await client.connect(transport);
-  return client;
-}
-
-async function searchMetrics(client: Client, query: string) {
-  const result = await client.callTool({
-    name: 'search_semantic_layer',
-    arguments: {
-      query,
-      limit: 10
-    }
-  });
-  
-  return result;
-}
-
-// Usage
-const client = await initKtxMcpClient();
-const metrics = await searchMetrics(client, 'monthly revenue');
-console.log(metrics);
-```
-
-### Python: Querying Semantic Layer
-
-```python
-import subprocess
-import json
-
-def search_semantic_layer(query: str) -> dict:
-    """Search ktx semantic layer via CLI."""
-    result = subprocess.run(
-        ['ktx', 'sl', query, '--json'],
-        capture_output=True,
-        text=True,
-        check=True
-    )
-    return json.loads(result.stdout)
-
-def get_metric_sql(metric_name: str) -> str:
-    """Get canonical SQL for a metric."""
-    result = subprocess.run(
-        ['ktx', 'semantic', 'show', metric_name, '--sql-only'],
-        capture_output=True,
-        text=True,
-        check=True
-    )
-    return result.stdout.strip()
-
-# Usage
-metrics = search_semantic_layer('revenue')
-for metric in metrics.get('results', []):
-    print(f"{metric['name']}: {metric['description']}")
-    
-sql = get_metric_sql('monthly_revenue')
-print(f"SQL:\n{sql}")
-```
-
-### Semantic Layer YAML Example
-
-Create a metric definition in `semantic-layer/warehouse/revenue.yaml`:
+#### Anthropic API
 
 ```yaml
-type: metric
-name: monthly_revenue
-description: Total revenue aggregated by month
-sql: |
-  SELECT
-    DATE_TRUNC('month', order_date) as month,
-    SUM(amount) as revenue
-  FROM orders
-  WHERE status = 'completed'
-  GROUP BY 1
+llm:
+  provider: "anthropic"
+  model: "claude-sonnet-4-6"
+  apiKeyEnvVar: "ANTHROPIC_API_KEY"
+```
+
+#### Google Vertex AI
+
+```yaml
+llm:
+  provider: "vertex"
+  model: "claude-sonnet-4-6"
+  projectId: "my-gcp-project"
+  region: "us-central1"
+  credentialsEnvVar: "GOOGLE_APPLICATION_CREDENTIALS"
+```
+
+#### Claude Code Session (Local)
+
+```yaml
+llm:
+  provider: "claude-agent-sdk"
+```
+
+### Database Connection Examples
+
+#### PostgreSQL
+
+```yaml
+connections:
+  warehouse:
+    type: "postgres"
+    host: "db.example.com"
+    port: 5432
+    database: "analytics"
+    user: "readonly"
+    passwordEnvVar: "POSTGRES_PASSWORD"
+    ssl: true
+```
+
+#### Snowflake
+
+```yaml
+connections:
+  snowflake:
+    type: "snowflake"
+    account: "xy12345.us-east-1"
+    warehouse: "COMPUTE_WH"
+    database: "ANALYTICS"
+    schema: "PUBLIC"
+    user: "ktx_user"
+    passwordEnvVar: "SNOWFLAKE_PASSWORD"
+```
+
+#### BigQuery
+
+```yaml
+connections:
+  bigquery:
+    type: "bigquery"
+    projectId: "my-project"
+    dataset: "analytics"
+    credentialsEnvVar: "GOOGLE_APPLICATION_CREDENTIALS"
+```
+
+### Context Source Configuration
+
+#### dbt
+
+```yaml
+sources:
+  dbt_main:
+    type: "dbt"
+    connection: "warehouse"
+    manifestPath: "./target/manifest.json"
+    catalogPath: "./target/catalog.json"
+    docsPath: "./target/index.html"  # optional
+```
+
+#### Looker
+
+```yaml
+sources:
+  looker:
+    type: "looker"
+    connection: "warehouse"
+    projectPath: "./looker-models"
+```
+
+#### Metabase
+
+```yaml
+sources:
+  metabase:
+    type: "metabase"
+    connection: "warehouse"
+    apiUrl: "https://metabase.example.com"
+    apiKeyEnvVar: "METABASE_API_KEY"
+```
+
+#### Notion
+
+```yaml
+sources:
+  notion_wiki:
+    type: "notion"
+    apiKeyEnvVar: "NOTION_API_KEY"
+    databaseIds:
+      - "abc123def456"
+      - "789ghi012jkl"
+```
+
+## Agent Integration
+
+### Claude Code
+
+After running `ktx setup`, the integration is automatic. From your project directory:
+
+```
+What is our total revenue this quarter?
+```
+
+Claude Code will use ktx's semantic layer to query accurately.
+
+### Codex
+
+```bash
+# Install ktx skill in Codex
+npx skills add Kaelio/ktx --skill ktx
+
+# Use in any project with ktx.yaml
+```
+
+### Cursor / OpenCode
+
+Configure MCP in your editor settings:
+
+```json
+{
+  "mcpServers": {
+    "ktx": {
+      "command": "ktx",
+      "args": ["mcp", "start", "--project-dir", "/path/to/project"]
+    }
+  }
+}
+```
+
+## Semantic Layer Usage
+
+### Defining Metrics
+
+Create YAML files in `semantic-layer/<connection-id>/`:
+
+```yaml
+# semantic-layer/warehouse/revenue.yaml
+version: "1"
+type: "metric"
+name: "total_revenue"
+description: "Sum of all order amounts"
+sql: "SUM(orders.amount)"
 dimensions:
-  - month
-  - customer_segment
-  - region
-measures:
-  - revenue
-  - order_count
-grain: month
+  - "customer_id"
+  - "order_date"
 filters:
-  - status = 'completed'
-  - amount > 0
-source_tables:
-  - orders
-  - customers
+  - "orders.status = 'completed'"
+source_table: "orders"
+```
+
+### Defining Dimensions
+
+```yaml
+# semantic-layer/warehouse/customer_dimension.yaml
+version: "1"
+type: "dimension"
+name: "customer_segment"
+description: "Customer segment based on lifetime value"
+sql: |
+  CASE
+    WHEN total_spent > 10000 THEN 'enterprise'
+    WHEN total_spent > 1000 THEN 'mid-market'
+    ELSE 'smb'
+  END
+source_table: "customers"
+```
+
+### Join Graph
+
+ktx automatically detects joinable columns. You can override in `ktx.yaml`:
+
+```yaml
+semantic_layer:
+  joins:
+    - left_table: "orders"
+      right_table: "customers"
+      left_column: "customer_id"
+      right_column: "id"
+      type: "inner"
+```
+
+## Wiki Management
+
+### Adding Wiki Pages
+
+```bash
+# Add to global wiki
+mkdir -p wiki/global
+cat > wiki/global/refund-policy.md <<EOF
+# Refund Policy
+
+Customers can request refunds within 30 days.
+Full refunds issued if:
+- Product not as described
+- Technical issues unresolved
+
+Partial refunds (50%) if:
+- Customer changed mind
+- Alternative solution offered
+EOF
+```
+
+### User-Scoped Notes
+
+```bash
+# Add user-specific notes
+mkdir -p wiki/user/alice
+cat > wiki/user/alice/analysis-notes.md <<EOF
+# Q1 Analysis Notes
+
+Revenue spike in March due to new product launch.
+Check customer_acquisition_source for details.
+EOF
+```
+
+### Ingesting Wiki Content
+
+```bash
+# Rebuild wiki index
+ktx ingest
+
+# Search after ingestion
+ktx wiki "refund timeline"
 ```
 
 ## Common Patterns
 
-### Setting Up for a New Project
+### Initial Project Setup
+
+```typescript
+// scripts/setup-ktx.ts
+import { execSync } from 'child_process';
+import * as fs from 'fs';
+import * as path from 'path';
+
+const projectDir = process.cwd();
+
+// Create ktx.yaml
+const config = {
+  version: "1",
+  project: {
+    name: path.basename(projectDir),
+    description: "Analytics warehouse"
+  },
+  llm: {
+    provider: "anthropic",
+    model: "claude-sonnet-4-6",
+    apiKeyEnvVar: "ANTHROPIC_API_KEY"
+  },
+  embeddings: {
+    provider: "openai",
+    model: "text-embedding-3-small",
+    apiKeyEnvVar: "OPENAI_API_KEY"
+  },
+  connections: {
+    warehouse: {
+      type: "postgres",
+      host: process.env.DB_HOST || "localhost",
+      port: parseInt(process.env.DB_PORT || "5432"),
+      database: process.env.DB_NAME || "analytics",
+      user: process.env.DB_USER || "readonly",
+      passwordEnvVar: "DB_PASSWORD"
+    }
+  }
+};
+
+fs.writeFileSync(
+  path.join(projectDir, 'ktx.yaml'),
+  JSON.stringify(config, null, 2)
+);
+
+// Run setup
+execSync('ktx setup', { stdio: 'inherit' });
+```
+
+### Programmatic Ingestion
+
+```typescript
+// scripts/daily-ingest.ts
+import { execSync } from 'child_process';
+
+async function runDailyIngest() {
+  console.log('Starting daily ktx ingestion...');
+  
+  try {
+    // Ingest all sources
+    execSync('ktx ingest', { 
+      stdio: 'inherit',
+      env: { ...process.env, KTX_PROJECT_DIR: '/path/to/project' }
+    });
+    
+    console.log('Ingestion complete');
+  } catch (error) {
+    console.error('Ingestion failed:', error);
+    process.exit(1);
+  }
+}
+
+runDailyIngest();
+```
+
+### Custom Metric Definition Workflow
+
+```typescript
+// scripts/add-metric.ts
+import * as fs from 'fs';
+import * as path from 'path';
+import * as yaml from 'yaml';
+
+interface MetricDefinition {
+  version: string;
+  type: 'metric';
+  name: string;
+  description: string;
+  sql: string;
+  dimensions?: string[];
+  filters?: string[];
+  source_table: string;
+}
+
+function addMetric(
+  connectionId: string,
+  metric: Omit<MetricDefinition, 'version' | 'type'>
+) {
+  const metricDef: MetricDefinition = {
+    version: "1",
+    type: "metric",
+    ...metric
+  };
+  
+  const dir = path.join(
+    process.cwd(),
+    'semantic-layer',
+    connectionId
+  );
+  
+  fs.mkdirSync(dir, { recursive: true });
+  
+  const filename = `${metric.name}.yaml`;
+  const filepath = path.join(dir, filename);
+  
+  fs.writeFileSync(
+    filepath,
+    yaml.stringify(metricDef)
+  );
+  
+  console.log(`Created metric: ${filepath}`);
+}
+
+// Usage
+addMetric('warehouse', {
+  name: 'daily_active_users',
+  description: 'Count of unique users per day',
+  sql: 'COUNT(DISTINCT user_id)',
+  dimensions: ['event_date'],
+  filters: ['event_type = \'login\''],
+  source_table: 'user_events'
+});
+```
+
+### Searching Programmatically
+
+```typescript
+// scripts/search-context.ts
+import { execSync } from 'child_process';
+
+function searchSemanticLayer(query: string): any {
+  const result = execSync(`ktx sl "${query}" --json`, {
+    encoding: 'utf-8',
+    env: { ...process.env, KTX_PROJECT_DIR: '/path/to/project' }
+  });
+  
+  return JSON.parse(result);
+}
+
+function searchWiki(query: string): any {
+  const result = execSync(`ktx wiki "${query}" --json`, {
+    encoding: 'utf-8',
+    env: { ...process.env, KTX_PROJECT_DIR: '/path/to/project' }
+  });
+  
+  return JSON.parse(result);
+}
+
+// Usage
+const revenueMetrics = searchSemanticLayer('revenue');
+console.log('Revenue metrics:', revenueMetrics);
+
+const policies = searchWiki('refund policy');
+console.log('Policies:', policies);
+```
+
+## MCP Integration Details
+
+### Available MCP Tools
+
+When ktx MCP server is running, agents have access to:
+
+1. **search_semantic_layer** - Search metrics, dimensions, and tables
+2. **search_wiki** - Search wiki pages and documentation
+3. **get_metric_definition** - Get full metric SQL and metadata
+4. **list_connections** - List available database connections
+5. **get_table_schema** - Get table column details
+6. **get_join_paths** - Find join paths between tables
+
+### Example MCP Usage from Agent
+
+```typescript
+// Agent uses MCP to find revenue metric
+const result = await useMcpTool('ktx', 'search_semantic_layer', {
+  query: 'total revenue by customer segment'
+});
+
+// Get full metric definition
+const metricDef = await useMcpTool('ktx', 'get_metric_definition', {
+  metric_name: 'total_revenue'
+});
+
+// Find join path
+const joinPath = await useMcpTool('ktx', 'get_join_paths', {
+  from_table: 'orders',
+  to_table: 'customers'
+});
+```
+
+## Troubleshooting
+
+### ktx status shows "Project ready: no"
 
 ```bash
-# Navigate to project
-cd /path/to/analytics-project
+# Check ktx.yaml exists
+ls -la ktx.yaml
 
-# Initialize ktx
+# If missing, run setup
 ktx setup
 
-# Configure database
-ktx connection add warehouse \
-  --type postgres \
-  --host $DB_HOST \
-  --database analytics \
-  --user-env POSTGRES_USER \
-  --password-env POSTGRES_PASSWORD
+# Verify project directory
+echo $KTX_PROJECT_DIR
+```
 
-# Add dbt context source
-ktx context-source add dbt_models \
-  --type dbt \
-  --path ./dbt_project
+### LLM provider not configured
 
-# Build context
+```bash
+# Check environment variables
+env | grep ANTHROPIC_API_KEY
+env | grep OPENAI_API_KEY
+
+# Add to .env file
+echo "ANTHROPIC_API_KEY=your_key" >> .env
+echo "OPENAI_API_KEY=your_key" >> .env
+
+# Re-run setup
+ktx setup
+```
+
+### Database connection fails
+
+```bash
+# Test connection manually
+psql -h localhost -U readonly -d analytics
+
+# Check ktx.yaml credentials
+cat ktx.yaml | grep -A 10 connections
+
+# Verify environment variable
+env | grep DB_PASSWORD
+
+# Try with explicit project dir
+ktx ingest --project-dir /path/to/project
+```
+
+### MCP server won't start
+
+```bash
+# Check if already running
+ktx mcp status
+
+# Stop existing server
+pkill -f "ktx mcp"
+
+# Start with debug output
+ktx mcp start --verbose
+
+# Check MCP logs
+tail -f ~/.ktx/logs/mcp.log
+```
+
+### Context ingestion fails
+
+```bash
+# Run with verbose output
+ktx ingest --verbose
+
+# Check specific source
+ktx ingest --source dbt_main --verbose
+
+# Verify source paths
+ls -la target/manifest.json
+ls -la target/catalog.json
+
+# Check connection separately
+ktx test-connection warehouse
+```
+
+### Search returns no results
+
+```bash
+# Rebuild context
 ktx ingest
+
+# Check if files exist
+ls -la semantic-layer/
+ls -la wiki/
+
+# Try broader search
+ktx sl "revenue" --verbose
+ktx wiki "policy" --verbose
+```
+
+### Permission errors
+
+```bash
+# Check file permissions
+ls -la ktx.yaml
+ls -la .ktx/
+
+# Fix ownership
+chown -R $USER:$USER .ktx/
+
+# Re-initialize
+rm -rf .ktx/
+ktx setup
+```
+
+### Agent can't find ktx
+
+```bash
+# Ensure MCP server is running
+ktx mcp status
+
+# If not, start it
+ktx mcp start --project-dir $(pwd)
+
+# Restart agent client (Claude Code, Cursor, etc.)
+
+# Verify MCP configuration in agent settings
+cat ~/.config/claude-code/mcp.json
+```
+
+### Telemetry Opt-Out
+
+```bash
+# Disable telemetry
+export KTX_TELEMETRY_DISABLED=1
+
+# Or add to .env
+echo "KTX_TELEMETRY_DISABLED=1" >> .env
 
 # Verify
 ktx status
 ```
 
-### Daily Context Updates
+## Advanced Usage
 
-```bash
-# Re-ingest to pick up schema changes
-ktx ingest --connection warehouse
-
-# Add a new wiki page about metric changes
-ktx wiki create --title "Q1 Metric Updates" --content-file q1-updates.md
-
-# Search to verify new content
-ktx wiki "Q1 metric"
-```
-
-### Agent Workflow
-
-1. Agent searches semantic layer:
-
-```text
-Search ktx for customer retention metrics
-```
-
-2. ktx returns metrics with canonical SQL
-
-3. Agent uses SQL definition to build query
-
-4. Agent validates query against ktx schema
-
-5. Agent executes query (read-only)
-
-### Debugging Semantic Layer
-
-```bash
-# List all semantic sources
-ktx semantic list
-
-# Show detailed metric definition
-ktx semantic show monthly_revenue
-
-# Validate metric SQL
-ktx semantic validate monthly_revenue
-
-# Check join paths
-ktx semantic joins orders customers
-```
-
-## Troubleshooting
-
-### "ktx mcp start --project-dir ..." Message
-
-If `ktx status` prints this message, run the command before opening your agent:
-
-```bash
-ktx mcp start --project-dir /path/to/project
-```
-
-This ensures the MCP server is ready for agent connections.
-
-### Ingestion Fails
-
-Check connection:
-
-```bash
-ktx connection test warehouse
-```
-
-Run with verbose logging:
-
-```bash
-ktx ingest --verbose
-```
-
-Skip problematic tables:
-
-```bash
-ktx ingest --exclude-tables table1,table2
-```
-
-### LLM Provider Errors
-
-Verify API key is set:
-
-```bash
-echo $ANTHROPIC_API_KEY
-```
-
-Test with a different provider:
-
-```bash
-ktx config set llm.provider vertex
-ktx ingest
-```
-
-### Semantic Search Returns No Results
-
-Rebuild embeddings:
-
-```bash
-ktx ingest --force --rebuild-embeddings
-```
-
-Check embedding configuration:
-
-```bash
-ktx config get embeddings.provider
-ktx config get embeddings.model
-```
-
-### Join Detection Missing Relationships
-
-Increase sample size:
-
-```bash
-ktx ingest --sample-size 1000
-```
-
-Manually define joins in semantic layer YAML:
+### Custom Join Logic
 
 ```yaml
-type: entity
-name: orders
-primary_key: order_id
-relationships:
-  - entity: customers
-    join_column: customer_id
-    relationship_type: many_to_one
+# ktx.yaml
+semantic_layer:
+  joins:
+    - left_table: "orders"
+      right_table: "customers"
+      left_column: "customer_id"
+      right_column: "id"
+      type: "left"
+    - left_table: "orders"
+      right_table: "products"
+      left_column: "product_id"
+      right_column: "id"
+      type: "inner"
+      # Prevent fan-out
+      cardinality: "many_to_one"
 ```
 
-### Contradictions Flagged
-
-Review flagged items:
-
-```bash
-ktx wiki search --contradictions-only
-```
-
-Resolve by editing wiki pages:
-
-```bash
-ktx wiki edit "Conflicting Metric Definition"
-```
-
-### Agent Can't Find ktx Tools
-
-Ensure MCP server is running:
-
-```bash
-ps aux | grep 'ktx mcp'
-```
-
-Restart agent client after starting MCP server.
-
-Check project directory is correct:
-
-```bash
-ktx status --project-dir /path/to/project
-```
-
-## Environment Variables
-
-ktx uses environment variables for secrets and configuration:
-
-- `ANTHROPIC_API_KEY`: Anthropic API key
-- `OPENAI_API_KEY`: OpenAI API key (for embeddings)
-- `POSTGRES_USER`, `POSTGRES_PASSWORD`: Database credentials
-- `SNOWFLAKE_ACCOUNT`, `SNOWFLAKE_USER`, `SNOWFLAKE_PASSWORD`: Snowflake credentials
-- `NOTION_API_KEY`: Notion integration token
-- `KTX_PROJECT_DIR`: Override project directory resolution
-
-Never hardcode secrets. Always reference environment variables in `ktx.yaml`:
+### Multi-Database Setup
 
 ```yaml
 connections:
   warehouse:
-    user_env: POSTGRES_USER
-    password_env: POSTGRES_PASSWORD
+    type: "postgres"
+    host: "warehouse.example.com"
+    database: "analytics"
+    # ... credentials
+  
+  production:
+    type: "postgres"
+    host: "prod.example.com"
+    database: "app_db"
+    # ... credentials
+  
+sources:
+  dbt_warehouse:
+    type: "dbt"
+    connection: "warehouse"
+    manifestPath: "./warehouse/target/manifest.json"
+  
+  dbt_production:
+    type: "dbt"
+    connection: "production"
+    manifestPath: "./production/target/manifest.json"
 ```
 
-## Resources
+### CI/CD Integration
 
-- **Documentation**: https://docs.kaelio.com/ktx
-- **CLI Reference**: https://docs.kaelio.com/ktx/docs/cli-reference/ktx
-- **Agent Setup Guide**: https://docs.kaelio.com/ktx/docs/ai-resources/agent-quickstart
-- **Slack Community**: https://join.slack.com/t/ktxcommunity/shared_invite/zt-3y9b44m1x-LVyNNJD5nwaZHq4XS29LMQ
-- **GitHub Issues**: https://github.com/Kaelio/ktx/issues
+```yaml
+# .github/workflows/ktx.yml
+name: ktx Context Build
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 2 * * *'  # Daily at 2 AM
+
+jobs:
+  build-context:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install ktx
+        run: npm install -g @kaelio/ktx
+      
+      - name: Build context
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: |
+          ktx ingest
+      
+      - name: Commit updated context
+        run: |
+          git config user.name "ktx Bot"
+          git config user.email "bot@example.com"
+          git add semantic-layer/ wiki/
+          git diff --quiet || git commit -m "Update ktx context"
+          git push
+```
+
+## Best Practices
+
+1. **Version Control**: Commit `ktx.yaml`, `semantic-layer/`, and `wiki/` but git-ignore `.ktx/`
+2. **Read-Only Access**: Configure database connections with read-only users
+3. **Regular Ingestion**: Run `ktx ingest` daily or on data model changes
+4. **Metric Naming**: Use clear, consistent names (e.g., `total_revenue`, not `rev`)
+5. **Documentation**: Document business logic in wiki pages, not just metrics
+6. **Environment Variables**: Never commit secrets; use env vars for all credentials
+7. **Testing**: Test new metrics and joins before committing to version control
+8. **MCP Management**: Keep MCP server running for active agent sessions
