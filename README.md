@@ -97,6 +97,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [tauri-mcp-server-development](skills/tauri-mcp-server-development/) | [install](https://skills.sh/aradotso/mcp-skills/tauri-mcp-server-development) | [hypothesi/mcp-server-tauri](https://github.com/hypothesi/mcp-server-tauri) | 2026-06-01 |
 | [office-oxide-mcp-rust-document-processor](skills/office-oxide-mcp-rust-document-processor/) | [install](https://skills.sh/aradotso/mcp-skills/office-oxide-mcp-rust-document-processor) | [Aimino-Tech/opendocswork-mcp](https://github.com/Aimino-Tech/opendocswork-mcp) | 2026-06-02 |
 | [office-oxide-mcp-server](skills/office-oxide-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/office-oxide-mcp-server) | [Aimino-Tech/opendocswork-mcp](https://github.com/Aimino-Tech/opendocswork-mcp) | 2026-06-02 |
+| [opendocswork-mcp-office-processing](skills/opendocswork-mcp-office-processing/) | [install](https://skills.sh/aradotso/mcp-skills/opendocswork-mcp-office-processing) | [Aimino-Tech/opendocswork-mcp](https://github.com/Aimino-Tech/opendocswork-mcp) | 2026-06-02 |
 <!-- SKILL_INDEX -->
 
 ---
