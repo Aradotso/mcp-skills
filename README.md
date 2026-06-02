@@ -95,6 +95,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [ktx-ai-data-context-layer](skills/ktx-ai-data-context-layer/) | [install](https://skills.sh/aradotso/mcp-skills/ktx-ai-data-context-layer) | [Kaelio/ktx-ai-data-agents-mcp-context-skills](https://github.com/Kaelio/ktx-ai-data-agents-mcp-context-skills) | 2026-05-30 |
 | [ktx-context-layer-data-agents](skills/ktx-context-layer-data-agents/) | [install](https://skills.sh/aradotso/mcp-skills/ktx-context-layer-data-agents) | [Kaelio/ktx-ai-data-agents-mcp-context-skills](https://github.com/Kaelio/ktx-ai-data-agents-mcp-context-skills) | 2026-05-30 |
 | [tauri-mcp-server-development](skills/tauri-mcp-server-development/) | [install](https://skills.sh/aradotso/mcp-skills/tauri-mcp-server-development) | [hypothesi/mcp-server-tauri](https://github.com/hypothesi/mcp-server-tauri) | 2026-06-01 |
+| [office-oxide-mcp-rust-document-processor](skills/office-oxide-mcp-rust-document-processor/) | [install](https://skills.sh/aradotso/mcp-skills/office-oxide-mcp-rust-document-processor) | [Aimino-Tech/opendocswork-mcp](https://github.com/Aimino-Tech/opendocswork-mcp) | 2026-06-02 |
 <!-- SKILL_INDEX -->
 
 ---
