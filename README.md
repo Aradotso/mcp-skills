@@ -100,6 +100,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [opendocswork-mcp-office-processing](skills/opendocswork-mcp-office-processing/) | [install](https://skills.sh/aradotso/mcp-skills/opendocswork-mcp-office-processing) | [Aimino-Tech/opendocswork-mcp](https://github.com/Aimino-Tech/opendocswork-mcp) | 2026-06-02 |
 | [ida-mcp-headless-reverse-engineering](skills/ida-mcp-headless-reverse-engineering/) | [install](https://skills.sh/aradotso/mcp-skills/ida-mcp-headless-reverse-engineering) | [blacktop/ida-mcp-rs](https://github.com/blacktop/ida-mcp-rs) | 2026-06-03 |
 | [zabbix-mcp-server](skills/zabbix-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/zabbix-mcp-server) | [mpeirone/zabbix-mcp-server](https://github.com/mpeirone/zabbix-mcp-server) | 2026-06-03 |
+| [deepseek-claude-code-worker-mcp](skills/deepseek-claude-code-worker-mcp/) | [install](https://skills.sh/aradotso/mcp-skills/deepseek-claude-code-worker-mcp) | [louchi1984-coder/deepseek-claude-code-worker-mcp](https://github.com/louchi1984-coder/deepseek-claude-code-worker-mcp) | 2026-06-03 |
 <!-- SKILL_INDEX -->
 
 ---
