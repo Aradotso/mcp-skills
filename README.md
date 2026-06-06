@@ -101,6 +101,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [ida-mcp-headless-reverse-engineering](skills/ida-mcp-headless-reverse-engineering/) | [install](https://skills.sh/aradotso/mcp-skills/ida-mcp-headless-reverse-engineering) | [blacktop/ida-mcp-rs](https://github.com/blacktop/ida-mcp-rs) | 2026-06-03 |
 | [zabbix-mcp-server](skills/zabbix-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/zabbix-mcp-server) | [mpeirone/zabbix-mcp-server](https://github.com/mpeirone/zabbix-mcp-server) | 2026-06-03 |
 | [deepseek-claude-code-worker-mcp](skills/deepseek-claude-code-worker-mcp/) | [install](https://skills.sh/aradotso/mcp-skills/deepseek-claude-code-worker-mcp) | [louchi1984-coder/deepseek-claude-code-worker-mcp](https://github.com/louchi1984-coder/deepseek-claude-code-worker-mcp) | 2026-06-03 |
+| [unity-mcp-server](skills/unity-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/unity-mcp-server) | [AnkleBreaker-Studio/unity-mcp-server](https://github.com/AnkleBreaker-Studio/unity-mcp-server) | 2026-06-06 |
 <!-- SKILL_INDEX -->
 
 ---
