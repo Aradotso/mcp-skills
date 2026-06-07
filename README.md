@@ -103,6 +103,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [deepseek-claude-code-worker-mcp](skills/deepseek-claude-code-worker-mcp/) | [install](https://skills.sh/aradotso/mcp-skills/deepseek-claude-code-worker-mcp) | [louchi1984-coder/deepseek-claude-code-worker-mcp](https://github.com/louchi1984-coder/deepseek-claude-code-worker-mcp) | 2026-06-03 |
 | [unity-mcp-server](skills/unity-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/unity-mcp-server) | [AnkleBreaker-Studio/unity-mcp-server](https://github.com/AnkleBreaker-Studio/unity-mcp-server) | 2026-06-06 |
 | [ios-mcp-jailbreak-automation](skills/ios-mcp-jailbreak-automation/) | [install](https://skills.sh/aradotso/mcp-skills/ios-mcp-jailbreak-automation) | [witchan/ios-mcp](https://github.com/witchan/ios-mcp) | 2026-06-07 |
+| [notebooklm-mcp-cli](skills/notebooklm-mcp-cli/) | [install](https://skills.sh/aradotso/mcp-skills/notebooklm-mcp-cli) | [jacob-bd/notebooklm-mcp-cli](https://github.com/jacob-bd/notebooklm-mcp-cli) | 2026-06-07 |
 <!-- SKILL_INDEX -->
 
 ---
