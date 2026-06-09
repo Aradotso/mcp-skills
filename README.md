@@ -106,6 +106,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [notebooklm-mcp-cli](skills/notebooklm-mcp-cli/) | [install](https://skills.sh/aradotso/mcp-skills/notebooklm-mcp-cli) | [jacob-bd/notebooklm-mcp-cli](https://github.com/jacob-bd/notebooklm-mcp-cli) | 2026-06-07 |
 | [osint-tools-mcp-server](skills/osint-tools-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/osint-tools-mcp-server) | [frishtik/osint-tools-mcp-server](https://github.com/frishtik/osint-tools-mcp-server) | 2026-06-08 |
 | [mcpspend-cost-tracking](skills/mcpspend-cost-tracking/) | [install](https://skills.sh/aradotso/mcp-skills/mcpspend-cost-tracking) | [andreisirbu91-lab/MCPSpend](https://github.com/andreisirbu91-lab/MCPSpend) | 2026-06-09 |
+| [codedb-mcp-fast-code-intelligence](skills/codedb-mcp-fast-code-intelligence/) | [install](https://skills.sh/aradotso/mcp-skills/codedb-mcp-fast-code-intelligence) | [killop/codedb-mcp](https://github.com/killop/codedb-mcp) | 2026-06-09 |
 <!-- SKILL_INDEX -->
 
 ---
