@@ -113,6 +113,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [essential-mcp-servers-reference](skills/essential-mcp-servers-reference/) | [install](https://skills.sh/aradotso/mcp-skills/essential-mcp-servers-reference) | [Moh4696/50-essential-mcp-servers](https://github.com/Moh4696/50-essential-mcp-servers) | 2026-06-10 |
 | [mcp-server-catalog-reference](skills/mcp-server-catalog-reference/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-server-catalog-reference) | [Moh4696/50-essential-mcp-servers](https://github.com/Moh4696/50-essential-mcp-servers) | 2026-06-10 |
 | [mcp-servers-essential-reference](skills/mcp-servers-essential-reference/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-servers-essential-reference) | [Moh4696/50-essential-mcp-servers](https://github.com/Moh4696/50-essential-mcp-servers) | 2026-06-10 |
+| [50-essential-mcp-servers-reference](skills/50-essential-mcp-servers-reference/) | [install](https://skills.sh/aradotso/mcp-skills/50-essential-mcp-servers-reference) | [Moh4696/50-essential-mcp-servers](https://github.com/Moh4696/50-essential-mcp-servers) | 2026-06-10 |
 <!-- SKILL_INDEX -->
 
 ---
