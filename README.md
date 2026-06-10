@@ -108,6 +108,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [mcpspend-cost-tracking](skills/mcpspend-cost-tracking/) | [install](https://skills.sh/aradotso/mcp-skills/mcpspend-cost-tracking) | [andreisirbu91-lab/MCPSpend](https://github.com/andreisirbu91-lab/MCPSpend) | 2026-06-09 |
 | [codedb-mcp-fast-code-intelligence](skills/codedb-mcp-fast-code-intelligence/) | [install](https://skills.sh/aradotso/mcp-skills/codedb-mcp-fast-code-intelligence) | [killop/codedb-mcp](https://github.com/killop/codedb-mcp) | 2026-06-09 |
 | [apple-health-mcp-server](skills/apple-health-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/apple-health-mcp-server) | [the-momentum/apple-health-mcp-server](https://github.com/the-momentum/apple-health-mcp-server) | 2026-06-09 |
+| [mcp-servers-for-revit-integration](skills/mcp-servers-for-revit-integration/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-servers-for-revit-integration) | [mcp-servers-for-revit/mcp-servers-for-revit](https://github.com/mcp-servers-for-revit/mcp-servers-for-revit) | 2026-06-10 |
 <!-- SKILL_INDEX -->
 
 ---
