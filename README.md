@@ -111,6 +111,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [mcp-servers-for-revit-integration](skills/mcp-servers-for-revit-integration/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-servers-for-revit-integration) | [mcp-servers-for-revit/mcp-servers-for-revit](https://github.com/mcp-servers-for-revit/mcp-servers-for-revit) | 2026-06-10 |
 | [mcp-servers-reference](skills/mcp-servers-reference/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-servers-reference) | [Moh4696/50-essential-mcp-servers](https://github.com/Moh4696/50-essential-mcp-servers) | 2026-06-10 |
 | [essential-mcp-servers-reference](skills/essential-mcp-servers-reference/) | [install](https://skills.sh/aradotso/mcp-skills/essential-mcp-servers-reference) | [Moh4696/50-essential-mcp-servers](https://github.com/Moh4696/50-essential-mcp-servers) | 2026-06-10 |
+| [mcp-server-catalog-reference](skills/mcp-server-catalog-reference/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-server-catalog-reference) | [Moh4696/50-essential-mcp-servers](https://github.com/Moh4696/50-essential-mcp-servers) | 2026-06-10 |
 <!-- SKILL_INDEX -->
 
 ---
