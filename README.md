@@ -117,6 +117,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [multi-llm-mcp-server](skills/multi-llm-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/multi-llm-mcp-server) | [mai-yyy/multi-llm-mcp](https://github.com/mai-yyy/multi-llm-mcp) | 2026-06-10 |
 | [affine-mcp-server-integration](skills/affine-mcp-server-integration/) | [install](https://skills.sh/aradotso/mcp-skills/affine-mcp-server-integration) | [DAWNCR0W/affine-mcp-server](https://github.com/DAWNCR0W/affine-mcp-server) | 2026-06-12 |
 | [claude-tradingview-mcp-autotrading](skills/claude-tradingview-mcp-autotrading/) | [install](https://skills.sh/aradotso/mcp-skills/claude-tradingview-mcp-autotrading) | [jackson-video-resources/claude-tradingview-mcp-trading](https://github.com/jackson-video-resources/claude-tradingview-mcp-trading) | 2026-06-15 |
+| [excel-mcp-automation](skills/excel-mcp-automation/) | [install](https://skills.sh/aradotso/mcp-skills/excel-mcp-automation) | [sbroenne/mcp-server-excel](https://github.com/sbroenne/mcp-server-excel) | 2026-06-15 |
 <!-- SKILL_INDEX -->
 
 ---
