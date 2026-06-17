@@ -120,6 +120,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [excel-mcp-automation](skills/excel-mcp-automation/) | [install](https://skills.sh/aradotso/mcp-skills/excel-mcp-automation) | [sbroenne/mcp-server-excel](https://github.com/sbroenne/mcp-server-excel) | 2026-06-15 |
 | [huolala-figma-mcp](skills/huolala-figma-mcp/) | [install](https://skills.sh/aradotso/mcp-skills/huolala-figma-mcp) | [HuolalaTech/huolala-figma-mcp](https://github.com/HuolalaTech/huolala-figma-mcp) | 2026-06-17 |
 | [blockrun-mcp-live-data](skills/blockrun-mcp-live-data/) | [install](https://skills.sh/aradotso/mcp-skills/blockrun-mcp-live-data) | [BlockRunAI/blockrun-mcp](https://github.com/BlockRunAI/blockrun-mcp) | 2026-06-17 |
+| [codex-control-plane-mcp](skills/codex-control-plane-mcp/) | [install](https://skills.sh/aradotso/mcp-skills/codex-control-plane-mcp) | [aresyn/codex-control-plane-mcp](https://github.com/aresyn/codex-control-plane-mcp) | 2026-06-17 |
 <!-- SKILL_INDEX -->
 
 ---
