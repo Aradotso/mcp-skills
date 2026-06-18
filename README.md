@@ -121,6 +121,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [huolala-figma-mcp](skills/huolala-figma-mcp/) | [install](https://skills.sh/aradotso/mcp-skills/huolala-figma-mcp) | [HuolalaTech/huolala-figma-mcp](https://github.com/HuolalaTech/huolala-figma-mcp) | 2026-06-17 |
 | [blockrun-mcp-live-data](skills/blockrun-mcp-live-data/) | [install](https://skills.sh/aradotso/mcp-skills/blockrun-mcp-live-data) | [BlockRunAI/blockrun-mcp](https://github.com/BlockRunAI/blockrun-mcp) | 2026-06-17 |
 | [codex-control-plane-mcp](skills/codex-control-plane-mcp/) | [install](https://skills.sh/aradotso/mcp-skills/codex-control-plane-mcp) | [aresyn/codex-control-plane-mcp](https://github.com/aresyn/codex-control-plane-mcp) | 2026-06-17 |
+| [matlab-mcp-server](skills/matlab-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/matlab-mcp-server) | [matlab/matlab-mcp-server](https://github.com/matlab/matlab-mcp-server) | 2026-06-18 |
 <!-- SKILL_INDEX -->
 
 ---
