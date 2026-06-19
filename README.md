@@ -122,6 +122,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [blockrun-mcp-live-data](skills/blockrun-mcp-live-data/) | [install](https://skills.sh/aradotso/mcp-skills/blockrun-mcp-live-data) | [BlockRunAI/blockrun-mcp](https://github.com/BlockRunAI/blockrun-mcp) | 2026-06-17 |
 | [codex-control-plane-mcp](skills/codex-control-plane-mcp/) | [install](https://skills.sh/aradotso/mcp-skills/codex-control-plane-mcp) | [aresyn/codex-control-plane-mcp](https://github.com/aresyn/codex-control-plane-mcp) | 2026-06-17 |
 | [matlab-mcp-server](skills/matlab-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/matlab-mcp-server) | [matlab/matlab-mcp-server](https://github.com/matlab/matlab-mcp-server) | 2026-06-18 |
+| [coding-tools-mcp-server](skills/coding-tools-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/coding-tools-mcp-server) | [xyTom/coding-tools-mcp](https://github.com/xyTom/coding-tools-mcp) | 2026-06-19 |
 <!-- SKILL_INDEX -->
 
 ---
