@@ -125,6 +125,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [coding-tools-mcp-server](skills/coding-tools-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/coding-tools-mcp-server) | [xyTom/coding-tools-mcp](https://github.com/xyTom/coding-tools-mcp) | 2026-06-19 |
 | [elementor-mcp-wordpress-builder](skills/elementor-mcp-wordpress-builder/) | [install](https://skills.sh/aradotso/mcp-skills/elementor-mcp-wordpress-builder) | [msrbuilds/elementor-mcp](https://github.com/msrbuilds/elementor-mcp) | 2026-06-22 |
 | [railway-mcp-server](skills/railway-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/railway-mcp-server) | [railwayapp/railway-mcp-server](https://github.com/railwayapp/railway-mcp-server) | 2026-06-22 |
+| [mcp-db-server-stateless](skills/mcp-db-server-stateless/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-db-server-stateless) | [PerfectXM/mcp-db-server](https://github.com/PerfectXM/mcp-db-server) | 2026-06-22 |
 <!-- SKILL_INDEX -->
 
 ---
