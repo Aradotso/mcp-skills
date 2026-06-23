@@ -127,6 +127,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [railway-mcp-server](skills/railway-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/railway-mcp-server) | [railwayapp/railway-mcp-server](https://github.com/railwayapp/railway-mcp-server) | 2026-06-22 |
 | [mcp-db-server-stateless](skills/mcp-db-server-stateless/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-db-server-stateless) | [PerfectXM/mcp-db-server](https://github.com/PerfectXM/mcp-db-server) | 2026-06-22 |
 | [opentelemetry-mcp-server](skills/opentelemetry-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/opentelemetry-mcp-server) | [traceloop/opentelemetry-mcp-server](https://github.com/traceloop/opentelemetry-mcp-server) | 2026-06-22 |
+| [mcp-quickstart-scaffolder](skills/mcp-quickstart-scaffolder/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-quickstart-scaffolder) | [G12789/mcp-quickstart](https://github.com/G12789/mcp-quickstart) | 2026-06-23 |
 <!-- SKILL_INDEX -->
 
 ---
