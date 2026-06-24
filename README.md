@@ -128,6 +128,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [mcp-db-server-stateless](skills/mcp-db-server-stateless/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-db-server-stateless) | [PerfectXM/mcp-db-server](https://github.com/PerfectXM/mcp-db-server) | 2026-06-22 |
 | [opentelemetry-mcp-server](skills/opentelemetry-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/opentelemetry-mcp-server) | [traceloop/opentelemetry-mcp-server](https://github.com/traceloop/opentelemetry-mcp-server) | 2026-06-22 |
 | [mcp-quickstart-scaffolder](skills/mcp-quickstart-scaffolder/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-quickstart-scaffolder) | [G12789/mcp-quickstart](https://github.com/G12789/mcp-quickstart) | 2026-06-23 |
+| [codebase-memory-mcp-pro-knowledge-graph](skills/codebase-memory-mcp-pro-knowledge-graph/) | [install](https://skills.sh/aradotso/mcp-skills/codebase-memory-mcp-pro-knowledge-graph) | [win4r/codebase-memory-mcp-pro](https://github.com/win4r/codebase-memory-mcp-pro) | 2026-06-24 |
 <!-- SKILL_INDEX -->
 
 ---
