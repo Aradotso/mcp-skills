@@ -136,6 +136,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [logos-router-reasoning-mesh](skills/logos-router-reasoning-mesh/) | [install](https://skills.sh/aradotso/mcp-skills/logos-router-reasoning-mesh) | [rak7777/mythic-mcp-proxy](https://github.com/rak7777/mythic-mcp-proxy) | 2026-06-30 |
 | [commercevault-edd-ecommerce-api](skills/commercevault-edd-ecommerce-api/) | [install](https://skills.sh/aradotso/mcp-skills/commercevault-edd-ecommerce-api) | [dhapat3927/mcp-edd-analytics-vantage](https://github.com/dhapat3927/mcp-edd-analytics-vantage) | 2026-06-30 |
 | [ask-expert-consult-mcp-wisdom-cascade](skills/ask-expert-consult-mcp-wisdom-cascade/) | [install](https://skills.sh/aradotso/mcp-skills/ask-expert-consult-mcp-wisdom-cascade) | [pakgik01/ask-expert-consult-mcp](https://github.com/pakgik01/ask-expert-consult-mcp) | 2026-06-30 |
+| [logos-router-distributed-reasoning](skills/logos-router-distributed-reasoning/) | [install](https://skills.sh/aradotso/mcp-skills/logos-router-distributed-reasoning) | [rak7777/mythic-mcp-proxy](https://github.com/rak7777/mythic-mcp-proxy) | 2026-06-30 |
 <!-- SKILL_INDEX -->
 
 ---
