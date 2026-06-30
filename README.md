@@ -130,6 +130,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [mcp-quickstart-scaffolder](skills/mcp-quickstart-scaffolder/) | [install](https://skills.sh/aradotso/mcp-skills/mcp-quickstart-scaffolder) | [G12789/mcp-quickstart](https://github.com/G12789/mcp-quickstart) | 2026-06-23 |
 | [codebase-memory-mcp-pro-knowledge-graph](skills/codebase-memory-mcp-pro-knowledge-graph/) | [install](https://skills.sh/aradotso/mcp-skills/codebase-memory-mcp-pro-knowledge-graph) | [win4r/codebase-memory-mcp-pro](https://github.com/win4r/codebase-memory-mcp-pro) | 2026-06-24 |
 | [godot-mcp-pro-integration](skills/godot-mcp-pro-integration/) | [install](https://skills.sh/aradotso/mcp-skills/godot-mcp-pro-integration) | [youichi-uda/godot-mcp-pro](https://github.com/youichi-uda/godot-mcp-pro) | 2026-06-30 |
+| [gemini-search-mcp-web-search](skills/gemini-search-mcp-web-search/) | [install](https://skills.sh/aradotso/mcp-skills/gemini-search-mcp-web-search) | [Sophomoresty/gemini-search-mcp](https://github.com/Sophomoresty/gemini-search-mcp) | 2026-06-30 |
 <!-- SKILL_INDEX -->
 
 ---
