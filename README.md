@@ -132,6 +132,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [godot-mcp-pro-integration](skills/godot-mcp-pro-integration/) | [install](https://skills.sh/aradotso/mcp-skills/godot-mcp-pro-integration) | [youichi-uda/godot-mcp-pro](https://github.com/youichi-uda/godot-mcp-pro) | 2026-06-30 |
 | [gemini-search-mcp-web-search](skills/gemini-search-mcp-web-search/) | [install](https://skills.sh/aradotso/mcp-skills/gemini-search-mcp-web-search) | [Sophomoresty/gemini-search-mcp](https://github.com/Sophomoresty/gemini-search-mcp) | 2026-06-30 |
 | [commercevault-edd-mcp-server](skills/commercevault-edd-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/commercevault-edd-mcp-server) | [dhapat3927/mcp-edd-analytics-vantage](https://github.com/dhapat3927/mcp-edd-analytics-vantage) | 2026-06-30 |
+| [commercevault-edd-commerce-orchestrator](skills/commercevault-edd-commerce-orchestrator/) | [install](https://skills.sh/aradotso/mcp-skills/commercevault-edd-commerce-orchestrator) | [dhapat3927/mcp-edd-analytics-vantage](https://github.com/dhapat3927/mcp-edd-analytics-vantage) | 2026-06-30 |
 <!-- SKILL_INDEX -->
 
 ---
