@@ -133,6 +133,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [gemini-search-mcp-web-search](skills/gemini-search-mcp-web-search/) | [install](https://skills.sh/aradotso/mcp-skills/gemini-search-mcp-web-search) | [Sophomoresty/gemini-search-mcp](https://github.com/Sophomoresty/gemini-search-mcp) | 2026-06-30 |
 | [commercevault-edd-mcp-server](skills/commercevault-edd-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/commercevault-edd-mcp-server) | [dhapat3927/mcp-edd-analytics-vantage](https://github.com/dhapat3927/mcp-edd-analytics-vantage) | 2026-06-30 |
 | [commercevault-edd-commerce-orchestrator](skills/commercevault-edd-commerce-orchestrator/) | [install](https://skills.sh/aradotso/mcp-skills/commercevault-edd-commerce-orchestrator) | [dhapat3927/mcp-edd-analytics-vantage](https://github.com/dhapat3927/mcp-edd-analytics-vantage) | 2026-06-30 |
+| [logos-router-reasoning-mesh](skills/logos-router-reasoning-mesh/) | [install](https://skills.sh/aradotso/mcp-skills/logos-router-reasoning-mesh) | [rak7777/mythic-mcp-proxy](https://github.com/rak7777/mythic-mcp-proxy) | 2026-06-30 |
 <!-- SKILL_INDEX -->
 
 ---
