@@ -1,15 +1,15 @@
 ---
 name: logos-router-reasoning-mesh
-description: Deploy and configure Logos Router, a distributed semantic reasoning gateway for AI agents with zero-drift consensus and adaptive depth control
+description: Distributed semantic reasoning gateway for AI agents with zero-drift consensus and adaptive depth control
 triggers:
   - set up logos router for distributed reasoning
-  - configure semantic routing mesh with multiple nodes
-  - implement zero-drift consensus protocol
-  - create adaptive reasoning workflow with logos
-  - debug logos router node coordination
-  - add multilingual semantic routing to my project
-  - integrate logos router strict write discipline
-  - deploy local reasoning mesh infrastructure
+  - configure a reasoning mesh with zero-drift consensus
+  - implement adaptive claude opus reasoning
+  - create multi-node reasoning workflow
+  - use strict write discipline protocol
+  - route semantic queries across reasoning nodes
+  - debug reasoning mesh consensus failures
+  - deploy local reasoning infrastructure
 ---
 
 # Logos Router Reasoning Mesh
@@ -18,68 +18,71 @@ triggers:
 
 ## Overview
 
-Logos Router is a distributed semantic reasoning gateway that fragments AI reasoning across local nodes with zero-drift consensus guarantees. Instead of funneling all inference through a single model, it coordinates reasoning across a mesh of nodes using the Strict Write Discipline (SWD) protocol to maintain fidelity.
+Logos Router is a distributed semantic reasoning gateway that fragments AI reasoning across local nodes with zero-drift consensus guarantees. Instead of routing all inference through a single model, it distributes subproblems across a mesh of reasoning units that coordinate through a disciplined write protocol.
 
-**Key capabilities:**
-- Adaptive reasoning depth (1-7 steps) based on query complexity
-- Zero-drift consensus protocol preventing hallucination chains
-- 16-language multilingual semantic routing
-- Causal audit trails for every reasoning decision
-- Local-first infrastructure with optional federation
-- 24/7 reasoning continuity with graceful degradation
+**Key Features:**
+- **Zero-drift consensus** - Strict Write Discipline (SWD) protocol prevents hallucination chains
+- **Adaptive reasoning depth** - Dynamically escalates/reduces cognitive complexity (1-7 steps)
+- **Multilingual routing** - Supports 16 languages with semantic intermediate representation
+- **24/7 continuity** - Adjacent nodes absorb load if one fails
+- **Causal audit trails** - Every decision is verifiable and traceable
+- **Local sovereignty** - All reasoning runs on your infrastructure
+
+## Architecture Layers
+
+1. **Grail Layer** - Immutable content-addressed storage for reasoning states (DAG of cognition)
+2. **Chiron Layer** - Routing logic that assigns subproblems to appropriate nodes
+3. **Orpheus Layer** - Synthesis layer that weaves fragmented outputs into coherent responses
 
 ## Installation
 
 ### Prerequisites
 
 ```bash
-# Python 3.11+ required
+# Requires Python 3.11+
 python --version
 
-# Ensure you have an inference engine installed
-# Options: vLLM, Ollama, llama.cpp, etc.
-```
+# Install with pip
+pip install logos-router
 
-### Basic Setup
-
-```bash
-# Clone the repository
+# Or clone and install from source
 git clone https://github.com/rak7777/mythic-mcp-proxy.git
 cd mythic-mcp-proxy
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Verify installation
-python -m logos --version
+pip install -e .
 ```
 
-### Configuration File
+### Infrastructure Requirements
 
-Create a `mesh.yaml` configuration file:
+- At least one inference engine (VLLM, Ollama, llama.cpp, etc.)
+- Network access between mesh nodes (localhost sufficient for single-machine)
+- Recommended: NVIDIA GPU (RTX 4090 or better) + 64GB RAM
+- CPU-only: Expect 3-5x longer latencies, max depth of 4 instead of 7
+
+## Configuration
+
+### Basic Mesh Configuration
+
+Create a `mesh.yaml` file:
 
 ```yaml
 mesh:
-  name: my-reasoning-lattice
-  consensus_threshold: 0.95  # Confidence required before write commit
-  max_concurrent_tasks: 10
+  name: my-thought-lattice
+  consensus_threshold: 0.95  # Confidence required before write
+  drift_tolerance: 0.003     # Maximum acceptable divergence
   
   nodes:
-    - id: node-primary
-      type: local
+    - type: local
       engine: vllm
       model: opus-mini-4.8
       max_thinking_depth: 7
-      gpu_memory: 12GB
+      gpu_id: 0
       
-    - id: node-secondary
-      type: local
+    - type: local
       engine: ollama
-      model: llama-3-70b
+      model: llama3.1:70b
       max_thinking_depth: 5
-      gpu_memory: 8GB
-  
-  # Language support
+      gpu_id: 1
+      
   languages:
     - en
     - zh
@@ -88,23 +91,62 @@ mesh:
     - hi
     - fr
     - de
+    - ja
     
-  # Strict Write Discipline settings
-  swd:
-    enabled: true
-    min_peer_verifiers: 2
-    escalation_threshold: 0.85
+  write_protocol:
+    verification_peers: 2      # Minimum peers for consensus
+    escalation_depth: 8        # Depth for arbitration
+    timeout_seconds: 30
     
-  # Caching
-  semantic_cache:
-    enabled: true
-    max_entries: 10000
-    ttl_hours: 24
+  caching:
+    semantic_cache: true
+    cache_similarity_threshold: 0.92
+    max_cache_size_gb: 10
 ```
 
-## Core Usage Patterns
+### Advanced Multi-Node Configuration
 
-### Single Query Reasoning
+```yaml
+mesh:
+  name: distributed-reasoning-cluster
+  consensus_threshold: 0.97
+  
+  nodes:
+    - type: local
+      name: deep-thinker-1
+      engine: vllm
+      model: opus-mini-4.8
+      max_thinking_depth: 7
+      specialization: complex_reasoning
+      
+    - type: local
+      name: fast-responder
+      engine: ollama
+      model: llama3.1:8b
+      max_thinking_depth: 3
+      specialization: simple_queries
+      
+    - type: remote
+      name: research-node
+      endpoint: "http://research-gpu.local:8080"
+      auth: "${RESEARCH_NODE_TOKEN}"
+      max_thinking_depth: 9
+      specialization: academic_analysis
+      
+  routing:
+    strategy: semantic_affinity
+    load_balance: true
+    prefer_local: true
+    
+  persistence:
+    backend: sqlite  # or postgresql
+    path: ./reasoning_dag.db
+    checkpoint_interval: 100  # Every 100 reasoning steps
+```
+
+## Core API Usage
+
+### Single-Query Reasoning
 
 ```python
 from logos import Router
@@ -112,425 +154,624 @@ from logos import Router
 # Initialize router with config
 router = Router(config="mesh.yaml")
 
-# Simple query with adaptive depth
+# Basic query with adaptive depth
 response = router.query(
-    prompt="Explain the halting problem and its implications for AI safety",
-    depth="adaptive",  # Can be: "fast", "adaptive", "deep", or numeric 1-7
+    prompt="Explain the relationship between recursion and self-reference in formal systems.",
+    depth="adaptive",  # Can be "adaptive", 1-7, or "max"
     language="en"
 )
 
 print(response.text)
 print(f"Reasoning depth used: {response.depth}")
 print(f"Nodes consulted: {response.nodes_involved}")
-print(f"Confidence score: {response.confidence}")
-print(f"Processing time: {response.elapsed_ms}ms")
+print(f"Consensus confidence: {response.consensus_score}")
 
-# Access the reasoning trail
+# Access reasoning trail
 for step in response.reasoning_trail:
     print(f"Step {step.index}: {step.description}")
-    print(f"  Node: {step.node_id}")
     print(f"  Verified by: {step.verifiers}")
+    print(f"  Confidence: {step.confidence}")
 ```
 
-### Multi-Language Routing
+### Fixed-Depth Reasoning
 
 ```python
-# Query in one language, response in another
+# Force specific reasoning depth for critical tasks
 response = router.query(
-    prompt="解释量子纠缠的基本原理",  # Mandarin query
-    depth="adaptive",
-    language="zh",
-    response_language="en"  # Get response in English
+    prompt="Prove or disprove the correctness of this algorithm",
+    depth=7,  # Maximum depth
+    require_consensus=True,
+    consensus_threshold=0.98  # Override default
 )
 
-print(response.text)
-print(f"Input language: {response.detected_language}")
-print(f"Output language: {response.output_language}")
+if response.consensus_achieved:
+    print("High-confidence response:", response.text)
+else:
+    print("Consensus failed - escalating")
+    print("Conflicting conclusions:", response.conflicts)
 ```
 
-### Workflow-Based Reasoning
+### Multi-Step Workflow
 
 ```python
-# Create multi-step workflow
-workflow = router.create_workflow(
-    name="research-paper-analysis",
-    context="analyze_paper.pdf"
+# Create a structured workflow
+task = router.create_workflow("analyze_research_paper.pdf")
+
+# Chain reasoning steps
+task.extract_claims(
+    extraction_depth=4,
+    include_citations=True
 )
 
-# Define workflow steps
-workflow.add_step(
-    "extract_claims",
-    prompt="Extract all major claims from this paper",
-    depth=3
+task.verify_claims(
+    consensus=True,
+    cross_reference_sources=True
 )
 
-workflow.add_step(
-    "verify_claims",
-    prompt="Cross-verify each claim against known literature",
-    depth=5,
-    requires_consensus=True
+task.identify_contradictions(
+    sensitivity=0.85
 )
 
-workflow.add_step(
-    "generate_summary",
-    prompt="Generate an academic summary highlighting controversies",
-    depth=4,
-    style="academic"
+task.generate_summary(
+    style="academic",
+    max_length=500,
+    language="en"
 )
 
-# Execute with full audit trail
-result = workflow.execute()
+# Execute and get results
+result = task.execute()
 
-print(f"Workflow status: {result.status}")
-print(f"Total steps: {result.steps_completed}")
-print(f"Total reasoning time: {result.total_time_seconds}s")
+print(result.summary)
+print(f"Claims verified: {len(result.verified_claims)}")
+print(f"Contradictions found: {len(result.contradictions)}")
 
-# Access individual step results
-for step_result in result.steps:
-    print(f"\n{step_result.name}:")
-    print(f"  Output: {step_result.output}")
-    print(f"  Consensus: {step_result.consensus_score}")
-    print(f"  Nodes: {step_result.nodes_used}")
+# Export reasoning DAG
+result.export_dag("reasoning_graph.json")
 ```
 
-### Streaming Reasoning
+### Multilingual Reasoning
 
 ```python
-# Stream reasoning steps in real-time
-stream = router.query_stream(
-    prompt="Design a distributed consensus algorithm for autonomous vehicles",
-    depth="deep"
-)
-
-for event in stream:
-    if event.type == "reasoning_step":
-        print(f"Step {event.step_num}: {event.description}")
-    elif event.type == "verification":
-        print(f"  Verified by nodes: {event.verifiers}")
-    elif event.type == "consensus_reached":
-        print(f"  Consensus: {event.confidence}")
-    elif event.type == "complete":
-        print(f"\nFinal output: {event.result}")
-```
-
-## Advanced Configuration
-
-### Consensus Thresholds
-
-```python
-# Per-query consensus override
+# Query in one language, respond in another
 response = router.query(
-    prompt="Should this system make autonomous decisions?",
-    depth=7,
-    consensus_threshold=0.98,  # Require 98% confidence
-    min_verifiers=3  # Require 3 peer verifications
+    prompt="解释量子纠缠的基本原理",  # Chinese input
+    language_in="zh",
+    language_out="en",  # English output
+    depth="adaptive"
+)
+
+# Or let router auto-detect input language
+response = router.query(
+    prompt="¿Cómo funciona el aprendizaje por refuerzo?",
+    language_out="es",  # Keep response in Spanish
+    depth=5
 )
 ```
 
-### Node Capability Filtering
+### Streaming Reasoning Steps
 
 ```python
-# Route only to specific node types
-response = router.query(
-    prompt="Generate code for a neural network",
-    depth="adaptive",
-    node_filter={
-        "min_memory_gb": 16,
-        "required_capabilities": ["code_generation", "math_reasoning"],
-        "exclude_nodes": ["node-secondary"]
-    }
-)
+# Stream reasoning process in real-time
+for update in router.query_stream(
+    prompt="Design a distributed database architecture",
+    depth="adaptive"
+):
+    if update.type == "reasoning_step":
+        print(f"Thinking: {update.content}")
+    elif update.type == "verification":
+        print(f"Verifying with {update.peer_count} peers...")
+    elif update.type == "consensus":
+        print(f"Consensus: {update.confidence:.2%}")
+    elif update.type == "response":
+        print(f"Final: {update.text}")
 ```
 
-### Custom Reasoning Profiles
+## Strict Write Discipline Protocol
+
+### Understanding SWD
+
+The Strict Write Discipline (SWD) prevents drift through a 6-step protocol:
+
+```python
+from logos import Router, WriteProtocol
+
+router = Router(config="mesh.yaml")
+
+# Configure SWD parameters
+protocol = WriteProtocol(
+    verification_peers=2,       # Minimum peers for validation
+    consensus_threshold=0.95,   # Required confidence
+    escalation_depth=8,         # Arbitration depth
+    max_retries=3              # Retries before failure
+)
+
+response = router.query(
+    prompt="Complex multi-step reasoning task",
+    write_protocol=protocol,
+    audit_trail=True  # Generate detailed audit log
+)
+
+# Inspect SWD execution
+for event in response.protocol_events:
+    print(f"{event.timestamp}: {event.type}")
+    if event.type == "consensus_failure":
+        print(f"  Reason: {event.reason}")
+        print(f"  Escalated to depth: {event.escalation_depth}")
+```
+
+### Custom Verification Logic
+
+```python
+from logos import Router, VerificationRule
+
+# Define custom verification rules
+class FactCheckRule(VerificationRule):
+    def verify(self, candidate_step, context):
+        # Check candidate against knowledge base
+        facts = self.extract_factual_claims(candidate_step)
+        verified = self.cross_reference(facts, context.knowledge_base)
+        
+        return {
+            "confidence": verified.confidence,
+            "issues": verified.conflicts,
+            "corrections": verified.suggested_corrections
+        }
+
+router.add_verification_rule(FactCheckRule())
+```
+
+## Advanced Patterns
+
+### Sandboxed Reasoning Zones
+
+```python
+# Isolate concurrent reasoning threads
+from logos import Router, ReasoningZone
+
+router = Router(config="mesh.yaml")
+
+# Create isolated zones
+zone1 = ReasoningZone(
+    name="hypothesis_a",
+    memory_limit_mb=2048,
+    isolation_level="strict"
+)
+
+zone2 = ReasoningZone(
+    name="hypothesis_b",
+    memory_limit_mb=2048,
+    isolation_level="strict"
+)
+
+# Run parallel reasoning
+result_a = router.query(
+    "Analyze data assuming hypothesis A",
+    zone=zone1,
+    depth=6
+)
+
+result_b = router.query(
+    "Analyze data assuming hypothesis B",
+    zone=zone2,
+    depth=6
+)
+
+# Compare isolated results
+comparison = router.compare_zones(zone1, zone2)
+print(f"Divergence score: {comparison.divergence}")
+print(f"Contradictions: {comparison.contradictions}")
+```
+
+### Semantic Caching
+
+```python
+# Leverage semantic cache for similar queries
+from logos import Router, SemanticCache
+
+router = Router(config="mesh.yaml")
+
+# Enable semantic caching
+cache = SemanticCache(
+    similarity_threshold=0.92,
+    max_size_gb=10,
+    ttl_hours=24
+)
+
+router.set_cache(cache)
+
+# First query (cache miss)
+r1 = router.query("What is machine learning?", depth=5)
+print(f"Cache hit: {r1.cache_hit}")  # False
+
+# Semantically similar query (cache hit)
+r2 = router.query("Explain the concept of machine learning", depth=5)
+print(f"Cache hit: {r2.cache_hit}")  # True
+print(f"Cache similarity: {r2.cache_similarity}")
+
+# Clear cache selectively
+cache.invalidate_by_topic("machine_learning")
+```
+
+### Graceful Degradation
+
+```python
+from logos import Router, DegradationPolicy
+
+router = Router(config="mesh.yaml")
+
+# Configure degradation behavior
+policy = DegradationPolicy(
+    trigger_threshold=0.8,  # Trigger at 80% resource usage
+    min_depth=3,            # Never go below depth 3
+    notify=True             # Alert when degrading
+)
+
+router.set_degradation_policy(policy)
+
+response = router.query(
+    "Complex reasoning under load",
+    depth=7
+)
+
+if response.degraded:
+    print(f"Degraded from depth {response.requested_depth} to {response.actual_depth}")
+    print(f"Reason: {response.degradation_reason}")
+```
+
+### Cross-Mesh Bridging (Federated Reasoning)
+
+```python
+from logos import Router, MeshBridge
+
+# Local mesh
+local_router = Router(config="local_mesh.yaml")
+
+# Create bridge to partner organization
+bridge = MeshBridge(
+    remote_endpoint="https://partner.org/reasoning-mesh",
+    auth_token="${PARTNER_MESH_TOKEN}",
+    trust_level=0.85,  # Trust threshold for remote reasoning
+    data_sharing_policy="metadata_only"
+)
+
+local_router.add_bridge(bridge)
+
+# Query can now use both local and remote nodes
+response = local_router.query(
+    "Cross-organizational analysis",
+    allow_remote=True,
+    depth=6
+)
+
+print(f"Local nodes: {response.local_nodes}")
+print(f"Remote nodes: {response.remote_nodes}")
+```
+
+## CLI Commands
+
+### Start Reasoning Node
+
+```bash
+# Start a single reasoning node
+logos node start \
+  --config mesh.yaml \
+  --node-name primary \
+  --gpu 0
+
+# Start with specific engine
+logos node start \
+  --engine vllm \
+  --model opus-mini-4.8 \
+  --max-depth 7 \
+  --port 8080
+```
+
+### Query from CLI
+
+```bash
+# Simple query
+logos query "Explain quantum entanglement" \
+  --depth adaptive \
+  --language en
+
+# With output options
+logos query "Analyze this algorithm" \
+  --depth 7 \
+  --output json \
+  --audit-trail \
+  --save-dag reasoning_graph.json
+
+# Stream reasoning steps
+logos query "Design distributed system" \
+  --stream \
+  --show-verification
+```
+
+### Mesh Management
+
+```bash
+# Check mesh health
+logos mesh status
+
+# List active nodes
+logos mesh nodes --detailed
+
+# Add node to running mesh
+logos mesh add-node \
+  --type local \
+  --engine ollama \
+  --model llama3.1:70b
+
+# Remove node gracefully
+logos mesh remove-node primary --drain
+
+# Export reasoning DAG
+logos mesh export-dag \
+  --output reasoning_history.json \
+  --format json
+```
+
+### Profile Management
+
+```bash
+# List available reasoning profiles
+logos profile list
+
+# Create custom profile
+logos profile create academic-analysis \
+  --base opus-4.8 \
+  --max-depth 9 \
+  --verification-peers 3 \
+  --consensus 0.97
+
+# Apply profile to query
+logos query "Research paper analysis" \
+  --profile academic-analysis
+```
+
+## Configuration Best Practices
+
+### Production Deployment
 
 ```yaml
-# profiles/custom-scientific.yaml
-profile:
-  name: scientific-reasoning
-  base: opus-4.8
+mesh:
+  name: production-reasoning-cluster
+  consensus_threshold: 0.97
   
-  parameters:
-    thinking_depth_bias: 1.3  # Prefer deeper reasoning
-    verification_strictness: 0.97
-    citation_required: true
+  nodes:
+    # Specialized for different workloads
+    - name: quick-responder
+      engine: vllm
+      model: opus-mini-4.8
+      max_thinking_depth: 3
+      max_concurrent_queries: 50
+      
+    - name: deep-thinker
+      engine: vllm
+      model: opus-mini-4.8
+      max_thinking_depth: 7
+      max_concurrent_queries: 10
+      
+  routing:
+    strategy: workload_aware
+    metrics:
+      - query_complexity
+      - node_load
+      - semantic_affinity
+      
+  monitoring:
+    prometheus_port: 9090
+    log_level: info
+    trace_sampling: 0.1
     
-  heuristics:
-    - type: claim_verification
-      enabled: true
-      cross_reference_required: true
+  persistence:
+    backend: postgresql
+    connection: "${DATABASE_URL}"
+    pool_size: 20
+    checkpoint_interval: 50
+    
+  security:
+    api_key: "${LOGOS_API_KEY}"
+    tls_enabled: true
+    cert_path: /etc/logos/tls/cert.pem
+    key_path: /etc/logos/tls/key.pem
+```
+
+### Development Configuration
+
+```yaml
+mesh:
+  name: dev-local
+  consensus_threshold: 0.90  # Lower for faster iteration
+  
+  nodes:
+    - type: local
+      engine: ollama
+      model: llama3.1:8b
+      max_thinking_depth: 4
       
-    - type: mathematical_proof
-      enabled: true
-      require_formal_notation: true
-      
-    - type: experimental_design
-      enabled: true
-      control_group_check: true
-```
-
-Load custom profile:
-
-```python
-router = Router(config="mesh.yaml", profile="profiles/custom-scientific.yaml")
-```
-
-## Monitoring and Debugging
-
-### Node Health Monitoring
-
-```python
-# Check node status
-status = router.get_mesh_status()
-
-for node in status.nodes:
-    print(f"\nNode: {node.id}")
-    print(f"  Status: {node.status}")
-    print(f"  Load: {node.current_load}%")
-    print(f"  Memory: {node.memory_used_gb}/{node.memory_total_gb} GB")
-    print(f"  Active tasks: {node.active_tasks}")
-    print(f"  Completed today: {node.completed_tasks}")
-    print(f"  Error rate: {node.error_rate}%")
-```
-
-### Reasoning Trail Inspection
-
-```python
-# Deep inspection of a reasoning chain
-response = router.query(
-    prompt="Prove that P != NP",
-    depth=7,
-    audit_mode=True  # Enable detailed logging
-)
-
-# Export reasoning trail
-trail = response.export_reasoning_trail(format="json")
-
-with open("reasoning_trail.json", "w") as f:
-    f.write(trail)
-
-# Visualize reasoning DAG
-router.visualize_reasoning(
-    response.id,
-    output="reasoning_graph.svg",
-    show_verifications=True
-)
-```
-
-### Performance Profiling
-
-```python
-# Enable profiling
-router.enable_profiling()
-
-# Run queries
-for _ in range(100):
-    router.query("Test query", depth="adaptive")
-
-# Get profiling report
-profile = router.get_profiling_report()
-
-print(f"Average latency: {profile.avg_latency_ms}ms")
-print(f"P95 latency: {profile.p95_latency_ms}ms")
-print(f"Cache hit rate: {profile.cache_hit_rate}%")
-print(f"Consensus success rate: {profile.consensus_success_rate}%")
-print(f"Average depth: {profile.avg_reasoning_depth}")
+  caching:
+    semantic_cache: true
+    cache_similarity_threshold: 0.95
+    
+  debug:
+    verbose_logging: true
+    save_all_reasoning_trails: true
+    output_dir: ./debug_logs
 ```
 
 ## Troubleshooting
 
-### High Drift Detected
+### Consensus Failures
 
 ```python
-# Check drift metrics
-metrics = router.get_drift_metrics(window_hours=24)
+from logos import Router
+from logos.exceptions import ConsensusFailure
 
-if metrics.drift_rate > 0.01:  # More than 1% drift
-    print("High drift detected!")
-    print(f"Affected nodes: {metrics.drifting_nodes}")
-    
-    # Force consensus recalibration
-    router.recalibrate_consensus(
-        nodes=metrics.drifting_nodes,
-        reference_dataset="calibration_set.jsonl"
-    )
-```
+router = Router(config="mesh.yaml")
 
-### Node Coordination Failures
-
-```python
-# Diagnose coordination issues
-diagnostics = router.diagnose_mesh()
-
-if diagnostics.has_issues:
-    for issue in diagnostics.issues:
-        print(f"Issue: {issue.type}")
-        print(f"  Affected nodes: {issue.nodes}")
-        print(f"  Recommended action: {issue.recommendation}")
-        
-    # Auto-repair if possible
-    if diagnostics.auto_repairable:
-        router.auto_repair_mesh()
-```
-
-### Memory Pressure
-
-```python
-# Monitor and manage memory
-mem_status = router.get_memory_status()
-
-if mem_status.pressure_level == "high":
-    # Reduce max concurrent tasks
-    router.update_config({
-        "max_concurrent_tasks": 5,
-        "semantic_cache.max_entries": 5000
-    })
-    
-    # Force cache cleanup
-    router.clear_semantic_cache(keep_recent_hours=6)
-```
-
-### Consensus Deadlock
-
-```python
 try:
     response = router.query(
-        prompt="Complex query",
+        "Controversial claim verification",
         depth=7,
-        timeout_seconds=60
+        require_consensus=True
     )
-except ConsensusDeadlockError as e:
-    print(f"Deadlock detected: {e}")
+except ConsensusFailure as e:
+    print(f"Consensus failed: {e.reason}")
+    print(f"Conflicting nodes: {e.conflicting_nodes}")
+    print(f"Confidence scores: {e.confidence_scores}")
     
-    # Retry with lower consensus threshold
+    # Retry with different strategy
     response = router.query(
-        prompt="Complex query",
-        depth=5,
-        consensus_threshold=0.90,
-        escalation_enabled=True
+        "Controversial claim verification",
+        depth=8,  # Deeper reasoning
+        consensus_threshold=0.93,  # Lower threshold
+        verification_peers=3  # More peers
     )
 ```
 
-## REST API Usage
-
-### Starting the API Server
+### Node Connectivity Issues
 
 ```bash
-# Start REST API server
-python -m logos.server \
-    --config mesh.yaml \
-    --host 0.0.0.0 \
-    --port 8080 \
-    --workers 4
+# Check node status
+logos mesh nodes --health-check
+
+# Test node connectivity
+logos mesh ping primary
+
+# View node logs
+logos node logs primary --tail 100
+
+# Restart unhealthy node
+logos node restart primary --graceful
 ```
 
-### API Endpoints
+### Performance Tuning
 
 ```python
-import requests
+from logos import Router, PerformanceProfile
 
-# Query endpoint
-response = requests.post(
-    "http://localhost:8080/query",
-    json={
-        "prompt": "Explain quantum entanglement",
-        "depth": "adaptive",
-        "language": "en",
-        "consensus_threshold": 0.95
-    },
-    headers={"Authorization": f"Bearer {os.getenv('LOGOS_API_KEY')}"}
+router = Router(config="mesh.yaml")
+
+# Optimize for latency
+latency_profile = PerformanceProfile(
+    prefer_cached=True,
+    max_depth=5,
+    timeout_seconds=10,
+    parallel_verification=True
 )
 
-result = response.json()
-print(result["text"])
-
-# Workflow endpoint
-workflow_response = requests.post(
-    "http://localhost:8080/workflow",
-    json={
-        "name": "analysis-workflow",
-        "steps": [
-            {"action": "extract", "depth": 3},
-            {"action": "verify", "depth": 5},
-            {"action": "summarize", "depth": 4}
-        ]
-    },
-    headers={"Authorization": f"Bearer {os.getenv('LOGOS_API_KEY')}"}
+# Optimize for accuracy
+accuracy_profile = PerformanceProfile(
+    prefer_cached=False,
+    max_depth=7,
+    timeout_seconds=60,
+    verification_peers=3,
+    consensus_threshold=0.97
 )
 
-workflow_id = workflow_response.json()["id"]
+response = router.query(
+    prompt="Time-sensitive query",
+    performance_profile=latency_profile
+)
+```
 
-# Poll workflow status
-status_response = requests.get(
-    f"http://localhost:8080/workflow/{workflow_id}",
-    headers={"Authorization": f"Bearer {os.getenv('LOGOS_API_KEY')}"}
+### Memory Management
+
+```python
+from logos import Router
+
+router = Router(config="mesh.yaml")
+
+# Monitor memory usage
+stats = router.get_stats()
+print(f"Active reasoning zones: {stats.active_zones}")
+print(f"Memory used: {stats.memory_used_gb}GB")
+print(f"Cache size: {stats.cache_size_gb}GB")
+
+# Clean up resources
+router.gc_reasoning_zones(max_age_minutes=30)
+router.clear_cache(older_than_hours=24)
+
+# Set memory limits
+router.set_memory_limits(
+    max_total_gb=48,
+    max_per_zone_mb=2048,
+    eviction_policy="lru"
+)
+```
+
+### Debugging Reasoning Trails
+
+```python
+from logos import Router
+
+router = Router(config="mesh.yaml")
+
+response = router.query(
+    "Debug this reasoning process",
+    depth=6,
+    audit_trail=True,
+    verbose=True
 )
 
-print(status_response.json())
+# Export detailed audit trail
+trail = response.export_audit_trail()
+
+for step in trail.steps:
+    print(f"\nStep {step.index}: {step.type}")
+    print(f"  Node: {step.node_id}")
+    print(f"  Input: {step.input_summary}")
+    print(f"  Output: {step.output_summary}")
+    print(f"  Verifiers: {step.verifiers}")
+    print(f"  Confidence: {step.confidence}")
+    
+    if step.warnings:
+        print(f"  Warnings: {step.warnings}")
+    
+    if step.escalated:
+        print(f"  Escalated to depth: {step.escalation_depth}")
+
+# Visualize reasoning DAG
+trail.visualize("reasoning_graph.html")
 ```
 
 ## Environment Variables
 
 ```bash
-# Required
+# Core configuration
 export LOGOS_CONFIG_PATH=/path/to/mesh.yaml
+export LOGOS_API_KEY=your_api_key_here
 
-# Optional
-export LOGOS_API_KEY=your-api-key-here
-export LOGOS_LOG_LEVEL=INFO  # DEBUG, INFO, WARN, ERROR
-export LOGOS_CACHE_DIR=/path/to/cache
-export LOGOS_AUDIT_DIR=/path/to/audit-logs
+# Node endpoints
+export LOGOS_PRIMARY_NODE=http://localhost:8080
+export LOGOS_SECONDARY_NODE=http://localhost:8081
+
+# Persistence
+export DATABASE_URL=postgresql://user:pass@localhost/logos_db
+
+# Remote bridges
+export PARTNER_MESH_TOKEN=secure_token_here
+export RESEARCH_NODE_TOKEN=another_secure_token
+
+# Monitoring
+export PROMETHEUS_PUSH_GATEWAY=http://prometheus:9091
+export LOG_LEVEL=info
+
+# Performance
 export LOGOS_MAX_WORKERS=8
-export LOGOS_GPU_MEMORY_FRACTION=0.9
+export LOGOS_CACHE_DIR=/var/cache/logos
 ```
 
-## Best Practices
+## Performance Characteristics
 
-1. **Start with low consensus thresholds** (0.90) and increase as you validate behavior
-2. **Use adaptive depth by default** — let the router choose complexity
-3. **Enable audit trails in production** for debugging and compliance
-4. **Monitor drift metrics daily** — recalibrate if drift exceeds 0.5%
-5. **Configure graceful degradation** to handle resource pressure
-6. **Use workflow mode** for multi-step reasoning tasks
-7. **Cache aggressively** for repeated reasoning patterns
-8. **Profile regularly** to identify bottlenecks
+**Single RTX 4090 + 64GB RAM:**
+- Latency: 200ms–12s (depth-dependent)
+- Throughput: 50–300 queries/hour (with consensus)
+- Drift: 0.003% measured divergence (10,000 test queries)
+- Memory: 4–12GB per active reasoning node
 
-## Common Patterns
-
-### Code Review Reasoning
-
-```python
-# Analyze code changes with consensus
-review = router.query(
-    prompt=f"Review this code change:\n{git_diff}",
-    depth=5,
-    consensus_threshold=0.95,
-    node_filter={"required_capabilities": ["code_analysis"]}
-)
-
-print(f"Issues found: {review.metadata['issues_count']}")
-for issue in review.metadata['issues']:
-    print(f"  {issue['severity']}: {issue['description']}")
-```
-
-### Research Paper Analysis
-
-```python
-workflow = router.create_workflow("paper-analysis")
-workflow.add_step("extract_methodology", depth=4)
-workflow.add_step("identify_limitations", depth=5)
-workflow.add_step("suggest_improvements", depth=6)
-result = workflow.execute()
-```
-
-### Multi-Document Synthesis
-
-```python
-# Synthesize across multiple documents
-synthesis = router.query(
-    prompt="Compare approaches across these 5 papers",
-    context={"documents": paper_texts},
-    depth=7,
-    consensus_threshold=0.96
-)
-```
+**Multi-node scaling:**
+- Near-linear latency improvements for parallel workloads
+- Throughput scales with node count for independent queries
+- Consensus overhead: 15-30% additional latency
