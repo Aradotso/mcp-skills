@@ -1,44 +1,30 @@
 ---
 name: logos-router-reasoning-mesh
-description: Distributed semantic reasoning gateway that fragments AI inference across local nodes with zero-drift consensus guarantees and adaptive reasoning depth
+description: Deploy and configure Logos Router for distributed zero-drift AI reasoning with adaptive Claude Opus-style thinking and consensus validation
 triggers:
   - set up logos router for distributed reasoning
-  - configure a reasoning mesh with multiple nodes
-  - implement zero-drift consensus protocol
-  - use adaptive claude opus reasoning depth
-  - create multilingual semantic routing
-  - debug reasoning node consensus failures
-  - build distributed AI inference mesh
-  - configure strict write discipline protocol
+  - configure reasoning mesh with zero drift protocol
+  - implement strict write discipline consensus
+  - create adaptive reasoning workflow
+  - deploy local reasoning nodes with logos
+  - build multi-step reasoning chain with consensus
+  - configure logos router multilingual routing
+  - integrate distributed semantic reasoning gateway
 ---
 
 # Logos Router Reasoning Mesh
 
 > Skill by [ara.so](https://ara.so) — MCP Skills collection.
 
-## Overview
-
-Logos Router is a distributed semantic reasoning gateway that fragments AI inference across multiple local nodes with consensus-based verification. Unlike traditional single-model pipelines, it distributes subproblems across a mesh of reasoning units that coordinate through a Strict Write Discipline (SWD) protocol to maintain zero-drift fidelity.
-
-**Key Features:**
-- Adaptive reasoning depth (1-7 steps based on problem complexity)
-- Zero-drift consensus protocol with 0.95+ confidence threshold
-- 16-language multilingual semantic routing
-- Content-addressed immutable reasoning DAG
-- Local-first sovereignty with optional federation
-- 24/7 reasoning continuity with graceful degradation
+Logos Router is a distributed semantic reasoning gateway that fragments AI reasoning across local nodes with zero-drift consensus guarantees. Unlike traditional single-model inference pipelines, it distributes subproblems across a mesh of reasoning units that coordinate through Strict Write Discipline (SWD) protocol—ensuring every output is cross-verified before committing.
 
 ## Installation
 
 ### Prerequisites
 
-```bash
-# Python 3.11+ required
-python --version
-
-# Ensure you have a local inference engine installed
-# Options: VLLM, Ollama, llama.cpp, or similar
-```
+- Python 3.11 or later
+- At least one local inference engine (VLLM, Ollama, llama.cpp)
+- Network access between mesh nodes (localhost sufficient for single-machine)
 
 ### Basic Setup
 
@@ -54,669 +40,772 @@ pip install -r requirements.txt
 python -m logos --version
 ```
 
-### Alternative: Download from GitHub Pages
+## Core Architecture
 
-Visit the download page for pre-built binaries (if available):
-```
-https://rak7777.github.io/mythic-mcp-proxy/
-```
+Logos Router operates on three layers:
+
+- **Grail Layer**: Content-addressed persistence store for immutable reasoning DAG
+- **Chiron Layer**: Semantic routing and node assignment
+- **Orpheus Layer**: Multi-fragment synthesis and conflict resolution
 
 ## Configuration
 
-### Basic Configuration File
+### Basic Mesh Configuration
 
-Create `mesh_config.yaml`:
+Create a YAML configuration file (e.g., `mesh_config.yaml`):
 
 ```yaml
 mesh:
-  name: my-reasoning-lattice
-  consensus_threshold: 0.95  # Confidence required before write
-  max_concurrent_tasks: 10
+  name: local-thought-lattice
+  consensus_threshold: 0.95  # Confidence required before write commit
   
   nodes:
-    - id: primary-node
-      type: local
+    - type: local
       engine: vllm
       model: opus-mini-4.8
       max_thinking_depth: 7
       host: localhost
-      port: 8080
-      
-    - id: secondary-node
-      type: local
+      port: 8001
+    
+    - type: local
       engine: ollama
       model: llama3.1-70b
       max_thinking_depth: 5
       host: localhost
-      port: 8081
-      
+      port: 11434
+  
   languages:
-    - en  # English (full support)
-    - zh  # Mandarin
-    - es  # Spanish
-    - ar  # Arabic
-    - hi  # Hindi
-    - fr  # French
-    - de  # German
-    - ja  # Japanese
-    
-  grail_layer:
-    storage_path: ./reasoning_dag
-    persistence: content-addressed
-    compression: true
-    
-  chiron_layer:
-    routing_strategy: semantic-similarity
-    load_balancing: true
-    
-  orpheus_layer:
-    synthesis_mode: harmonized
-    contradiction_handling: arbitration
+    - en
+    - es
+    - zh
+    - ar
+    - fr
+    - de
+
+strict_write_discipline:
+  enabled: true
+  min_peer_verifications: 2
+  escalation_depth_threshold: 4
+  
+semantic_caching:
+  enabled: true
+  cache_ttl_hours: 24
+  max_cache_size_mb: 2048
+
+reasoning:
+  default_depth: adaptive
+  max_parallel_threads: 4
+  graceful_degradation: true
 ```
 
-### Environment Variables
+### Initialize Router with Config
 
-```bash
-# Set in .env or export directly
-export LOGOS_CONFIG_PATH=./mesh_config.yaml
-export LOGOS_LOG_LEVEL=info
-export LOGOS_API_KEY=$ANTHROPIC_API_KEY  # If using Anthropic backends
-export LOGOS_STORAGE_PATH=./reasoning_storage
+```python
+from logos import Router, RouterConfig
+
+# Load configuration
+config = RouterConfig.from_yaml("mesh_config.yaml")
+
+# Initialize router
+router = Router(config=config)
+
+# Verify mesh connectivity
+status = router.health_check()
+print(f"Active nodes: {status.active_nodes}")
+print(f"Consensus available: {status.consensus_ready}")
 ```
 
-## Core API Usage
+## Single-Query Reasoning
 
 ### Basic Query Execution
 
 ```python
 from logos import Router
 
-# Initialize router with config
 router = Router(config="mesh_config.yaml")
 
-# Simple query with adaptive depth
+# Execute single query with adaptive depth
 response = router.query(
-    prompt="Explain the halting problem and its implications for AI safety.",
-    depth="adaptive",  # Auto-adjusts 1-7 based on complexity
+    prompt="Explain the halting problem and its implications for AI safety",
+    depth="adaptive",
     language="en"
 )
 
 print(response.text)
-print(f"Reasoning depth: {response.depth}")
+print(f"Reasoning depth used: {response.depth}")
 print(f"Nodes consulted: {response.nodes_involved}")
 print(f"Consensus score: {response.consensus_score}")
-print(f"Latency: {response.latency_ms}ms")
+print(f"Verification steps: {len(response.audit_trail)}")
 ```
 
 ### Explicit Depth Control
 
 ```python
-# Force specific reasoning depth
-response = router.query(
-    prompt="What is 2+2?",
-    depth=1,  # Simple query, minimal reasoning
+# Force shallow reasoning (faster, less thorough)
+quick_response = router.query(
+    prompt="What is photosynthesis?",
+    depth=2,
     language="en"
 )
 
-# Deep reasoning for complex problems
-response = router.query(
-    prompt="Design a distributed consensus protocol for Byzantine fault tolerance.",
-    depth=7,  # Maximum reasoning depth
+# Force deep reasoning (slower, more thorough)
+deep_response = router.query(
+    prompt="Design a distributed consensus algorithm for Byzantine fault tolerance",
+    depth=7,
     language="en",
-    timeout=30000  # 30 second timeout
+    require_consensus=True
 )
 ```
 
-### Multilingual Routing
+### Multilingual Reasoning
 
 ```python
+# Query in Spanish, reason in universal IR, respond in Spanish
+response = router.query(
+    prompt="¿Cuál es la diferencia entre aprendizaje supervisado y no supervisado?",
+    depth="adaptive",
+    language="es"
+)
+
 # Query in one language, respond in another
 response = router.query(
-    prompt="递归和自我指涉在形式系统中的关系是什么？",  # Chinese query
-    language="zh",
-    response_language="en"  # English response
+    prompt="Explain quantum entanglement",
+    depth=5,
+    language="en",
+    response_language="zh"  # Respond in Mandarin
 )
-
-# Auto-detect language
-response = router.query(
-    prompt="Explique la différence entre induction et déduction.",
-    language="auto"  # Auto-detects French
-)
-```
-
-### Streaming Reasoning Steps
-
-```python
-# Stream reasoning process in real-time
-for step in router.query_stream(
-    prompt="Prove that P != NP implies one-way functions exist.",
-    depth="adaptive"
-):
-    print(f"[Node {step.node_id}] {step.reasoning_fragment}")
-    print(f"  Confidence: {step.confidence}")
-    print(f"  Verified by: {step.verified_by}")
 ```
 
 ## Multi-Step Workflows
 
-### Workflow API
+### Creating Reasoning Workflows
 
 ```python
-from logos import Router
+from logos import Router, Workflow
 
 router = Router(config="mesh_config.yaml")
 
-# Create workflow for multi-step task
-task = router.create_workflow("analyze_research_paper")
+# Create multi-step workflow
+workflow = router.create_workflow(
+    name="research-paper-analysis",
+    input_file="paper.pdf"
+)
 
 # Define workflow steps
-task.add_step("extract_claims", {
-    "input": "paper.pdf",
-    "method": "semantic_extraction"
-})
+workflow.add_step(
+    name="extract_claims",
+    operation="extract",
+    params={"claim_types": ["theorem", "hypothesis", "conclusion"]}
+)
 
-task.add_step("verify_claims", {
-    "consensus": True,
-    "threshold": 0.95,
-    "cross_reference": True
-})
+workflow.add_step(
+    name="verify_claims",
+    operation="verify",
+    params={"consensus": True, "min_confidence": 0.95}
+)
 
-task.add_step("generate_summary", {
-    "style": "academic",
-    "max_length": 500,
-    "language": "en"
-})
+workflow.add_step(
+    name="generate_summary",
+    operation="synthesize",
+    params={"style": "academic", "max_length": 500}
+)
 
-# Execute workflow
-result = task.execute(async_mode=False)
+# Execute workflow with automatic state management
+result = workflow.execute()
 
-print(result.summary)
-print(f"Claims verified: {result.claims_verified}/{result.claims_total}")
-print(f"Audit trail: {result.audit_trail_url}")
+print(f"Claims extracted: {len(result.steps['extract_claims'].output)}")
+print(f"Claims verified: {result.steps['verify_claims'].verified_count}")
+print(f"Summary: {result.steps['generate_summary'].text}")
 ```
 
-### Asynchronous Workflows
+### Workflow with Error Handling
 
 ```python
-import asyncio
+workflow = router.create_workflow("code-review")
 
-async def analyze_multiple_papers(papers):
-    router = Router(config="mesh_config.yaml")
+try:
+    workflow.add_step("analyze_complexity", operation="analyze")
+    workflow.add_step("detect_vulnerabilities", operation="security_scan")
+    workflow.add_step("suggest_improvements", operation="generate")
     
-    tasks = []
-    for paper in papers:
-        workflow = router.create_workflow(f"analyze_{paper}")
-        workflow.add_step("extract_claims", {"input": paper})
-        workflow.add_step("verify_claims", {"consensus": True})
-        tasks.append(workflow.execute_async())
+    result = workflow.execute(
+        timeout_seconds=300,
+        graceful_degradation=True
+    )
     
-    results = await asyncio.gather(*tasks)
-    return results
-
-# Run async workflows
-papers = ["paper1.pdf", "paper2.pdf", "paper3.pdf"]
-results = asyncio.run(analyze_multiple_papers(papers))
+    # Access individual step results
+    for step_name, step_result in result.steps.items():
+        print(f"{step_name}: {step_result.status}")
+        if step_result.degraded:
+            print(f"  Warning: Reduced depth to {step_result.actual_depth}")
+            
+except workflow.WorkflowError as e:
+    print(f"Workflow failed at step: {e.failed_step}")
+    print(f"Partial results available: {e.partial_results}")
 ```
 
 ## Strict Write Discipline Protocol
 
-### Understanding SWD
+### Understanding SWD Flow
 
-The Strict Write Discipline ensures zero-drift through consensus:
+The Strict Write Discipline protocol ensures zero-drift reasoning:
 
-```python
-from logos import Router
-from logos.protocols import StrictWriteDiscipline
+1. **Proposal**: Node generates candidate reasoning step
+2. **Broadcast**: Candidate sent to peer nodes
+3. **Verification**: Peers evaluate consistency and accuracy
+4. **Consensus**: If confidence > threshold, commit
+5. **Commit**: Write to Grail layer
+6. **Escalation**: If consensus fails, escalate to higher-depth node
 
-router = Router(config="mesh_config.yaml")
-
-# Configure SWD parameters
-swd_config = StrictWriteDiscipline(
-    consensus_threshold=0.95,  # 95% confidence required
-    min_verifying_nodes=2,     # At least 2 peer verifications
-    escalation_depth=7,        # Max depth for arbitration
-    timeout_ms=5000           # 5 second consensus timeout
-)
-
-response = router.query(
-    prompt="Design a cryptographic protocol for secure multi-party computation.",
-    swd=swd_config,
-    trace=True  # Enable full audit trail
-)
-
-# Inspect reasoning trail
-for step in response.reasoning_trail:
-    print(f"Step {step.index}: {step.proposal}")
-    print(f"  Verified by nodes: {step.verifying_nodes}")
-    print(f"  Consensus score: {step.consensus_score}")
-    print(f"  Committed: {step.committed}")
-```
-
-### Custom Verification Logic
-
-```python
-from logos.protocols import VerificationRule
-
-# Define custom verification rule
-def verify_mathematical_proof(proposal, context):
-    """Custom verifier for mathematical proofs"""
-    # Check for logical consistency
-    if not proposal.has_clear_premises():
-        return 0.0
-    
-    # Check for valid inference steps
-    if not proposal.valid_inference_chain():
-        return 0.5
-    
-    # Check for conclusion
-    if proposal.has_valid_conclusion():
-        return 1.0
-    
-    return 0.7
-
-# Register custom verifier
-router.register_verifier(
-    name="math_proof_verifier",
-    handler=verify_mathematical_proof,
-    domains=["mathematics", "logic", "formal_systems"]
-)
-
-# Use custom verifier
-response = router.query(
-    prompt="Prove Fermat's Last Theorem for n=3.",
-    verifiers=["math_proof_verifier"],
-    depth=7
-)
-```
-
-## Node Management
-
-### Adding Nodes Dynamically
+### Monitoring SWD
 
 ```python
 from logos import Router
-from logos.nodes import Node
 
 router = Router(config="mesh_config.yaml")
 
-# Add a new node at runtime
-new_node = Node(
-    id="high-capacity-node",
-    type="local",
-    engine="vllm",
-    model="opus-4.8",
-    max_thinking_depth=7,
-    host="192.168.1.100",
-    port=8082
+# Enable detailed SWD logging
+router.configure_logging(
+    level="DEBUG",
+    swd_trace=True
 )
 
-router.add_node(new_node)
+response = router.query(
+    prompt="Prove that the set of real numbers is uncountable",
+    depth="adaptive"
+)
 
-# Verify node is available
-print(router.list_nodes())
+# Inspect SWD trace
+for step in response.swd_trace:
+    print(f"Step {step.index}:")
+    print(f"  Proposal: {step.proposal_summary}")
+    print(f"  Verifiers: {step.verifier_nodes}")
+    print(f"  Confidence scores: {step.confidence_scores}")
+    print(f"  Consensus: {step.consensus_reached}")
+    if step.escalated:
+        print(f"  Escalated to depth: {step.escalation_depth}")
+```
+
+### Custom Consensus Thresholds
+
+```python
+# Override consensus threshold for specific query
+response = router.query(
+    prompt="Design a safety-critical flight control algorithm",
+    depth=7,
+    consensus_threshold=0.99,  # Higher threshold for safety-critical
+    min_peer_verifications=3
+)
+```
+
+## Semantic Caching
+
+### Enable and Configure Caching
+
+```python
+from logos import Router, CacheConfig
+
+cache_config = CacheConfig(
+    enabled=True,
+    ttl_hours=24,
+    max_size_mb=2048,
+    similarity_threshold=0.85  # Semantic similarity for cache hits
+)
+
+router = Router(
+    config="mesh_config.yaml",
+    cache_config=cache_config
+)
+
+# First query (cache miss)
+response1 = router.query(
+    prompt="What are the benefits of functional programming?",
+    depth="adaptive"
+)
+print(f"Cache hit: {response1.cache_hit}")  # False
+
+# Similar query (cache hit)
+response2 = router.query(
+    prompt="Explain advantages of functional programming paradigm",
+    depth="adaptive"
+)
+print(f"Cache hit: {response2.cache_hit}")  # True
+print(f"Latency reduction: {response2.cache_stats.time_saved_ms}ms")
+```
+
+### Cache Management
+
+```python
+# Clear cache for specific semantic domain
+router.cache.clear_domain("programming_concepts")
+
+# Inspect cache statistics
+stats = router.cache.statistics()
+print(f"Hit rate: {stats.hit_rate:.2%}")
+print(f"Average similarity score: {stats.avg_similarity}")
+print(f"Memory usage: {stats.memory_mb}MB")
+
+# Manually warm cache with common queries
+common_queries = [
+    "What is machine learning?",
+    "Explain neural networks",
+    "Define supervised learning"
+]
+
+for query in common_queries:
+    router.query(query, depth=3)
+```
+
+## Audit Trails and Reasoning Inspection
+
+### Accessing Causal Audit Trails
+
+```python
+response = router.query(
+    prompt="Should we adopt microservices architecture?",
+    depth="adaptive"
+)
+
+# Inspect complete reasoning chain
+audit_trail = response.audit_trail
+
+for i, step in enumerate(audit_trail.steps):
+    print(f"\n--- Step {i+1} ---")
+    print(f"Node: {step.node_id}")
+    print(f"Reasoning: {step.reasoning_fragment}")
+    print(f"Confidence: {step.confidence}")
+    print(f"Dependencies: {step.dependencies}")
+    print(f"Timestamp: {step.timestamp}")
+
+# Export audit trail for external verification
+audit_trail.export_to_file("reasoning_trace.json")
+```
+
+### Visualizing Reasoning DAG
+
+```python
+from logos.visualization import ReasoningGraph
+
+# Generate visual representation of reasoning flow
+graph = ReasoningGraph(response.audit_trail)
+graph.render(
+    output_file="reasoning_dag.svg",
+    format="svg",
+    show_confidence_scores=True,
+    show_node_assignments=True
+)
+```
+
+## Advanced Routing Strategies
+
+### Custom Node Selection
+
+```python
+from logos import Router, NodeSelector
+
+# Define custom node selection strategy
+class CapabilityBasedSelector(NodeSelector):
+    def select_nodes(self, query, available_nodes):
+        """Select nodes based on specific capabilities"""
+        if "mathematical" in query.domain:
+            return [n for n in available_nodes if n.has_capability("symbolic_math")]
+        elif "code" in query.domain:
+            return [n for n in available_nodes if n.has_capability("code_analysis")]
+        return available_nodes[:2]  # Default: first two nodes
+
+router = Router(
+    config="mesh_config.yaml",
+    node_selector=CapabilityBasedSelector()
+)
+```
+
+### Load Balancing
+
+```python
+# Configure load-aware routing
+router.configure_routing(
+    strategy="load_balanced",
+    max_node_queue_depth=10,
+    rebalance_interval_seconds=30
+)
+
+# Monitor node load
+for node in router.active_nodes():
+    load = router.get_node_load(node.id)
+    print(f"Node {node.id}: {load.queue_depth} queries, {load.avg_latency_ms}ms avg")
+```
+
+## REST API Integration
+
+### Starting REST Server
+
+```python
+from logos import Router
+from logos.server import RESTServer
+
+router = Router(config="mesh_config.yaml")
+
+# Start REST API server
+server = RESTServer(
+    router=router,
+    host="0.0.0.0",
+    port=8080,
+    enable_cors=True
+)
+
+server.start()
+```
+
+### Using REST API
+
+```bash
+# Query via REST API
+curl -X POST http://localhost:8080/query \
+  -H "Content-Type: application/json" \
+  -d '{
+    "prompt": "Explain the CAP theorem",
+    "depth": "adaptive",
+    "language": "en"
+  }'
+
+# Get mesh status
+curl http://localhost:8080/status
+
+# Retrieve audit trail
+curl http://localhost:8080/audit/query_id_12345
+```
+
+### Python REST Client
+
+```python
+import requests
+
+response = requests.post(
+    "http://localhost:8080/query",
+    json={
+        "prompt": "Compare ACID vs BASE database properties",
+        "depth": 5,
+        "require_consensus": True
+    }
+)
+
+result = response.json()
+print(result["text"])
+print(f"Consensus score: {result['consensus_score']}")
+```
+
+## WebSocket Streaming
+
+### Real-Time Reasoning Updates
+
+```python
+from logos import Router
+from logos.streaming import WebSocketStreamer
+
+router = Router(config="mesh_config.yaml")
+
+# Start WebSocket server for streaming
+streamer = WebSocketStreamer(router, port=8081)
+streamer.start()
+
+# Client-side streaming consumer
+import asyncio
+import websockets
+
+async def consume_reasoning_stream():
+    uri = "ws://localhost:8081/stream"
+    
+    async with websockets.connect(uri) as websocket:
+        # Send query
+        await websocket.send(json.dumps({
+            "prompt": "Design a distributed cache system",
+            "depth": 7
+        }))
+        
+        # Receive reasoning steps in real-time
+        async for message in websocket:
+            step = json.loads(message)
+            print(f"Step {step['index']}: {step['reasoning_fragment']}")
+            if step.get('final'):
+                print(f"Final result: {step['text']}")
+                break
+
+asyncio.run(consume_reasoning_stream())
+```
+
+## Multi-Node Mesh Setup
+
+### Distributed Configuration
+
+```yaml
+# node1_config.yaml (primary coordinator)
+mesh:
+  name: distributed-mesh
+  role: coordinator
+  consensus_threshold: 0.95
+  
+  nodes:
+    - type: local
+      engine: vllm
+      model: opus-mini-4.8
+      max_thinking_depth: 7
+      host: localhost
+      port: 8001
+    
+    - type: remote
+      host: 192.168.1.10
+      port: 8002
+      capabilities: [symbolic_math, formal_verification]
+    
+    - type: remote
+      host: 192.168.1.11
+      port: 8003
+      capabilities: [code_analysis, security_audit]
+
+mesh_coordination:
+  discovery_protocol: mdns
+  heartbeat_interval_seconds: 10
+  failure_detection_timeout_seconds: 30
+```
+
+### Cross-Mesh Communication
+
+```python
+from logos import Router, MeshBridge
+
+# Setup primary mesh
+primary_router = Router(config="node1_config.yaml")
+
+# Connect to remote mesh
+bridge = MeshBridge(
+    local_router=primary_router,
+    remote_mesh_url="https://partner-org.example.com/mesh",
+    auth_token="${MESH_BRIDGE_TOKEN}"
+)
+
+# Query spans both meshes
+response = primary_router.query(
+    prompt="Analyze cybersecurity implications across our infrastructure",
+    depth="adaptive",
+    enable_cross_mesh=True
+)
+
+print(f"Nodes from local mesh: {response.local_nodes}")
+print(f"Nodes from remote mesh: {response.remote_nodes}")
+```
+
+## Reasoning Profiles
+
+### Loading Custom Profiles
+
+```python
+from logos import Router, ReasoningProfile
+
+# Load custom reasoning profile
+profile = ReasoningProfile.from_file("profiles/academic_research.json")
+
+router = Router(
+    config="mesh_config.yaml",
+    default_profile=profile
+)
+
+# Override profile for specific query
+response = router.query(
+    prompt="Analyze this research methodology",
+    profile=profile,
+    depth="adaptive"
+)
+```
+
+### Creating Custom Profile
+
+```json
+{
+  "name": "academic_research",
+  "version": "1.0",
+  "description": "Profile optimized for academic research tasks",
+  "parameters": {
+    "verification_strictness": 0.98,
+    "citation_required": true,
+    "logical_rigor": "formal",
+    "preferred_reasoning_style": "deductive",
+    "escalation_triggers": [
+      "contradiction_detected",
+      "insufficient_evidence",
+      "formal_proof_required"
+    ],
+    "output_format": {
+      "include_references": true,
+      "show_confidence_intervals": true,
+      "reasoning_transparency": "full"
+    }
+  },
+  "node_preferences": {
+    "prefer_capabilities": ["symbolic_math", "formal_verification"],
+    "min_depth": 5
+  }
+}
+```
+
+## Troubleshooting
+
+### Consensus Failures
+
+```python
+# Diagnose consensus issues
+response = router.query(
+    prompt="Complex query here",
+    depth="adaptive",
+    debug_consensus=True
+)
+
+if response.consensus_score < 0.95:
+    diagnosis = router.diagnose_consensus_failure(response.query_id)
+    
+    print(f"Consensus score: {response.consensus_score}")
+    print(f"Failed verifications: {diagnosis.failed_verifications}")
+    print(f"Conflicting nodes: {diagnosis.conflicting_nodes}")
+    print(f"Recommended action: {diagnosis.recommendation}")
+    
+    # Retry with different nodes
+    if diagnosis.recommendation == "retry_different_nodes":
+        response = router.query(
+            prompt="Same query",
+            exclude_nodes=diagnosis.conflicting_nodes,
+            depth="adaptive"
+        )
+```
+
+### Performance Optimization
+
+```python
+# Profile query performance
+with router.performance_profiler() as profiler:
+    response = router.query(
+        prompt="Query to optimize",
+        depth="adaptive"
+    )
+
+print(f"Total latency: {profiler.total_ms}ms")
+print(f"Routing time: {profiler.routing_ms}ms")
+print(f"Inference time: {profiler.inference_ms}ms")
+print(f"Consensus time: {profiler.consensus_ms}ms")
+print(f"Synthesis time: {profiler.synthesis_ms}ms")
+
+# Optimize based on bottleneck
+if profiler.consensus_ms > profiler.inference_ms:
+    # Consensus is bottleneck, reduce threshold or peer count
+    router.configure_swd(
+        consensus_threshold=0.90,
+        min_peer_verifications=2
+    )
 ```
 
 ### Node Health Monitoring
 
 ```python
-# Check node health
-health = router.get_node_health("primary-node")
+# Continuous health monitoring
+import time
 
-print(f"Status: {health.status}")
-print(f"Load: {health.current_load}%")
-print(f"Reasoning depth capacity: {health.max_depth}")
-print(f"Queries processed: {health.queries_processed}")
-print(f"Average latency: {health.avg_latency_ms}ms")
-
-# Auto-rebalance if node is overloaded
-if health.current_load > 80:
-    router.rebalance_load()
+while True:
+    health = router.health_check()
+    
+    for node_id, node_status in health.nodes.items():
+        if node_status.status != "healthy":
+            print(f"Node {node_id} unhealthy: {node_status.error}")
+            
+            # Attempt node restart
+            router.restart_node(node_id)
+        
+        if node_status.memory_usage_percent > 90:
+            print(f"Node {node_id} high memory: {node_status.memory_usage_percent}%")
+            router.clear_node_cache(node_id)
+    
+    time.sleep(30)
 ```
 
-## Semantic Caching
-
-### Enable Semantic Cache
+### Debug Logging
 
 ```python
-from logos import Router
-from logos.cache import SemanticCache
+import logging
 
-router = Router(config="mesh_config.yaml")
+# Enable comprehensive debug logging
+logging.basicConfig(level=logging.DEBUG)
 
-# Configure semantic cache
-cache = SemanticCache(
-    similarity_threshold=0.85,  # 85% semantic similarity
-    max_cache_size_gb=10,
-    ttl_hours=24
+router = Router(
+    config="mesh_config.yaml",
+    log_config={
+        "level": "DEBUG",
+        "log_swd_steps": True,
+        "log_node_selection": True,
+        "log_cache_operations": True,
+        "log_consensus_details": True,
+        "output_file": "logos_debug.log"
+    }
 )
-
-router.enable_cache(cache)
-
-# First query - full reasoning
-response1 = router.query(
-    prompt="What is recursion in computer science?"
-)
-print(f"Cache hit: {response1.from_cache}")  # False
-
-# Similar query - cached response
-response2 = router.query(
-    prompt="Can you explain recursive functions in programming?"
-)
-print(f"Cache hit: {response2.from_cache}")  # True
-print(f"Latency reduction: {response2.cache_latency_reduction}%")
 ```
 
-## REST API Server
+## Environment Configuration
 
-### Start API Server
-
-```python
-from logos import Router
-from logos.api import create_app
-
-router = Router(config="mesh_config.yaml")
-app = create_app(router)
-
-# Run server
-app.run(host="0.0.0.0", port=5000)
-```
-
-### API Endpoints
+Required environment variables:
 
 ```bash
-# Query endpoint
-curl -X POST http://localhost:5000/api/v1/query \
-  -H "Content-Type: application/json" \
-  -d '{
-    "prompt": "Explain quantum entanglement",
-    "depth": "adaptive",
-    "language": "en"
-  }'
+# Inference engine endpoints (if using remote engines)
+export VLLM_ENDPOINT="http://localhost:8001"
+export OLLAMA_ENDPOINT="http://localhost:11434"
 
-# Workflow endpoint
-curl -X POST http://localhost:5000/api/v1/workflow \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "analyze_paper",
-    "steps": [
-      {"action": "extract_claims", "params": {"input": "paper.pdf"}},
-      {"action": "verify_claims", "params": {"consensus": true}}
-    ]
-  }'
+# Mesh bridge authentication (for cross-mesh communication)
+export MESH_BRIDGE_TOKEN="your-secure-token"
 
-# Node status
-curl http://localhost:5000/api/v1/nodes
+# Optional: Performance tuning
+export LOGOS_MAX_PARALLEL_THREADS=4
+export LOGOS_DEFAULT_TIMEOUT_SECONDS=120
+export LOGOS_CACHE_SIZE_MB=2048
 
-# Health check
-curl http://localhost:5000/health
-```
-
-## WebSocket Streaming
-
-### Client-Side Streaming
-
-```python
-import asyncio
-import websockets
-import json
-
-async def stream_reasoning():
-    uri = "ws://localhost:5000/ws/stream"
-    
-    async with websockets.connect(uri) as websocket:
-        # Send query
-        await websocket.send(json.dumps({
-            "prompt": "Design a distributed database system",
-            "depth": "adaptive",
-            "stream": True
-        }))
-        
-        # Receive reasoning steps
-        async for message in websocket:
-            data = json.loads(message)
-            if data["type"] == "reasoning_step":
-                print(f"[{data['node']}] {data['fragment']}")
-            elif data["type"] == "final":
-                print(f"\nFinal: {data['text']}")
-                break
-
-asyncio.run(stream_reasoning())
+# Optional: Monitoring and telemetry
+export LOGOS_METRICS_ENABLED=true
+export LOGOS_METRICS_PORT=9090
 ```
 
 ## Common Patterns
 
-### Pattern: Fallback Reasoning
+### Batch Processing
 
 ```python
-# Graceful degradation with fallback
+queries = [
+    "Explain quantum computing",
+    "What is blockchain?",
+    "Define neural networks"
+]
+
+# Process batch with automatic load distribution
+results = router.batch_query(
+    prompts=queries,
+    depth="adaptive",
+    parallel=True,
+    max_concurrent=3
+)
+
+for query, response in zip(queries, results):
+    print(f"Q: {query}")
+    print(f"A: {response.text}\n")
+```
+
+### Fallback Strategy
+
+```python
+# Primary query with automatic fallback
 try:
     response = router.query(
-        prompt="Complex multi-step reasoning task",
+        prompt="Complex analysis query",
         depth=7,
-        timeout=10000
+        timeout_seconds=60
     )
-except TimeoutError:
-    # Fallback to lower depth
+except router.TimeoutError:
+    # Fallback to faster, shallower reasoning
     response = router.query(
-        prompt="Complex multi-step reasoning task",
-        depth=4,
-        timeout=5000
-    )
-    print(f"Warning: Reduced reasoning depth to {response.depth}")
-```
-
-### Pattern: Cross-Mesh Federation
-
-```python
-from logos import Router, MeshBridge
-
-# Local mesh
-local_router = Router(config="local_mesh.yaml")
-
-# Bridge to remote mesh
-bridge = MeshBridge(
-    remote_url="https://partner-org.example.com/mesh",
-    auth_token="${REMOTE_MESH_TOKEN}"
-)
-
-local_router.add_bridge(bridge)
-
-# Query uses both local and remote nodes
-response = router.query(
-    prompt="Collaborative reasoning task",
-    allow_federation=True
-)
-```
-
-### Pattern: Audit Trail Analysis
-
-```python
-# Generate detailed audit trail
-response = router.query(
-    prompt="Security-critical decision",
-    depth=7,
-    audit=True
-)
-
-# Analyze reasoning chain
-audit = response.get_audit_trail()
-
-print("Reasoning Chain:")
-for i, step in enumerate(audit.steps):
-    print(f"{i+1}. {step.action}")
-    print(f"   Node: {step.node_id}")
-    print(f"   Confidence: {step.confidence}")
-    print(f"   Verified by: {', '.join(step.verifiers)}")
-    print(f"   Hash: {step.content_hash}")
-
-# Export audit trail
-audit.export("audit_trail.json")
-```
-
-## CLI Commands
-
-### Basic CLI Usage
-
-```bash
-# Simple query
-logos query "What is machine learning?" --depth adaptive
-
-# Multi-language query
-logos query "什么是人工智能？" --lang zh --response-lang en
-
-# Workflow execution
-logos workflow run analyze_paper.yaml
-
-# Node management
-logos nodes list
-logos nodes add --config new_node.yaml
-logos nodes remove node-id
-
-# Cache management
-logos cache stats
-logos cache clear
-logos cache export cache_dump.json
-
-# Server mode
-logos serve --host 0.0.0.0 --port 5000 --config mesh_config.yaml
-
-# Audit trail inspection
-logos audit show query-id-12345
-logos audit export query-id-12345 --format json
-```
-
-## Troubleshooting
-
-### Issue: Low Consensus Scores
-
-```python
-# Diagnose consensus failures
-response = router.query(
-    prompt="Problematic query",
-    debug=True
-)
-
-if response.consensus_score < 0.95:
-    print("Consensus failure reasons:")
-    for failure in response.consensus_failures:
-        print(f"  Node {failure.node_id}: {failure.reason}")
-        print(f"  Confidence: {failure.confidence}")
-    
-    # Retry with reduced threshold
-    response = router.query(
-        prompt="Problematic query",
-        consensus_threshold=0.85
+        prompt="Complex analysis query",
+        depth=3,
+        require_consensus=False
     )
 ```
-
-### Issue: Node Overload
-
-```python
-# Monitor and rebalance
-nodes = router.list_nodes()
-
-for node in nodes:
-    health = router.get_node_health(node.id)
-    if health.current_load > 90:
-        print(f"Node {node.id} overloaded")
-        router.rebalance_load(exclude=[node.id])
-```
-
-### Issue: High Latency
-
-```python
-# Profile query performance
-response = router.query(
-    prompt="Test query",
-    profile=True
-)
-
-print(f"Total latency: {response.latency_ms}ms")
-print(f"Routing overhead: {response.routing_latency_ms}ms")
-print(f"Consensus time: {response.consensus_latency_ms}ms")
-print(f"Synthesis time: {response.synthesis_latency_ms}ms")
-
-# Optimize by reducing reasoning depth
-router.set_default_depth(5)  # Reduce from 7 to 5
-```
-
-### Issue: Language Detection Failures
-
-```python
-# Manual language override
-response = router.query(
-    prompt="مرحبا كيف حالك",  # Arabic
-    language="ar",  # Force Arabic instead of auto-detect
-    fallback_language="en"
-)
-```
-
-### Issue: Storage Growth
-
-```bash
-# Clean old reasoning DAG entries
-logos storage prune --older-than 30d
-
-# Compress storage
-logos storage compress --algorithm zstd
-
-# Export and archive
-logos storage export --output reasoning_archive.tar.gz --date-range 2026-01-01:2026-06-30
-```
-
-## Best Practices
-
-1. **Start with adaptive depth** — let the router decide complexity
-2. **Use semantic caching** for production deployments to reduce latency
-3. **Monitor consensus scores** — scores below 0.90 indicate potential drift
-4. **Enable audit trails** for security-critical or high-stakes reasoning
-5. **Implement graceful degradation** with fallback depth levels
-6. **Scale horizontally** by adding nodes rather than increasing per-node capacity
-7. **Use content-addressed storage** for reproducible reasoning chains
-8. **Test multilingual routing** before deploying in production
-9. **Set appropriate timeouts** based on query complexity
-10. **Regular cache pruning** to prevent storage bloat
-
-## Integration Examples
-
-### CI/CD Pipeline Integration
-
-```python
-# code_review.py
-from logos import Router
-
-def review_pull_request(pr_diff):
-    router = Router(config="mesh_config.yaml")
-    
-    response = router.query(
-        prompt=f"Review this code diff for bugs, security issues, and style:\n{pr_diff}",
-        depth=5,
-        consensus_threshold=0.95
-    )
-    
-    return {
-        "review": response.text,
-        "confidence": response.consensus_score,
-        "reasoning_trail": response.get_audit_trail()
-    }
-```
-
-### Document Management Integration
-
-```python
-# semantic_search.py
-from logos import Router
-
-def semantic_document_search(query, corpus):
-    router = Router(config="mesh_config.yaml")
-    
-    # Use router for semantic understanding
-    response = router.query(
-        prompt=f"Find documents relevant to: {query}\nCorpus IDs: {corpus}",
-        depth=3
-    )
-    
-    return response.extract_document_ids()
-```
-
-This skill provides comprehensive coverage of Logos Router's distributed reasoning capabilities for AI coding agents.
