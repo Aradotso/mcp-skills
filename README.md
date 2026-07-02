@@ -139,6 +139,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [logos-router-distributed-reasoning](skills/logos-router-distributed-reasoning/) | [install](https://skills.sh/aradotso/mcp-skills/logos-router-distributed-reasoning) | [rak7777/mythic-mcp-proxy](https://github.com/rak7777/mythic-mcp-proxy) | 2026-06-30 |
 | [logos-distributed-reasoning-router](skills/logos-distributed-reasoning-router/) | [install](https://skills.sh/aradotso/mcp-skills/logos-distributed-reasoning-router) | [rak7777/mythic-mcp-proxy](https://github.com/rak7777/mythic-mcp-proxy) | 2026-07-01 |
 | [darknet-mcp-server-threat-intelligence](skills/darknet-mcp-server-threat-intelligence/) | [install](https://skills.sh/aradotso/mcp-skills/darknet-mcp-server-threat-intelligence) | [badchars/darknet-mcp-server](https://github.com/badchars/darknet-mcp-server) | 2026-07-01 |
+| [browser-mcp-control](skills/browser-mcp-control/) | [install](https://skills.sh/aradotso/mcp-skills/browser-mcp-control) | [UHolli/browser-mcp](https://github.com/UHolli/browser-mcp) | 2026-07-02 |
 <!-- SKILL_INDEX -->
 
 ---
