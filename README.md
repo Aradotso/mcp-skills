@@ -141,6 +141,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [darknet-mcp-server-threat-intelligence](skills/darknet-mcp-server-threat-intelligence/) | [install](https://skills.sh/aradotso/mcp-skills/darknet-mcp-server-threat-intelligence) | [badchars/darknet-mcp-server](https://github.com/badchars/darknet-mcp-server) | 2026-07-01 |
 | [browser-mcp-control](skills/browser-mcp-control/) | [install](https://skills.sh/aradotso/mcp-skills/browser-mcp-control) | [UHolli/browser-mcp](https://github.com/UHolli/browser-mcp) | 2026-07-02 |
 | [easy-notion-mcp-integration](skills/easy-notion-mcp-integration/) | [install](https://skills.sh/aradotso/mcp-skills/easy-notion-mcp-integration) | [FR0ZON3/notion-mcp](https://github.com/FR0ZON3/notion-mcp) | 2026-07-03 |
+| [mcpsnoop-mcp-debugging](skills/mcpsnoop-mcp-debugging/) | [install](https://skills.sh/aradotso/mcp-skills/mcpsnoop-mcp-debugging) | [kerlenton/mcpsnoop](https://github.com/kerlenton/mcpsnoop) | 2026-07-03 |
 <!-- SKILL_INDEX -->
 
 ---
