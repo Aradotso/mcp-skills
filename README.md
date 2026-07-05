@@ -143,6 +143,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [easy-notion-mcp-integration](skills/easy-notion-mcp-integration/) | [install](https://skills.sh/aradotso/mcp-skills/easy-notion-mcp-integration) | [FR0ZON3/notion-mcp](https://github.com/FR0ZON3/notion-mcp) | 2026-07-03 |
 | [mcpsnoop-mcp-debugging](skills/mcpsnoop-mcp-debugging/) | [install](https://skills.sh/aradotso/mcp-skills/mcpsnoop-mcp-debugging) | [kerlenton/mcpsnoop](https://github.com/kerlenton/mcpsnoop) | 2026-07-03 |
 | [voicebox-voice-mcp-agent](skills/voicebox-voice-mcp-agent/) | [install](https://skills.sh/aradotso/mcp-skills/voicebox-voice-mcp-agent) | [h1papc11/voice-mcp-agent](https://github.com/h1papc11/voice-mcp-agent) | 2026-07-04 |
+| [security-detections-mcp](skills/security-detections-mcp/) | [install](https://skills.sh/aradotso/mcp-skills/security-detections-mcp) | [MHaggis/Security-Detections-MCP](https://github.com/MHaggis/Security-Detections-MCP) | 2026-07-05 |
 <!-- SKILL_INDEX -->
 
 ---
