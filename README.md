@@ -144,6 +144,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [mcpsnoop-mcp-debugging](skills/mcpsnoop-mcp-debugging/) | [install](https://skills.sh/aradotso/mcp-skills/mcpsnoop-mcp-debugging) | [kerlenton/mcpsnoop](https://github.com/kerlenton/mcpsnoop) | 2026-07-03 |
 | [voicebox-voice-mcp-agent](skills/voicebox-voice-mcp-agent/) | [install](https://skills.sh/aradotso/mcp-skills/voicebox-voice-mcp-agent) | [h1papc11/voice-mcp-agent](https://github.com/h1papc11/voice-mcp-agent) | 2026-07-04 |
 | [security-detections-mcp](skills/security-detections-mcp/) | [install](https://skills.sh/aradotso/mcp-skills/security-detections-mcp) | [MHaggis/Security-Detections-MCP](https://github.com/MHaggis/Security-Detections-MCP) | 2026-07-05 |
+| [amazon-sorftime-research-mcp-skill](skills/amazon-sorftime-research-mcp-skill/) | [install](https://skills.sh/aradotso/mcp-skills/amazon-sorftime-research-mcp-skill) | [liangdabiao/amazon-sorftime-research-MCP-skill](https://github.com/liangdabiao/amazon-sorftime-research-MCP-skill) | 2026-07-07 |
 <!-- SKILL_INDEX -->
 
 ---
