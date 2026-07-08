@@ -146,6 +146,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [security-detections-mcp](skills/security-detections-mcp/) | [install](https://skills.sh/aradotso/mcp-skills/security-detections-mcp) | [MHaggis/Security-Detections-MCP](https://github.com/MHaggis/Security-Detections-MCP) | 2026-07-05 |
 | [amazon-sorftime-research-mcp-skill](skills/amazon-sorftime-research-mcp-skill/) | [install](https://skills.sh/aradotso/mcp-skills/amazon-sorftime-research-mcp-skill) | [liangdabiao/amazon-sorftime-research-MCP-skill](https://github.com/liangdabiao/amazon-sorftime-research-MCP-skill) | 2026-07-07 |
 | [shopify-mcp-server](skills/shopify-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/shopify-mcp-server) | [Cesarjoquin/shopify-mcp](https://github.com/Cesarjoquin/shopify-mcp) | 2026-07-07 |
+| [yuque-mcp-server](skills/yuque-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/yuque-mcp-server) | [yuque/yuque-mcp-server](https://github.com/yuque/yuque-mcp-server) | 2026-07-08 |
 <!-- SKILL_INDEX -->
 
 ---
