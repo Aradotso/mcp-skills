@@ -149,6 +149,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [yuque-mcp-server](skills/yuque-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/yuque-mcp-server) | [yuque/yuque-mcp-server](https://github.com/yuque/yuque-mcp-server) | 2026-07-08 |
 | [drissionpage-mcp-browser-automation](skills/drissionpage-mcp-browser-automation/) | [install](https://skills.sh/aradotso/mcp-skills/drissionpage-mcp-browser-automation) | [jumodada/Drissionpage-MCP-Server](https://github.com/jumodada/Drissionpage-MCP-Server) | 2026-07-08 |
 | [kogiqa-mcp-browser-automation](skills/kogiqa-mcp-browser-automation/) | [install](https://skills.sh/aradotso/mcp-skills/kogiqa-mcp-browser-automation) | [atagon-GmbH/kogiqa-mcp](https://github.com/atagon-GmbH/kogiqa-mcp) | 2026-07-08 |
+| [sts2mcp-slay-the-spire-2-ai-agent](skills/sts2mcp-slay-the-spire-2-ai-agent/) | [install](https://skills.sh/aradotso/mcp-skills/sts2mcp-slay-the-spire-2-ai-agent) | [Gennadiyev/STS2MCP](https://github.com/Gennadiyev/STS2MCP) | 2026-07-08 |
 <!-- SKILL_INDEX -->
 
 ---
