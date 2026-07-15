@@ -151,6 +151,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [kogiqa-mcp-browser-automation](skills/kogiqa-mcp-browser-automation/) | [install](https://skills.sh/aradotso/mcp-skills/kogiqa-mcp-browser-automation) | [atagon-GmbH/kogiqa-mcp](https://github.com/atagon-GmbH/kogiqa-mcp) | 2026-07-08 |
 | [sts2mcp-slay-the-spire-2-ai-agent](skills/sts2mcp-slay-the-spire-2-ai-agent/) | [install](https://skills.sh/aradotso/mcp-skills/sts2mcp-slay-the-spire-2-ai-agent) | [Gennadiyev/STS2MCP](https://github.com/Gennadiyev/STS2MCP) | 2026-07-08 |
 | [sdl-mcp-symbol-delta-ledger](skills/sdl-mcp-symbol-delta-ledger/) | [install](https://skills.sh/aradotso/mcp-skills/sdl-mcp-symbol-delta-ledger) | [GlitterKill/sdl-mcp](https://github.com/GlitterKill/sdl-mcp) | 2026-07-11 |
+| [solana-mcp-vybe](skills/solana-mcp-vybe/) | [install](https://skills.sh/aradotso/mcp-skills/solana-mcp-vybe) | [vybenetwork/solana-mcp-vybe](https://github.com/vybenetwork/solana-mcp-vybe) | 2026-07-15 |
 <!-- SKILL_INDEX -->
 
 ---
