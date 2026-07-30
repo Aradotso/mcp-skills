@@ -154,6 +154,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [solana-mcp-vybe](skills/solana-mcp-vybe/) | [install](https://skills.sh/aradotso/mcp-skills/solana-mcp-vybe) | [vybenetwork/solana-mcp-vybe](https://github.com/vybenetwork/solana-mcp-vybe) | 2026-07-15 |
 | [comfyui-mcp-agent](skills/comfyui-mcp-agent/) | [install](https://skills.sh/aradotso/mcp-skills/comfyui-mcp-agent) | [artokun/comfyui-mcp](https://github.com/artokun/comfyui-mcp) | 2026-07-18 |
 | [livetennisapi-mcp-integration](skills/livetennisapi-mcp-integration/) | [install](https://skills.sh/aradotso/mcp-skills/livetennisapi-mcp-integration) | [livetennisapi/livetennisapi-mcp](https://github.com/livetennisapi/livetennisapi-mcp) | 2026-07-30 |
+| [patsnap-patent-literature-search](skills/patsnap-patent-literature-search/) | [install](https://skills.sh/aradotso/mcp-skills/patsnap-patent-literature-search) | [patsnap/patent-literature-search-mcp](https://github.com/patsnap/patent-literature-search-mcp) | 2026-07-30 |
 <!-- SKILL_INDEX -->
 
 ---
