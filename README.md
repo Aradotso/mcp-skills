@@ -157,6 +157,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [patsnap-patent-literature-search](skills/patsnap-patent-literature-search/) | [install](https://skills.sh/aradotso/mcp-skills/patsnap-patent-literature-search) | [patsnap/patent-literature-search-mcp](https://github.com/patsnap/patent-literature-search-mcp) | 2026-07-30 |
 | [concord-mcp-workspace](skills/concord-mcp-workspace/) | [install](https://skills.sh/aradotso/mcp-skills/concord-mcp-workspace) | [Get-Concord-AI/concord-mcp](https://github.com/Get-Concord-AI/concord-mcp) | 2026-07-30 |
 | [figma-mcp-bridge](skills/figma-mcp-bridge/) | [install](https://skills.sh/aradotso/mcp-skills/figma-mcp-bridge) | [gethopp/figma-mcp-bridge](https://github.com/gethopp/figma-mcp-bridge) | 2026-07-30 |
+| [zhtw-mcp-linguistic-linter](skills/zhtw-mcp-linguistic-linter/) | [install](https://skills.sh/aradotso/mcp-skills/zhtw-mcp-linguistic-linter) | [sysprog21/zhtw-mcp](https://github.com/sysprog21/zhtw-mcp) | 2026-07-30 |
 <!-- SKILL_INDEX -->
 
 ---
