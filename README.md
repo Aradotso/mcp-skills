@@ -155,6 +155,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [comfyui-mcp-agent](skills/comfyui-mcp-agent/) | [install](https://skills.sh/aradotso/mcp-skills/comfyui-mcp-agent) | [artokun/comfyui-mcp](https://github.com/artokun/comfyui-mcp) | 2026-07-18 |
 | [livetennisapi-mcp-integration](skills/livetennisapi-mcp-integration/) | [install](https://skills.sh/aradotso/mcp-skills/livetennisapi-mcp-integration) | [livetennisapi/livetennisapi-mcp](https://github.com/livetennisapi/livetennisapi-mcp) | 2026-07-30 |
 | [patsnap-patent-literature-search](skills/patsnap-patent-literature-search/) | [install](https://skills.sh/aradotso/mcp-skills/patsnap-patent-literature-search) | [patsnap/patent-literature-search-mcp](https://github.com/patsnap/patent-literature-search-mcp) | 2026-07-30 |
+| [concord-mcp-workspace](skills/concord-mcp-workspace/) | [install](https://skills.sh/aradotso/mcp-skills/concord-mcp-workspace) | [Get-Concord-AI/concord-mcp](https://github.com/Get-Concord-AI/concord-mcp) | 2026-07-30 |
 <!-- SKILL_INDEX -->
 
 ---
