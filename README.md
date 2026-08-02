@@ -160,6 +160,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [zhtw-mcp-linguistic-linter](skills/zhtw-mcp-linguistic-linter/) | [install](https://skills.sh/aradotso/mcp-skills/zhtw-mcp-linguistic-linter) | [sysprog21/zhtw-mcp](https://github.com/sysprog21/zhtw-mcp) | 2026-07-30 |
 | [unifi-mcp-server](skills/unifi-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/unifi-mcp-server) | [enuno/unifi-mcp-server](https://github.com/enuno/unifi-mcp-server) | 2026-07-30 |
 | [open-mcp-apps-persistent-ui](skills/open-mcp-apps-persistent-ui/) | [install](https://skills.sh/aradotso/mcp-skills/open-mcp-apps-persistent-ui) | [2nd1st/open-mcp-apps](https://github.com/2nd1st/open-mcp-apps) | 2026-07-31 |
+| [camoufox-reverse-mcp](skills/camoufox-reverse-mcp/) | [install](https://skills.sh/aradotso/mcp-skills/camoufox-reverse-mcp) | [WhiteNightShadow/camoufox-reverse-mcp](https://github.com/WhiteNightShadow/camoufox-reverse-mcp) | 2026-08-02 |
 <!-- SKILL_INDEX -->
 
 ---
