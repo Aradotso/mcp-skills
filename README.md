@@ -161,6 +161,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [unifi-mcp-server](skills/unifi-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/unifi-mcp-server) | [enuno/unifi-mcp-server](https://github.com/enuno/unifi-mcp-server) | 2026-07-30 |
 | [open-mcp-apps-persistent-ui](skills/open-mcp-apps-persistent-ui/) | [install](https://skills.sh/aradotso/mcp-skills/open-mcp-apps-persistent-ui) | [2nd1st/open-mcp-apps](https://github.com/2nd1st/open-mcp-apps) | 2026-07-31 |
 | [camoufox-reverse-mcp](skills/camoufox-reverse-mcp/) | [install](https://skills.sh/aradotso/mcp-skills/camoufox-reverse-mcp) | [WhiteNightShadow/camoufox-reverse-mcp](https://github.com/WhiteNightShadow/camoufox-reverse-mcp) | 2026-08-02 |
+| [mcpx-runtime](skills/mcpx-runtime/) | [install](https://skills.sh/aradotso/mcp-skills/mcpx-runtime) | [opentokenz/mcpx](https://github.com/opentokenz/mcpx) | 2026-08-03 |
 <!-- SKILL_INDEX -->
 
 ---
