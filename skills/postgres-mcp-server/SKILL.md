@@ -1,30 +1,28 @@
 ---
 name: postgres-mcp-server
-description: Query and analyze PostgreSQL databases through Model Context Protocol with controlled LLM access
+description: MCP server for PostgreSQL databases enabling LLMs to query and analyze databases through a controlled interface
 triggers:
-  - query the postgres database
+  - query postgres database
+  - connect to postgresql via mcp
   - analyze database schema
-  - get table structure from postgres
-  - execute sql query
-  - list database tables
-  - inspect postgres table
-  - run database analysis
-  - explore postgresql data
+  - run sql query through mcp
+  - explore postgres tables
+  - set up postgres mcp server
+  - get table structure from database
+  - execute database queries safely
 ---
 
 # Postgres MCP Server
 
 > Skill by [ara.so](https://ara.so) — MCP Skills collection.
 
-## Overview
-
-The Postgres MCP Server is a Model Context Protocol server that enables LLMs to query and analyze PostgreSQL databases through a controlled interface. It provides safe read-only access by default, with optional write operations, and exposes database schemas, tables, and query execution capabilities.
+A Model Context Protocol (MCP) server that provides LLMs with controlled access to PostgreSQL databases. Enables safe querying, schema inspection, and data analysis through standardized MCP tools and resources.
 
 ## Installation
 
-### Quick Install (Cursor/Claude Desktop)
+### Quick Install (npx)
 
-Add to your MCP client settings file:
+Add to your MCP client configuration file (e.g., `claude_desktop_config.json` or Cursor settings):
 
 ```json
 {
@@ -40,13 +38,7 @@ Add to your MCP client settings file:
 }
 ```
 
-### Configuration File Locations
-
-- **Claude Desktop (macOS)**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-- **Claude Desktop (Windows)**: `%APPDATA%\Claude\claude_desktop_config.json`
-- **Cursor**: `.cursor/mcp.json` or Cursor settings
-
-### Local Development Setup
+### Local Development Install
 
 ```bash
 git clone https://github.com/ericzakariasson/pg-mcp-server.git
@@ -55,7 +47,7 @@ bun install
 bun run build:js
 ```
 
-Use local build in settings:
+Use local build in MCP settings:
 
 ```json
 {
@@ -71,367 +63,340 @@ Use local build in settings:
 }
 ```
 
-## Environment Variables
+## Configuration
 
-- **`DATABASE_URL`** (required): PostgreSQL connection string
-  - Format: `postgresql://[user[:password]@][host][:port][/dbname][?param=value]`
-  - Example: `postgresql://postgres:mypass@localhost:5432/production`
-  
-- **`DANGEROUSLY_ALLOW_WRITE_OPS`**: Enable INSERT, UPDATE, DELETE operations (default: `false`)
-  - Set to `"true"` to enable writes
-  
-- **`DEBUG`**: Enable debug logging (default: `false`)
-  
-- **`PG_SSL_ROOT_CERT`**: Path to TLS CA bundle for SSL connections
-  - Example: `/path/to/rds-combined-ca-bundle.pem`
+### Environment Variables
 
-## Transport Modes
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `DATABASE_URL` | Yes | - | PostgreSQL connection string |
+| `DANGEROUSLY_ALLOW_WRITE_OPS` | No | `false` | Enable INSERT/UPDATE/DELETE operations |
+| `DEBUG` | No | `false` | Enable debug logging |
+| `PG_SSL_ROOT_CERT` | No | - | Path to TLS CA bundle for SSL connections |
 
-### stdio (Default)
+### Connection String Format
 
-Used for local MCP clients like Claude Desktop and Cursor:
-
-```bash
-npx --yes pg-mcp-server --transport stdio
+```
+postgresql://[user[:password]@][host][:port][/dbname][?param1=value1&...]
 ```
 
-### HTTP
+Examples:
+- Local: `postgresql://postgres:postgres@localhost:5432/myapp`
+- Remote: `postgresql://user:pass@db.example.com:5432/production`
+- SSL: `postgresql://user:pass@db.example.com:5432/prod?sslmode=require`
 
-For HTTP-based MCP clients:
+### Transport Modes
 
+**stdio** (default) - Standard input/output for MCP clients:
 ```bash
-npx --yes pg-mcp-server --transport http
-# Serves at http://localhost:3000/mcp
+pg-mcp-server --transport=stdio
 ```
 
-Set custom port:
-
+**http** - HTTP server mode (port 3000 by default):
 ```bash
-PORT=8080 npx --yes pg-mcp-server --transport http
+pg-mcp-server --transport=http
+PORT=8080 pg-mcp-server --transport=http
 ```
+
+HTTP endpoint available at: `http://localhost:3000/mcp`
 
 ## Available Tools
 
-### query
+### `query` Tool
 
-Execute SQL queries against the database.
+Execute SQL queries against the database. Read-only by default.
 
 **Parameters:**
-- `sql` (string, required): The SQL query to execute
+- `sql` (string, required): SQL query to execute
 
-**Example Usage:**
+**Example Usage in Code:**
 
 ```typescript
-// Through MCP tool call
+// Tool call structure
 {
   "name": "query",
   "arguments": {
-    "sql": "SELECT * FROM users WHERE active = true LIMIT 10"
+    "sql": "SELECT id, email, created_at FROM users WHERE active = true LIMIT 10"
   }
 }
 ```
 
-**Read-only queries (always allowed):**
+**Common Query Patterns:**
 
 ```sql
-SELECT id, email, created_at FROM users WHERE role = 'admin';
+-- Basic SELECT
+SELECT * FROM products WHERE category = 'electronics' LIMIT 20;
 
-SELECT p.name, COUNT(o.id) as order_count 
-FROM products p 
-LEFT JOIN orders o ON p.id = o.product_id 
-GROUP BY p.id, p.name 
-ORDER BY order_count DESC 
-LIMIT 5;
+-- JOIN queries
+SELECT o.id, o.created_at, u.email, SUM(oi.quantity * oi.price) as total
+FROM orders o
+JOIN users u ON o.user_id = u.id
+JOIN order_items oi ON oi.order_id = o.id
+GROUP BY o.id, u.email
+ORDER BY o.created_at DESC;
 
-SELECT 
-  DATE_TRUNC('month', created_at) as month,
-  COUNT(*) as user_count
-FROM users
-GROUP BY month
-ORDER BY month DESC;
+-- Aggregations
+SELECT category, COUNT(*) as count, AVG(price) as avg_price
+FROM products
+GROUP BY category
+ORDER BY count DESC;
+
+-- WITH clauses for complex analysis
+WITH monthly_sales AS (
+  SELECT 
+    DATE_TRUNC('month', created_at) as month,
+    SUM(total_amount) as revenue
+  FROM orders
+  GROUP BY month
+)
+SELECT * FROM monthly_sales ORDER BY month DESC;
 ```
 
-**Write queries (requires `DANGEROUSLY_ALLOW_WRITE_OPS=true`):**
+**Write Operations (when enabled):**
+
+Set `DANGEROUSLY_ALLOW_WRITE_OPS=true` to enable:
 
 ```sql
-INSERT INTO users (email, name) VALUES ('user@example.com', 'John Doe');
+-- INSERT
+INSERT INTO users (email, name) VALUES ('user@example.com', 'New User');
 
-UPDATE products SET price = 29.99 WHERE id = 123;
+-- UPDATE
+UPDATE products SET price = price * 1.1 WHERE category = 'books';
 
-DELETE FROM sessions WHERE expires_at < NOW();
+-- DELETE
+DELETE FROM temp_data WHERE created_at < NOW() - INTERVAL '30 days';
 ```
 
-## Resources
+## Available Resources
 
-Resources provide structured access to database metadata.
+### `postgres://tables`
 
-### postgres://tables
-
-Lists all tables in the database with schema information.
-
-**Response format:**
-```json
-{
-  "uri": "postgres://tables",
-  "mimeType": "application/json",
-  "text": "[{\"schema\":\"public\",\"table\":\"users\"},{\"schema\":\"public\",\"table\":\"orders\"}]"
-}
-```
-
-### postgres://table/{schema}/{table}
-
-Get detailed schema and sample data for a specific table.
-
-**Example URIs:**
-- `postgres://table/public/users`
-- `postgres://table/analytics/events`
+Lists all tables in the database with their schemas.
 
 **Response includes:**
+- Schema name
+- Table name
 - Column definitions (name, type, nullable, default)
-- Primary keys and constraints
-- Sample rows (up to 5)
+- Primary keys
+- Indexes
+- Foreign keys
 
-```json
-{
-  "uri": "postgres://table/public/users",
-  "mimeType": "application/json",
-  "text": "{\"columns\":[{\"name\":\"id\",\"type\":\"integer\",\"nullable\":false}],\"sample\":[{\"id\":1,\"email\":\"user@example.com\"}]}"
-}
+**Usage Pattern:**
+
+Request this resource first to understand database structure before querying.
+
+### `postgres://table/{schema}/{table}`
+
+Get detailed information about a specific table including:
+- Full schema definition
+- Sample data (first 5 rows)
+- Column statistics
+- Constraints
+
+**Example:**
+```
+postgres://table/public/users
+postgres://table/public/orders
 ```
 
-## Common Patterns
+## Common Workflows
 
-### Data Exploration
+### 1. Database Discovery
 
 ```typescript
-// Prompt: "Show me the database schema"
-// Agent will:
-// 1. List all tables using postgres://tables resource
-// 2. Get schema for each table using postgres://table/{schema}/{table}
+// Step 1: List all tables
+// Request resource: postgres://tables
 
-// Prompt: "Find all active users created in the last 7 days"
-// Agent will use query tool:
+// Step 2: Examine specific table
+// Request resource: postgres://table/public/users
+
+// Step 3: Run exploratory query
 {
-  "sql": "SELECT id, email, created_at FROM users WHERE active = true AND created_at > NOW() - INTERVAL '7 days' ORDER BY created_at DESC"
-}
-```
-
-### Aggregation & Analytics
-
-```typescript
-// Prompt: "What are the top-selling products this month?"
-{
-  "sql": "SELECT p.id, p.name, SUM(oi.quantity) as total_sold, SUM(oi.quantity * oi.price) as revenue FROM products p JOIN order_items oi ON p.id = oi.product_id JOIN orders o ON oi.order_id = o.id WHERE o.created_at >= DATE_TRUNC('month', CURRENT_DATE) GROUP BY p.id, p.name ORDER BY total_sold DESC LIMIT 10"
-}
-```
-
-### Schema Introspection
-
-```typescript
-// Prompt: "What's the structure of the orders table?"
-// Agent fetches resource: postgres://table/public/orders
-
-// Prompt: "Show me all foreign key relationships"
-{
-  "sql": "SELECT tc.table_schema, tc.table_name, kcu.column_name, ccu.table_schema AS foreign_table_schema, ccu.table_name AS foreign_table_name, ccu.column_name AS foreign_column_name FROM information_schema.table_constraints AS tc JOIN information_schema.key_column_usage AS kcu ON tc.constraint_name = kcu.constraint_name AND tc.table_schema = kcu.table_schema JOIN information_schema.constraint_column_usage AS ccu ON ccu.constraint_name = tc.constraint_name WHERE tc.constraint_type = 'FOREIGN KEY'"
-}
-```
-
-### Safe Data Modification (with writes enabled)
-
-```typescript
-// When DANGEROUSLY_ALLOW_WRITE_OPS=true
-
-// Prompt: "Mark order #123 as shipped"
-{
-  "sql": "UPDATE orders SET status = 'shipped', shipped_at = NOW() WHERE id = 123 RETURNING *"
-}
-
-// Prompt: "Create a new product category"
-{
-  "sql": "INSERT INTO categories (name, slug, description) VALUES ('Electronics', 'electronics', 'Electronic devices and accessories') RETURNING *"
-}
-```
-
-## Configuration Examples
-
-### Production Database (Read-only)
-
-```json
-{
-  "mcpServers": {
-    "postgres-prod": {
-      "command": "npx",
-      "args": ["--yes", "pg-mcp-server", "--transport", "stdio"],
-      "env": {
-        "DATABASE_URL": "postgresql://readonly_user:${DB_PASSWORD}@prod-db.example.com:5432/production",
-        "PG_SSL_ROOT_CERT": "/path/to/ca-bundle.pem"
-      }
-    }
+  "name": "query",
+  "arguments": {
+    "sql": "SELECT COUNT(*), MAX(created_at), MIN(created_at) FROM users"
   }
 }
 ```
 
-### Development Database (With Writes)
+### 2. Data Analysis Pattern
 
-```json
-{
-  "mcpServers": {
-    "postgres-dev": {
-      "command": "npx",
-      "args": ["--yes", "pg-mcp-server", "--transport", "stdio"],
-      "env": {
-        "DATABASE_URL": "postgresql://postgres:devpass@localhost:5432/myapp_dev",
-        "DANGEROUSLY_ALLOW_WRITE_OPS": "true",
-        "DEBUG": "true"
-      }
-    }
-  }
-}
+```sql
+-- User activity analysis
+WITH user_stats AS (
+  SELECT 
+    u.id,
+    u.email,
+    COUNT(DISTINCT o.id) as order_count,
+    SUM(o.total_amount) as lifetime_value,
+    MAX(o.created_at) as last_order_date
+  FROM users u
+  LEFT JOIN orders o ON u.id = o.user_id
+  GROUP BY u.id, u.email
+)
+SELECT 
+  CASE 
+    WHEN order_count = 0 THEN 'No Orders'
+    WHEN order_count < 3 THEN 'Low Activity'
+    WHEN order_count < 10 THEN 'Medium Activity'
+    ELSE 'High Activity'
+  END as segment,
+  COUNT(*) as user_count,
+  AVG(lifetime_value) as avg_ltv
+FROM user_stats
+GROUP BY segment;
 ```
 
-### Multiple Database Connections
+### 3. Schema Inspection
 
-```json
-{
-  "mcpServers": {
-    "postgres-analytics": {
-      "command": "npx",
-      "args": ["--yes", "pg-mcp-server", "--transport", "stdio"],
-      "env": {
-        "DATABASE_URL": "postgresql://analyst:${ANALYTICS_DB_PASSWORD}@analytics.example.com:5432/analytics"
-      }
-    },
-    "postgres-app": {
-      "command": "npx",
-      "args": ["--yes", "pg-mcp-server", "--transport", "stdio"],
-      "env": {
-        "DATABASE_URL": "postgresql://app_user:${APP_DB_PASSWORD}@app-db.example.com:5432/app_production"
-      }
-    }
-  }
-}
+```sql
+-- Find all foreign key relationships
+SELECT
+    tc.table_schema, 
+    tc.table_name, 
+    kcu.column_name,
+    ccu.table_name AS foreign_table_name,
+    ccu.column_name AS foreign_column_name
+FROM information_schema.table_constraints AS tc
+JOIN information_schema.key_column_usage AS kcu
+  ON tc.constraint_name = kcu.constraint_name
+JOIN information_schema.constraint_column_usage AS ccu
+  ON ccu.constraint_name = tc.constraint_name
+WHERE tc.constraint_type = 'FOREIGN KEY';
+
+-- List all indexes
+SELECT
+    schemaname,
+    tablename,
+    indexname,
+    indexdef
+FROM pg_indexes
+WHERE schemaname = 'public'
+ORDER BY tablename, indexname;
 ```
 
-## Testing with Docker
+## Development & Testing
 
-Quick start with sample database:
+### Quick Start with Docker
 
 ```bash
-# Start PostgreSQL with sample data
+# Start test PostgreSQL with sample data
 bun run db:start
 
-# Test with MCP Inspector
+# Run MCP inspector for testing
 bun run inspector
 
-# Stop PostgreSQL
+# Stop database
 bun run db:stop
 ```
 
-Sample tables created:
-- `users`: User accounts
-- `products`: Product catalog
-- `orders`: Order records
-- `order_items`: Order line items
+Sample schema includes: `users`, `products`, `orders`, `order_items`
+
+### Running Tests
+
+```bash
+bun test
+```
+
+### Debug Mode
+
+```bash
+DEBUG=true bun run index.ts -- --transport=stdio
+```
 
 ## Troubleshooting
 
-### Connection Errors
+### Connection Issues
 
-**Problem**: `connection refused` or `timeout`
+**Problem:** "Connection refused" or timeout errors
 
-```bash
-# Verify PostgreSQL is running
-psql $DATABASE_URL -c "SELECT 1"
+**Solutions:**
+- Verify `DATABASE_URL` format is correct
+- Check database is running: `pg_isready -h localhost -p 5432`
+- Test connection with psql: `psql $DATABASE_URL`
+- Check firewall/security groups allow connections
 
-# Check connection parameters
-echo $DATABASE_URL
+### SSL/TLS Errors
 
-# Test with explicit host
-DATABASE_URL="postgresql://user:pass@127.0.0.1:5432/dbname"
-```
+**Problem:** SSL certificate verification failed
 
-### SSL/TLS Issues
-
-**Problem**: `SSL connection required`
-
+**Solutions:**
 ```json
 {
   "env": {
-    "DATABASE_URL": "postgresql://user:pass@host:5432/db?sslmode=require",
-    "PG_SSL_ROOT_CERT": "/path/to/ca-certificate.crt"
+    "DATABASE_URL": "postgresql://host/db?sslmode=require",
+    "PG_SSL_ROOT_CERT": "/path/to/ca-bundle.crt"
   }
 }
+```
+
+For AWS RDS:
+```bash
+# Download RDS CA bundle
+curl -o rds-ca-bundle.crt https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem
 ```
 
 ### Write Operations Blocked
 
-**Problem**: `Write operations are disabled`
+**Problem:** INSERT/UPDATE/DELETE queries return permission errors
 
-Enable writes explicitly:
-
+**Solution:** Enable write operations (use with caution):
 ```json
 {
   "env": {
+    "DATABASE_URL": "postgresql://localhost/db",
     "DANGEROUSLY_ALLOW_WRITE_OPS": "true"
   }
 }
 ```
 
-### Debug Mode
+### Query Timeouts
 
-Enable verbose logging:
+**Problem:** Long-running queries timeout
 
-```json
-{
-  "env": {
-    "DEBUG": "true"
-  }
-}
-```
+**Solutions:**
+- Add `LIMIT` clauses to queries
+- Use `EXPLAIN ANALYZE` to check query performance
+- Add appropriate indexes
+- Use connection pooling parameters: `?pool_timeout=30&query_timeout=60000`
 
-### Permission Errors
+### Schema Not Found
 
-**Problem**: `permission denied for table`
+**Problem:** Tables not visible even though they exist
 
-Grant appropriate permissions:
-
+**Solutions:**
 ```sql
--- Read-only access
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO readonly_user;
-GRANT USAGE ON SCHEMA public TO readonly_user;
+-- Check current search path
+SHOW search_path;
 
--- Read-write access
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO app_user;
+-- List all schemas
+SELECT schema_name FROM information_schema.schemata;
+
+-- Fully qualify table names
+SELECT * FROM myschema.mytable;
 ```
-
-### Resource Not Found
-
-Ensure schema and table names are correct:
-
-```typescript
-// Correct format
-"postgres://table/public/users"
-
-// Not
-"postgres://table/users"  // Missing schema
-```
-
-## Security Best Practices
-
-1. **Use read-only credentials** for production databases
-2. **Enable writes only when necessary** (`DANGEROUSLY_ALLOW_WRITE_OPS`)
-3. **Use SSL/TLS** for remote connections
-4. **Limit database user permissions** to minimum required
-5. **Store credentials in environment variables**, never in config files
-6. **Use separate database users** for different environments
 
 ## Example Prompts for AI Agents
 
-- "Show me the first 5 users from the database"
-- "What tables are in this database?"
-- "Analyze the orders table structure"
-- "Find customers who haven't placed an order in 30 days"
+Use these prompts to test the MCP server:
+
+- "Show me the first 10 users from the database"
+- "What tables exist in this database?"
+- "Analyze the order patterns from last month"
+- "Show me the schema for the products table"
+- "Find all users who haven't made an order"
 - "Calculate total revenue by product category"
-- "Show me the relationships between tables"
-- "What's the average order value this quarter?"
+- "What are the foreign key relationships in this database?"
+
+## Security Best Practices
+
+1. **Use read-only database users** when possible
+2. **Never enable `DANGEROUSLY_ALLOW_WRITE_OPS`** in production environments
+3. **Use SSL/TLS** for remote connections
+4. **Limit database user permissions** to only required schemas/tables
+5. **Set connection limits** in PostgreSQL configuration
+6. **Monitor query logs** for suspicious activity
+
+## License
+
+MIT - See project repository for full license text.
