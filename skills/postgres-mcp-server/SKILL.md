@@ -1,28 +1,28 @@
 ---
 name: postgres-mcp-server
-description: MCP server for PostgreSQL databases enabling LLMs to query and analyze databases through a controlled interface
+description: Query and analyze PostgreSQL databases through the Model Context Protocol with controlled read/write access
 triggers:
-  - query postgres database
-  - connect to postgresql via mcp
+  - query my postgres database
+  - show me tables in the database
   - analyze database schema
   - run sql query through mcp
-  - explore postgres tables
-  - set up postgres mcp server
-  - get table structure from database
+  - connect to postgres via mcp
+  - explore my database structure
   - execute database queries safely
+  - get table schema and sample data
 ---
 
 # Postgres MCP Server
 
 > Skill by [ara.so](https://ara.so) — MCP Skills collection.
 
-A Model Context Protocol (MCP) server that provides LLMs with controlled access to PostgreSQL databases. Enables safe querying, schema inspection, and data analysis through standardized MCP tools and resources.
+A Model Context Protocol server that enables LLMs to query and analyze PostgreSQL databases through a controlled, safe interface. Supports both read-only and write operations (when explicitly enabled), table inspection, and schema exploration.
 
 ## Installation
 
-### Quick Install (npx)
+### Quick Install (Cursor/Claude Desktop)
 
-Add to your MCP client configuration file (e.g., `claude_desktop_config.json` or Cursor settings):
+Add to your MCP client configuration (`claude_desktop_config.json` or `.cursor/config.json`):
 
 ```json
 {
@@ -47,7 +47,7 @@ bun install
 bun run build:js
 ```
 
-Use local build in MCP settings:
+Then reference the local build:
 
 ```json
 {
@@ -56,7 +56,7 @@ Use local build in MCP settings:
       "command": "node",
       "args": ["/absolute/path/to/pg-mcp-server/lib/index.js", "--transport", "stdio"],
       "env": {
-        "DATABASE_URL": "postgresql://localhost:5432/mydb"
+        "DATABASE_URL": "postgresql://postgres:postgres@localhost:5432/postgres"
       }
     }
   }
@@ -69,334 +69,379 @@ Use local build in MCP settings:
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `DATABASE_URL` | Yes | - | PostgreSQL connection string |
-| `DANGEROUSLY_ALLOW_WRITE_OPS` | No | `false` | Enable INSERT/UPDATE/DELETE operations |
+| `DATABASE_URL` | Yes | - | PostgreSQL connection string (format: `postgresql://user:pass@host:port/db`) |
+| `DANGEROUSLY_ALLOW_WRITE_OPS` | No | `false` | Enable INSERT, UPDATE, DELETE operations |
 | `DEBUG` | No | `false` | Enable debug logging |
-| `PG_SSL_ROOT_CERT` | No | - | Path to TLS CA bundle for SSL connections |
-
-### Connection String Format
-
-```
-postgresql://[user[:password]@][host][:port][/dbname][?param1=value1&...]
-```
-
-Examples:
-- Local: `postgresql://postgres:postgres@localhost:5432/myapp`
-- Remote: `postgresql://user:pass@db.example.com:5432/production`
-- SSL: `postgresql://user:pass@db.example.com:5432/prod?sslmode=require`
+| `PG_SSL_ROOT_CERT` | No | - | Path to TLS CA bundle (e.g., for AWS RDS) |
 
 ### Transport Modes
 
-**stdio** (default) - Standard input/output for MCP clients:
+**stdio** (default): For MCP clients like Claude Desktop, Cursor
 ```bash
-pg-mcp-server --transport=stdio
+npx pg-mcp-server --transport=stdio
 ```
 
-**http** - HTTP server mode (port 3000 by default):
+**http**: For web-based or HTTP-compatible MCP clients
 ```bash
-pg-mcp-server --transport=http
-PORT=8080 pg-mcp-server --transport=http
+npx pg-mcp-server --transport=http
+# Serves at http://localhost:3000/mcp
+PORT=8080 npx pg-mcp-server --transport=http
 ```
-
-HTTP endpoint available at: `http://localhost:3000/mcp`
 
 ## Available Tools
 
-### `query` Tool
+### `query` - Execute SQL Queries
 
-Execute SQL queries against the database. Read-only by default.
+Execute SELECT queries (and INSERT/UPDATE/DELETE when write ops enabled).
 
 **Parameters:**
 - `sql` (string, required): SQL query to execute
 
-**Example Usage in Code:**
-
+**Example:**
 ```typescript
-// Tool call structure
+// Tool call from LLM
 {
   "name": "query",
   "arguments": {
-    "sql": "SELECT id, email, created_at FROM users WHERE active = true LIMIT 10"
+    "sql": "SELECT id, email, created_at FROM users WHERE active = true ORDER BY created_at DESC LIMIT 10"
   }
 }
 ```
 
-**Common Query Patterns:**
-
-```sql
--- Basic SELECT
-SELECT * FROM products WHERE category = 'electronics' LIMIT 20;
-
--- JOIN queries
-SELECT o.id, o.created_at, u.email, SUM(oi.quantity * oi.price) as total
-FROM orders o
-JOIN users u ON o.user_id = u.id
-JOIN order_items oi ON oi.order_id = o.id
-GROUP BY o.id, u.email
-ORDER BY o.created_at DESC;
-
--- Aggregations
-SELECT category, COUNT(*) as count, AVG(price) as avg_price
-FROM products
-GROUP BY category
-ORDER BY count DESC;
-
--- WITH clauses for complex analysis
-WITH monthly_sales AS (
-  SELECT 
-    DATE_TRUNC('month', created_at) as month,
-    SUM(total_amount) as revenue
-  FROM orders
-  GROUP BY month
-)
-SELECT * FROM monthly_sales ORDER BY month DESC;
+**Response:**
+```json
+{
+  "rows": [
+    {"id": 1, "email": "user@example.com", "created_at": "2024-01-15T10:30:00Z"},
+    {"id": 2, "email": "another@example.com", "created_at": "2024-01-14T09:20:00Z"}
+  ],
+  "rowCount": 2
+}
 ```
 
-**Write Operations (when enabled):**
+### Query Safety
 
-Set `DANGEROUSLY_ALLOW_WRITE_OPS=true` to enable:
+By default, only **SELECT** queries are allowed. To enable writes:
 
-```sql
--- INSERT
-INSERT INTO users (email, name) VALUES ('user@example.com', 'New User');
+```json
+{
+  "env": {
+    "DATABASE_URL": "postgresql://...",
+    "DANGEROUSLY_ALLOW_WRITE_OPS": "true"
+  }
+}
+```
 
--- UPDATE
-UPDATE products SET price = price * 1.1 WHERE category = 'books';
-
--- DELETE
-DELETE FROM temp_data WHERE created_at < NOW() - INTERVAL '30 days';
+**Write operations example:**
+```typescript
+// Only works when DANGEROUSLY_ALLOW_WRITE_OPS=true
+{
+  "name": "query",
+  "arguments": {
+    "sql": "UPDATE users SET last_login = NOW() WHERE id = 123"
+  }
+}
 ```
 
 ## Available Resources
 
-### `postgres://tables`
+### `postgres://tables` - List All Tables
 
-Lists all tables in the database with their schemas.
+Returns a list of all tables in the database with row counts.
 
-**Response includes:**
-- Schema name
-- Table name
-- Column definitions (name, type, nullable, default)
-- Primary keys
-- Indexes
-- Foreign keys
+**URI:** `postgres://tables`
 
-**Usage Pattern:**
-
-Request this resource first to understand database structure before querying.
-
-### `postgres://table/{schema}/{table}`
-
-Get detailed information about a specific table including:
-- Full schema definition
-- Sample data (first 5 rows)
-- Column statistics
-- Constraints
-
-**Example:**
-```
-postgres://table/public/users
-postgres://table/public/orders
+**Response:**
+```json
+{
+  "tables": [
+    {"schema": "public", "table": "users", "rows": 1523},
+    {"schema": "public", "table": "products", "rows": 342},
+    {"schema": "public", "table": "orders", "rows": 8912}
+  ]
+}
 ```
 
-## Common Workflows
+### `postgres://table/{schema}/{table}` - Get Table Details
 
-### 1. Database Discovery
+Returns table schema (columns, types, constraints) and sample data.
+
+**URI:** `postgres://table/public/users`
+
+**Response:**
+```json
+{
+  "schema": {
+    "columns": [
+      {"name": "id", "type": "integer", "nullable": false, "default": "nextval('users_id_seq')"},
+      {"name": "email", "type": "character varying(255)", "nullable": false},
+      {"name": "created_at", "type": "timestamp with time zone", "nullable": false, "default": "now()"}
+    ],
+    "primaryKey": ["id"],
+    "indexes": [
+      {"name": "users_pkey", "columns": ["id"], "unique": true},
+      {"name": "users_email_idx", "columns": ["email"], "unique": true}
+    ]
+  },
+  "sampleData": [
+    {"id": 1, "email": "alice@example.com", "created_at": "2024-01-10T08:00:00Z"},
+    {"id": 2, "email": "bob@example.com", "created_at": "2024-01-11T09:15:00Z"}
+  ]
+}
+```
+
+## Common Usage Patterns
+
+### Data Exploration
 
 ```typescript
-// Step 1: List all tables
-// Request resource: postgres://tables
+// User prompt: "Show me the structure of my database"
+// Agent should:
+// 1. Call resource: postgres://tables
+// 2. Present overview of tables
+// 3. Optionally call postgres://table/{schema}/{table} for interesting tables
 
-// Step 2: Examine specific table
-// Request resource: postgres://table/public/users
+// User prompt: "What columns does the users table have?"
+// Agent calls: postgres://table/public/users
+```
 
-// Step 3: Run exploratory query
+### Analytics Queries
+
+```typescript
+// User prompt: "Show me my top 10 customers by order value"
 {
   "name": "query",
   "arguments": {
-    "sql": "SELECT COUNT(*), MAX(created_at), MIN(created_at) FROM users"
+    "sql": `
+      SELECT 
+        u.id, 
+        u.email, 
+        COUNT(o.id) as order_count,
+        SUM(o.total) as total_spent
+      FROM users u
+      JOIN orders o ON u.id = o.user_id
+      GROUP BY u.id, u.email
+      ORDER BY total_spent DESC
+      LIMIT 10
+    `
   }
 }
 ```
 
-### 2. Data Analysis Pattern
+### Complex Joins
 
-```sql
--- User activity analysis
-WITH user_stats AS (
-  SELECT 
-    u.id,
-    u.email,
-    COUNT(DISTINCT o.id) as order_count,
-    SUM(o.total_amount) as lifetime_value,
-    MAX(o.created_at) as last_order_date
-  FROM users u
-  LEFT JOIN orders o ON u.id = o.user_id
-  GROUP BY u.id, u.email
-)
-SELECT 
-  CASE 
-    WHEN order_count = 0 THEN 'No Orders'
-    WHEN order_count < 3 THEN 'Low Activity'
-    WHEN order_count < 10 THEN 'Medium Activity'
-    ELSE 'High Activity'
-  END as segment,
-  COUNT(*) as user_count,
-  AVG(lifetime_value) as avg_ltv
-FROM user_stats
-GROUP BY segment;
+```typescript
+// User prompt: "List products that have never been ordered"
+{
+  "name": "query",
+  "arguments": {
+    "sql": `
+      SELECT p.id, p.name, p.price
+      FROM products p
+      LEFT JOIN order_items oi ON p.id = oi.product_id
+      WHERE oi.id IS NULL
+      ORDER BY p.name
+    `
+  }
+}
 ```
 
-### 3. Schema Inspection
+### Aggregations & Statistics
 
-```sql
--- Find all foreign key relationships
-SELECT
-    tc.table_schema, 
-    tc.table_name, 
-    kcu.column_name,
-    ccu.table_name AS foreign_table_name,
-    ccu.column_name AS foreign_column_name
-FROM information_schema.table_constraints AS tc
-JOIN information_schema.key_column_usage AS kcu
-  ON tc.constraint_name = kcu.constraint_name
-JOIN information_schema.constraint_column_usage AS ccu
-  ON ccu.constraint_name = tc.constraint_name
-WHERE tc.constraint_type = 'FOREIGN KEY';
+```typescript
+// User prompt: "Show me monthly revenue for 2024"
+{
+  "name": "query",
+  "arguments": {
+    "sql": `
+      SELECT 
+        DATE_TRUNC('month', created_at) as month,
+        COUNT(*) as order_count,
+        SUM(total) as revenue
+      FROM orders
+      WHERE created_at >= '2024-01-01' AND created_at < '2025-01-01'
+      GROUP BY DATE_TRUNC('month', created_at)
+      ORDER BY month
+    `
+  }
+}
+```
 
--- List all indexes
-SELECT
-    schemaname,
-    tablename,
-    indexname,
-    indexdef
-FROM pg_indexes
-WHERE schemaname = 'public'
-ORDER BY tablename, indexname;
+### Safe Schema Inspection
+
+```typescript
+// User prompt: "What indexes exist on the users table?"
+// Agent calls: postgres://table/public/users
+// Then parses the schema.indexes field
+
+// User prompt: "Show me all foreign key relationships"
+{
+  "name": "query",
+  "arguments": {
+    "sql": `
+      SELECT
+        tc.table_schema, 
+        tc.table_name, 
+        kcu.column_name,
+        ccu.table_name AS foreign_table_name,
+        ccu.column_name AS foreign_column_name
+      FROM information_schema.table_constraints AS tc
+      JOIN information_schema.key_column_usage AS kcu
+        ON tc.constraint_name = kcu.constraint_name
+      JOIN information_schema.constraint_column_usage AS ccu
+        ON ccu.constraint_name = tc.constraint_name
+      WHERE tc.constraint_type = 'FOREIGN KEY'
+    `
+  }
+}
 ```
 
 ## Development & Testing
 
 ### Quick Start with Docker
 
+The repository includes a Docker Compose setup with sample data:
+
 ```bash
-# Start test PostgreSQL with sample data
+# Start PostgreSQL with sample tables (users, products, orders, order_items)
 bun run db:start
 
-# Run MCP inspector for testing
+# Test with MCP Inspector
 bun run inspector
 
-# Stop database
+# Stop PostgreSQL
 bun run db:stop
 ```
 
-Sample schema includes: `users`, `products`, `orders`, `order_items`
-
-### Running Tests
+### Running Locally
 
 ```bash
+# Clone repository
+git clone https://github.com/ericzakariasson/pg-mcp-server.git
+cd pg-mcp-server
+bun install
+
+# Run with stdio transport
+bun run index.ts -- --transport=stdio
+
+# Run with debug logging
+DEBUG=true bun run index.ts -- --transport=stdio
+
+# Run with HTTP transport
+bun run index.ts -- --transport=http
+
+# Run tests
 bun test
 ```
 
-### Debug Mode
+### Building for Distribution
 
 ```bash
-DEBUG=true bun run index.ts -- --transport=stdio
+bun run build:js
+# Output: lib/index.js
 ```
 
 ## Troubleshooting
 
 ### Connection Issues
 
-**Problem:** "Connection refused" or timeout errors
-
-**Solutions:**
-- Verify `DATABASE_URL` format is correct
-- Check database is running: `pg_isready -h localhost -p 5432`
-- Test connection with psql: `psql $DATABASE_URL`
-- Check firewall/security groups allow connections
-
-### SSL/TLS Errors
+**Problem:** "Connection refused" or "ECONNREFUSED"
+```bash
+# Check DATABASE_URL format
+# Correct: postgresql://user:password@localhost:5432/dbname
+# Ensure PostgreSQL is running
+psql $DATABASE_URL -c "SELECT 1"
+```
 
 **Problem:** SSL certificate verification failed
-
-**Solutions:**
 ```json
 {
   "env": {
-    "DATABASE_URL": "postgresql://host/db?sslmode=require",
-    "PG_SSL_ROOT_CERT": "/path/to/ca-bundle.crt"
+    "DATABASE_URL": "postgresql://...",
+    "PG_SSL_ROOT_CERT": "/path/to/ca-bundle.pem"
   }
 }
 ```
 
-For AWS RDS:
-```bash
-# Download RDS CA bundle
-curl -o rds-ca-bundle.crt https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem
+### Permission Errors
+
+**Problem:** "permission denied for table"
+```sql
+-- Grant read access to specific tables
+GRANT SELECT ON TABLE users, products TO your_user;
+
+-- Grant read access to all tables in schema
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO your_user;
 ```
 
 ### Write Operations Blocked
 
-**Problem:** INSERT/UPDATE/DELETE queries return permission errors
-
-**Solution:** Enable write operations (use with caution):
+**Problem:** "Write operations are not allowed"
 ```json
 {
   "env": {
-    "DATABASE_URL": "postgresql://localhost/db",
+    "DATABASE_URL": "postgresql://...",
     "DANGEROUSLY_ALLOW_WRITE_OPS": "true"
   }
 }
 ```
 
-### Query Timeouts
+### MCP Server Not Responding
 
-**Problem:** Long-running queries timeout
+**Problem:** Server starts but doesn't respond to requests
+```bash
+# Check transport mode matches client expectations
+# Cursor/Claude Desktop: use --transport=stdio (default)
+# Web clients: use --transport=http
 
-**Solutions:**
-- Add `LIMIT` clauses to queries
-- Use `EXPLAIN ANALYZE` to check query performance
-- Add appropriate indexes
-- Use connection pooling parameters: `?pool_timeout=30&query_timeout=60000`
-
-### Schema Not Found
-
-**Problem:** Tables not visible even though they exist
-
-**Solutions:**
-```sql
--- Check current search path
-SHOW search_path;
-
--- List all schemas
-SELECT schema_name FROM information_schema.schemata;
-
--- Fully qualify table names
-SELECT * FROM myschema.mytable;
+# Verify with MCP Inspector
+npx @modelcontextprotocol/inspector npx pg-mcp-server --transport=stdio
 ```
 
-## Example Prompts for AI Agents
+### Query Timeout
 
-Use these prompts to test the MCP server:
+**Problem:** Long-running queries hang
+```typescript
+// Add query timeout to DATABASE_URL
+"DATABASE_URL": "postgresql://user:pass@host:5432/db?statement_timeout=30000"
+// Or set in query
+{
+  "sql": "SET statement_timeout = '30s'; SELECT * FROM large_table;"
+}
+```
 
-- "Show me the first 10 users from the database"
-- "What tables exist in this database?"
-- "Analyze the order patterns from last month"
-- "Show me the schema for the products table"
-- "Find all users who haven't made an order"
-- "Calculate total revenue by product category"
-- "What are the foreign key relationships in this database?"
+### Debug Logging
+
+Enable detailed logging for troubleshooting:
+
+```json
+{
+  "env": {
+    "DATABASE_URL": "postgresql://...",
+    "DEBUG": "true"
+  }
+}
+```
 
 ## Security Best Practices
 
-1. **Use read-only database users** when possible
-2. **Never enable `DANGEROUSLY_ALLOW_WRITE_OPS`** in production environments
-3. **Use SSL/TLS** for remote connections
-4. **Limit database user permissions** to only required schemas/tables
-5. **Set connection limits** in PostgreSQL configuration
-6. **Monitor query logs** for suspicious activity
+1. **Read-Only by Default**: Never enable `DANGEROUSLY_ALLOW_WRITE_OPS` in production unless absolutely necessary
+2. **Use Dedicated User**: Create a PostgreSQL user with limited privileges:
+   ```sql
+   CREATE USER mcp_readonly WITH PASSWORD 'secure_password';
+   GRANT CONNECT ON DATABASE mydb TO mcp_readonly;
+   GRANT USAGE ON SCHEMA public TO mcp_readonly;
+   GRANT SELECT ON ALL TABLES IN SCHEMA public TO mcp_readonly;
+   ```
+3. **Connection Pooling**: For high-traffic scenarios, use connection pooling (PgBouncer)
+4. **Secrets Management**: Never commit `DATABASE_URL` to version control; use environment variables
 
-## License
+## Example Prompts for Users
 
-MIT - See project repository for full license text.
+- "Show me the first 5 users from the database"
+- "What tables exist in my database?"
+- "Describe the schema of the orders table"
+- "Find all products with price greater than $100"
+- "Show me total revenue by month for this year"
+- "List customers who haven't placed an order in the last 30 days"
+- "What are the most popular products by order count?"
