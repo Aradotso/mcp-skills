@@ -1,28 +1,28 @@
 ---
 name: postgres-mcp-server
-description: MCP server that enables LLMs to query and analyze PostgreSQL databases through a controlled interface with read/write capabilities.
+description: MCP server that enables AI to query and analyze PostgreSQL databases through a controlled interface with tools, resources, and optional write operations.
 triggers:
   - query my postgres database
-  - analyze data in postgresql
-  - get table schema from postgres
-  - execute sql query through mcp
-  - list all postgres tables
-  - connect to postgresql with mcp
-  - run database queries with llm
-  - inspect postgres database structure
+  - show me tables in the database
+  - get schema for this table
+  - analyze data in postgres
+  - execute sql query on database
+  - list all database tables
+  - get sample data from table
+  - connect to postgresql database
 ---
 
 # Postgres MCP Server
 
 > Skill by [ara.so](https://ara.so) — MCP Skills collection.
 
-The Postgres MCP Server is a Model Context Protocol server that provides LLMs with controlled access to PostgreSQL databases. It supports querying, schema inspection, and optional write operations, making it ideal for database analysis, reporting, and data exploration tasks.
+This MCP server provides AI assistants with controlled access to PostgreSQL databases. It exposes tools for executing SQL queries, resources for browsing database schemas and tables, and configurable permissions for read-only or read-write operations.
 
 ## Installation
 
-### Using npx (Recommended)
+### Quick Install (Claude Desktop / Cursor)
 
-Add to your MCP client settings (e.g., `~/Library/Application Support/Claude/claude_desktop_config.json` for Claude Desktop):
+Add to your MCP settings file:
 
 ```json
 {
@@ -38,216 +38,236 @@ Add to your MCP client settings (e.g., `~/Library/Application Support/Claude/cla
 }
 ```
 
-### Local Development Build
+### Configuration Options
 
-```bash
-git clone https://github.com/ericzakariasson/pg-mcp-server.git
-cd pg-mcp-server
-bun install
-bun run build:js
-```
+Environment variables:
 
-Then reference the local build:
+- **`DATABASE_URL`** (required): PostgreSQL connection string
+  - Format: `postgresql://username:password@host:port/database`
+  - Example: `postgresql://postgres:postgres@localhost:5432/myapp`
+- **`DANGEROUSLY_ALLOW_WRITE_OPS`**: Enable INSERT/UPDATE/DELETE operations (default: `false`)
+- **`DEBUG`**: Enable debug logging (default: `false`)
+- **`PG_SSL_ROOT_CERT`**: Path to TLS CA bundle for SSL connections (e.g., AWS RDS)
 
+### Transport Modes
+
+**stdio** (default):
 ```json
 {
-  "mcpServers": {
-    "postgres": {
-      "command": "node",
-      "args": ["/absolute/path/to/pg-mcp-server/lib/index.js", "--transport", "stdio"],
-      "env": {
-        "DATABASE_URL": "${DATABASE_URL}"
-      }
-    }
+  "command": "npx",
+  "args": ["--yes", "pg-mcp-server", "--transport", "stdio"]
+}
+```
+
+**HTTP** (Streamable HTTP endpoint at `/mcp`):
+```json
+{
+  "command": "npx",
+  "args": ["--yes", "pg-mcp-server", "--transport", "http"],
+  "env": {
+    "PORT": "3000",
+    "DATABASE_URL": "postgresql://postgres:postgres@localhost:5432/postgres"
   }
 }
 ```
 
-## Configuration
-
-### Environment Variables
-
-- **`DATABASE_URL`** (required): PostgreSQL connection string
-  - Format: `postgresql://user:password@host:port/database`
-  - Example: `postgresql://postgres:postgres@localhost:5432/myapp`
-
-- **`DANGEROUSLY_ALLOW_WRITE_OPS`** (optional): Enable INSERT, UPDATE, DELETE operations
-  - Default: `false`
-  - Set to `true` to allow write operations
-
-- **`DEBUG`** (optional): Enable debug logging
-  - Default: `false`
-  - Set to `true` for verbose logging
-
-- **`PG_SSL_ROOT_CERT`** (optional): Path to TLS CA bundle for SSL connections
-  - Example: `/path/to/rds-combined-ca-bundle.pem`
-
-### Transport Modes
-
-The server supports two transport modes:
-
-**stdio (default)**: For MCP clients like Claude Desktop
-```bash
-pg-mcp-server --transport=stdio
-```
-
-**http**: Serves MCP Streamable HTTP endpoint at `/mcp`
-```bash
-pg-mcp-server --transport=http
-# Server runs on PORT (default: 3000)
-# Connect to: http://localhost:3000/mcp
-```
-
 ## Available Tools
 
-### `query` Tool
+### `query`
 
-Execute SQL queries against the connected PostgreSQL database.
+Execute SQL queries against the database.
 
-**Input Schema:**
+**Parameters:**
 ```typescript
 {
   sql: string  // SQL query to execute
 }
 ```
 
-**Example Usage:**
-```json
+**Example usage:**
+```typescript
+// Tool call from AI
 {
-  "sql": "SELECT id, email, created_at FROM users WHERE active = true LIMIT 10"
+  "name": "query",
+  "arguments": {
+    "sql": "SELECT id, email, created_at FROM users WHERE active = true LIMIT 10"
+  }
 }
 ```
 
-**Safety Features:**
-- Read-only by default (SELECT, WITH queries only)
-- Write operations (INSERT, UPDATE, DELETE) require `DANGEROUSLY_ALLOW_WRITE_OPS=true`
-- Dangerous operations (DROP, TRUNCATE, ALTER) are blocked regardless of settings
+**Read-only mode (default):**
+- Only SELECT statements allowed
+- INSERT, UPDATE, DELETE, DROP will be rejected
+
+**Write mode (DANGEROUSLY_ALLOW_WRITE_OPS=true):**
+```typescript
+// Insert example
+{
+  "name": "query",
+  "arguments": {
+    "sql": "INSERT INTO users (email, name) VALUES ('user@example.com', 'John Doe') RETURNING id"
+  }
+}
+
+// Update example
+{
+  "name": "query",
+  "arguments": {
+    "sql": "UPDATE products SET price = 19.99 WHERE id = 42"
+  }
+}
+```
 
 ## Available Resources
 
-### List All Tables
+### `postgres://tables`
 
-**Resource URI:** `postgres://tables`
+Lists all tables in the database with their schemas.
 
-Returns a list of all tables in the database with schema information.
+**Returns:**
+- Array of table names with schema information
+- Useful for discovering what data is available
 
-**Example Response:**
+### `postgres://table/{schema}/{table}`
+
+Get detailed information about a specific table.
+
+**URI format:**
 ```
-Available tables:
-- public.users
-- public.products
-- public.orders
-- public.order_items
-```
-
-### Get Table Details
-
-**Resource URI:** `postgres://table/{schema}/{table}`
-
-Returns detailed schema information and sample data for a specific table.
-
-**Example:** `postgres://table/public/users`
-
-**Response includes:**
-- Column names and data types
-- Primary keys
-- Foreign keys
-- Constraints
-- Sample rows (first 5 records)
-
-## Common Usage Patterns
-
-### Basic Data Query
-
-Ask the AI assistant:
-```
-Show me the first 10 active users from the database
+postgres://table/public/users
+postgres://table/myschema/products
 ```
 
-The AI will use the `query` tool:
-```json
+**Returns:**
+- Column definitions (name, type, nullable, default)
+- Primary keys and indexes
+- Foreign key relationships
+- Sample data (up to 5 rows)
+
+**Example usage:**
+```typescript
+// Resource URI
+"postgres://table/public/orders"
+
+// Returns schema + sample data
 {
-  "sql": "SELECT * FROM users WHERE active = true LIMIT 10"
+  "columns": [
+    { "name": "id", "type": "integer", "nullable": false, "primary_key": true },
+    { "name": "user_id", "type": "integer", "nullable": false },
+    { "name": "total", "type": "numeric", "nullable": false },
+    { "name": "created_at", "type": "timestamp", "nullable": false }
+  ],
+  "sample_data": [ /* up to 5 rows */ ]
 }
 ```
 
-### Schema Exploration
+## Common Patterns
 
-Ask the AI assistant:
-```
-What tables are available in the database?
-```
+### Data Exploration
 
-The AI will access the `postgres://tables` resource to list all tables.
-
-### Table Analysis
-
-Ask the AI assistant:
-```
-Show me the structure of the products table
+**List all tables:**
+```typescript
+// Use resource: postgres://tables
+// AI will see all available tables and schemas
 ```
 
-The AI will access `postgres://table/public/products` to get schema and sample data.
-
-### Aggregate Queries
-
-Ask the AI assistant:
-```
-How many orders were placed each month in 2024?
+**Inspect table structure:**
+```typescript
+// Use resource: postgres://table/public/users
+// Review columns, types, constraints, and sample data before querying
 ```
 
-The AI will construct an appropriate GROUP BY query:
-```json
+**Count records:**
+```typescript
 {
-  "sql": "SELECT DATE_TRUNC('month', created_at) as month, COUNT(*) as order_count FROM orders WHERE EXTRACT(YEAR FROM created_at) = 2024 GROUP BY DATE_TRUNC('month', created_at) ORDER BY month"
+  "name": "query",
+  "arguments": {
+    "sql": "SELECT COUNT(*) as total FROM users"
+  }
 }
 ```
 
-### Join Queries
+### Data Analysis
 
-Ask the AI assistant:
-```
-Show me order totals by user
-```
-
-The AI will construct a JOIN query:
-```json
+**Find active users created in last 30 days:**
+```typescript
 {
-  "sql": "SELECT u.email, COUNT(o.id) as order_count, SUM(oi.quantity * oi.price) as total_spent FROM users u LEFT JOIN orders o ON u.id = o.user_id LEFT JOIN order_items oi ON o.id = oi.order_id GROUP BY u.id, u.email ORDER BY total_spent DESC LIMIT 20"
+  "name": "query",
+  "arguments": {
+    "sql": "SELECT id, email, created_at FROM users WHERE active = true AND created_at > NOW() - INTERVAL '30 days' ORDER BY created_at DESC"
+  }
 }
 ```
 
-## TypeScript Development
+**Aggregate sales by month:**
+```typescript
+{
+  "name": "query",
+  "arguments": {
+    "sql": "SELECT DATE_TRUNC('month', created_at) as month, SUM(total) as revenue FROM orders WHERE created_at > '2024-01-01' GROUP BY month ORDER BY month"
+  }
+}
+```
 
-### Running Locally
+**Join tables for detailed view:**
+```typescript
+{
+  "name": "query",
+  "arguments": {
+    "sql": "SELECT o.id, o.total, u.email, u.name FROM orders o JOIN users u ON o.user_id = u.id WHERE o.created_at > '2024-01-01' LIMIT 100"
+  }
+}
+```
+
+### Safe Data Modification (Write Mode)
+
+**Enable write operations:**
+```json
+{
+  "env": {
+    "DATABASE_URL": "postgresql://user:password@host:5432/db",
+    "DANGEROUSLY_ALLOW_WRITE_OPS": "true"
+  }
+}
+```
+
+**Insert new record:**
+```typescript
+{
+  "name": "query",
+  "arguments": {
+    "sql": "INSERT INTO products (name, price, category) VALUES ('Widget', 29.99, 'hardware') RETURNING id, name, price"
+  }
+}
+```
+
+**Update existing records:**
+```typescript
+{
+  "name": "query",
+  "arguments": {
+    "sql": "UPDATE users SET last_login = NOW() WHERE email = 'user@example.com'"
+  }
+}
+```
+
+**Transactional operations:**
+```typescript
+// Use BEGIN/COMMIT for multi-statement transactions
+{
+  "name": "query",
+  "arguments": {
+    "sql": "BEGIN; UPDATE accounts SET balance = balance - 100 WHERE id = 1; UPDATE accounts SET balance = balance + 100 WHERE id = 2; COMMIT;"
+  }
+}
+```
+
+## Development & Local Testing
+
+### Docker Quick Start
 
 ```bash
-# Clone the repository
-git clone https://github.com/ericzakariasson/pg-mcp-server.git
-cd pg-mcp-server
-
-# Install dependencies
-bun install
-
-# Run with stdio transport
-bun run index.ts -- --transport=stdio
-
-# Run with debug logging
-DEBUG=true bun run index.ts -- --transport=stdio
-
-# Run with HTTP transport
-bun run index.ts -- --transport=http
-
-# Run tests
-bun test
-```
-
-### Docker Development Environment
-
-Start a PostgreSQL instance with sample data:
-
-```bash
-# Start PostgreSQL container with sample data
+# Start PostgreSQL with sample data
 bun run db:start
 
 # Test with MCP Inspector
@@ -257,113 +277,96 @@ bun run inspector
 bun run db:stop
 ```
 
-Sample tables included:
-- `users` - User accounts
-- `products` - Product catalog
-- `orders` - Order records
-- `order_items` - Line items for orders
+### Build from Source
+
+```bash
+git clone https://github.com/ericzakariasson/pg-mcp-server.git
+cd pg-mcp-server
+bun install
+
+# Run with stdio transport
+bun run index.ts -- --transport=stdio
+
+# Run with HTTP transport
+bun run index.ts -- --transport=http
+
+# Build for distribution
+bun run build:js
+```
+
+### Use Local Build in MCP Client
+
+```json
+{
+  "mcpServers": {
+    "postgres": {
+      "command": "node",
+      "args": ["/absolute/path/to/pg-mcp-server/lib/index.js", "--transport", "stdio"],
+      "env": {
+        "DATABASE_URL": "postgresql://postgres:postgres@localhost:5432/postgres"
+      }
+    }
+  }
+}
+```
 
 ## Troubleshooting
 
 ### Connection Issues
 
-**Problem:** "Connection refused" or "ECONNREFUSED"
+**Problem:** Cannot connect to database
 
-**Solution:** Verify your `DATABASE_URL` is correct and the PostgreSQL server is running:
-```bash
-psql "${DATABASE_URL}" -c "SELECT version();"
-```
-
-### SSL/TLS Errors
-
-**Problem:** SSL connection errors with cloud databases (AWS RDS, etc.)
-
-**Solution:** Download and specify the CA bundle:
-```bash
-# Download AWS RDS CA bundle
-curl -o /path/to/rds-ca.pem https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem
-```
-
-Update configuration:
-```json
-{
-  "env": {
-    "DATABASE_URL": "postgresql://...",
-    "PG_SSL_ROOT_CERT": "/path/to/rds-ca.pem"
-  }
-}
-```
-
-### Write Operations Not Working
-
-**Problem:** INSERT/UPDATE/DELETE queries fail
-
-**Solution:** Enable write operations explicitly:
-```json
-{
-  "env": {
-    "DATABASE_URL": "postgresql://...",
-    "DANGEROUSLY_ALLOW_WRITE_OPS": "true"
-  }
-}
-```
-
-**Note:** This is disabled by default for safety.
+**Solutions:**
+- Verify `DATABASE_URL` format: `postgresql://user:pass@host:port/db`
+- Check PostgreSQL is running and accepting connections
+- Verify network access (firewall, security groups)
+- For SSL connections, set `PG_SSL_ROOT_CERT` to CA bundle path
 
 ### Permission Errors
 
-**Problem:** "permission denied for table" errors
+**Problem:** "Write operations not allowed"
 
-**Solution:** Ensure the database user has appropriate permissions:
-```sql
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO your_user;
--- For write operations:
-GRANT INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO your_user;
+**Solution:**
+- Set `DANGEROUSLY_ALLOW_WRITE_OPS=true` in environment
+- Note: Only enable for trusted environments
+
+### Query Failures
+
+**Problem:** SQL syntax errors
+
+**Solutions:**
+- Check PostgreSQL version compatibility
+- Verify table/column names exist (use `postgres://tables` resource)
+- Use `postgres://table/{schema}/{table}` to inspect schema first
+
+### Debug Mode
+
+Enable detailed logging:
+```json
+{
+  "env": {
+    "DATABASE_URL": "postgresql://user:pass@host:port/db",
+    "DEBUG": "true"
+  }
+}
 ```
 
-### Large Result Sets
+### SSL/TLS Issues
 
-**Problem:** Queries timeout or return too much data
-
-**Solution:** Always use LIMIT clauses for exploratory queries:
-```sql
-SELECT * FROM large_table LIMIT 100;
+For AWS RDS or other SSL-required databases:
+```json
+{
+  "env": {
+    "DATABASE_URL": "postgresql://user:pass@rds-host:5432/db?ssl=true",
+    "PG_SSL_ROOT_CERT": "/path/to/rds-ca-bundle.pem"
+  }
+}
 ```
-
-For large datasets, ask the AI to use pagination or aggregation.
 
 ## Security Best Practices
 
-1. **Use read-only database users** when possible
-2. **Enable write operations only when necessary** via `DANGEROUSLY_ALLOW_WRITE_OPS`
-3. **Use connection pooling** for production environments
-4. **Store credentials securely** using environment variables, never in code
-5. **Limit network access** to the database (firewall rules, VPC)
-6. **Use SSL/TLS** for connections to remote databases
-
-## Example Workflows
-
-### Data Analysis Notebook
-
-The project includes a Cursor rule for data analysis workflows at `.cursor/rules/notebooks.mdc`. Use it to:
-
-1. Explore database schema
-2. Generate sample queries
-3. Visualize query results
-4. Document findings in markdown notebooks
-
-### Database Health Check
-
-Ask the AI:
-```
-Check the database health: show table sizes, row counts, and any missing indexes
-```
-
-### Generating Reports
-
-Ask the AI:
-```
-Create a sales report for Q4 2024 showing revenue by product category
-```
-
-The AI will construct appropriate queries and format the results.
+1. **Read-only by default:** Never enable write operations in production without careful consideration
+2. **Least privilege:** Use database users with minimal required permissions
+3. **Connection strings:** Store `DATABASE_URL` in secure environment variables, never in code
+4. **Query review:** Always review AI-generated queries before execution in production
+5. **Network isolation:** Restrict database access to necessary networks only
