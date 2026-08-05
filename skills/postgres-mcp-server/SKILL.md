@@ -1,36 +1,36 @@
 ---
 name: postgres-mcp-server
-description: Query and analyze PostgreSQL databases through MCP protocol, enabling LLMs to interact with database schemas, tables, and data
+description: MCP Server for querying and analyzing PostgreSQL databases through LLM interfaces with controlled read/write operations
 triggers:
-  - query the postgres database
+  - query my postgres database
   - connect to postgresql through mcp
-  - analyze database schema and tables
-  - execute sql queries via mcp
-  - inspect postgres table structure
-  - run database queries with mcp server
-  - get data from postgresql database
-  - explore postgres database schema
+  - analyze database tables with llm
+  - run sql queries safely
+  - inspect postgres schema
+  - list database tables
+  - execute database query with ai
+  - get postgres table structure
 ---
 
 # Postgres MCP Server
 
 > Skill by [ara.so](https://ara.so) — MCP Skills collection.
 
-A Model Context Protocol server that provides controlled access to PostgreSQL databases. Enables LLMs to query schemas, inspect tables, and execute SQL queries through MCP tools and resources.
+A Model Context Protocol (MCP) server that enables LLMs to safely query and analyze PostgreSQL databases. Provides controlled access to database operations through MCP tools and resources, supporting both read-only and optional write operations.
 
 ## What It Does
 
-- **Query Execution**: Run SQL queries against PostgreSQL databases
-- **Schema Inspection**: List tables and view detailed schema information
-- **Sample Data**: Retrieve sample rows from tables for analysis
-- **Read/Write Control**: Optional write operation support via environment flag
-- **Transport Options**: Supports both stdio (default) and HTTP transports
+- **Query Execution**: Run SQL queries against PostgreSQL databases through MCP tools
+- **Schema Inspection**: Browse tables, view structure, and sample data via MCP resources
+- **Safe by Default**: Read-only mode unless explicitly enabled
+- **Dual Transport**: Supports both stdio (default) and HTTP transports
+- **SSL/TLS Support**: Optional certificate configuration for secure connections
 
 ## Installation
 
 ### Quick Install (npx)
 
-Add to your MCP client settings (e.g., Claude Desktop, Cursor):
+Add to your MCP client configuration (e.g., Claude Desktop, Cursor):
 
 ```json
 {
@@ -46,7 +46,7 @@ Add to your MCP client settings (e.g., Claude Desktop, Cursor):
 }
 ```
 
-### Local Development
+### Local Development Install
 
 ```bash
 git clone https://github.com/ericzakariasson/pg-mcp-server.git
@@ -55,7 +55,7 @@ bun install
 bun run build:js
 ```
 
-Point to local build:
+Then use in MCP client:
 
 ```json
 {
@@ -64,7 +64,7 @@ Point to local build:
       "command": "node",
       "args": ["/absolute/path/to/pg-mcp-server/lib/index.js", "--transport", "stdio"],
       "env": {
-        "DATABASE_URL": "postgresql://localhost:5432/mydb"
+        "DATABASE_URL": "postgresql://user:password@localhost:5432/dbname"
       }
     }
   }
@@ -76,101 +76,91 @@ Point to local build:
 ### Environment Variables
 
 - **`DATABASE_URL`** (required): PostgreSQL connection string
-  ```
-  postgresql://[user]:[password]@[host]:[port]/[database]
-  ```
+  - Format: `postgresql://user:password@host:port/database`
+  - Example: `postgresql://postgres:postgres@localhost:5432/mydb`
 
-- **`DANGEROUSLY_ALLOW_WRITE_OPS`**: Enable INSERT, UPDATE, DELETE operations
-  ```
-  DANGEROUSLY_ALLOW_WRITE_OPS=true
-  ```
+- **`DANGEROUSLY_ALLOW_WRITE_OPS`** (optional): Enable write operations
+  - Default: `false` (read-only)
+  - Set to `true` to allow INSERT, UPDATE, DELETE, etc.
 
-- **`DEBUG`**: Enable verbose logging
-  ```
-  DEBUG=true
-  ```
+- **`DEBUG`** (optional): Enable debug logging
+  - Default: `false`
+  - Set to `true` for verbose output
 
-- **`PG_SSL_ROOT_CERT`**: Path to TLS CA bundle (for AWS RDS, etc.)
-  ```
-  PG_SSL_ROOT_CERT=/path/to/ca-bundle.crt
-  ```
+- **`PG_SSL_ROOT_CERT`** (optional): Path to TLS CA bundle
+  - Useful for cloud providers (AWS RDS, etc.)
+  - Example: `/path/to/rds-combined-ca-bundle.pem`
 
 ### Transport Modes
 
-**Stdio** (default, for MCP clients):
+**stdio** (default): For MCP clients that communicate via stdin/stdout
 ```bash
 pg-mcp-server --transport=stdio
 ```
 
-**HTTP** (serves at `/mcp` endpoint):
+**http**: For clients supporting MCP Streamable HTTP
 ```bash
 pg-mcp-server --transport=http
-# Connects at http://localhost:3000/mcp
+# Serves at http://localhost:3000/mcp
 ```
 
-Override port:
+Set custom port:
 ```bash
 PORT=8080 pg-mcp-server --transport=http
 ```
 
 ## MCP Tools
 
-### `query`
+### `query` Tool
 
 Execute SQL queries against the database.
 
-**Input Schema:**
+**Parameters:**
+- `sql` (string): The SQL query to execute
+
+**Example Tool Call:**
 ```typescript
 {
-  sql: string  // SQL query to execute
+  "name": "query",
+  "arguments": {
+    "sql": "SELECT id, email, created_at FROM users WHERE active = true LIMIT 10"
+  }
 }
 ```
 
-**Example Usage:**
+**Read-Only Queries:**
 ```typescript
-// Read query
+// List active users
 {
-  "sql": "SELECT id, email, created_at FROM users WHERE active = true LIMIT 10"
+  "sql": "SELECT * FROM users WHERE status = 'active' ORDER BY created_at DESC LIMIT 20"
 }
 
-// Aggregation
+// Join tables
 {
-  "sql": "SELECT status, COUNT(*) as count FROM orders GROUP BY status"
+  "sql": "SELECT o.id, o.total, u.email FROM orders o JOIN users u ON o.user_id = u.id WHERE o.status = 'completed'"
 }
 
-// Join query
+// Aggregations
 {
-  "sql": "SELECT u.email, COUNT(o.id) as order_count FROM users u LEFT JOIN orders o ON u.id = o.user_id GROUP BY u.email"
+  "sql": "SELECT product_id, COUNT(*) as order_count, SUM(quantity) as total_qty FROM order_items GROUP BY product_id ORDER BY order_count DESC"
 }
 ```
 
-**Write Operations** (requires `DANGEROUSLY_ALLOW_WRITE_OPS=true`):
+**Write Queries (requires `DANGEROUSLY_ALLOW_WRITE_OPS=true`):**
 ```typescript
 // Insert
 {
-  "sql": "INSERT INTO users (email, name) VALUES ('user@example.com', 'John Doe')"
+  "sql": "INSERT INTO users (email, name) VALUES ('user@example.com', 'John Doe') RETURNING id"
 }
 
 // Update
 {
-  "sql": "UPDATE users SET active = false WHERE last_login < NOW() - INTERVAL '1 year'"
+  "sql": "UPDATE products SET price = 29.99 WHERE id = 123"
 }
 
 // Delete
 {
-  "sql": "DELETE FROM temp_data WHERE created_at < NOW() - INTERVAL '7 days'"
-}
-```
-
-**Response Format:**
-```typescript
-{
-  content: [
-    {
-      type: "text",
-      text: string  // JSON string of query results
-    }
-  ]
+  "sql": "DELETE FROM sessions WHERE expires_at < NOW()"
 }
 ```
 
@@ -178,225 +168,225 @@ Execute SQL queries against the database.
 
 ### `postgres://tables`
 
-List all tables in the database with row counts.
+Lists all tables in the database with schema information.
 
-**Response:**
-```json
-{
-  "tables": [
-    {
-      "schema": "public",
-      "name": "users",
-      "row_count": 1523
-    },
-    {
-      "schema": "public",
-      "name": "orders",
-      "row_count": 8947
-    }
-  ]
-}
+**URI:** `postgres://tables`
+
+**Returns:**
+- List of all tables grouped by schema
+- Table names and schemas
+
+**Example Usage:**
+```
+User: "Show me all tables in the database"
+Agent: Reads postgres://tables resource
 ```
 
 ### `postgres://table/{schema}/{table}`
 
-Get detailed schema and sample data for a specific table.
+Get detailed information about a specific table including structure and sample data.
 
-**URI Pattern:**
-```
-postgres://table/public/users
-postgres://table/analytics/events
-```
+**URI Pattern:** `postgres://table/{schema}/{table}`
 
-**Response:**
-```json
-{
-  "schema": "public",
-  "table": "users",
-  "columns": [
-    {
-      "column_name": "id",
-      "data_type": "integer",
-      "is_nullable": "NO",
-      "column_default": "nextval('users_id_seq'::regclass)"
-    },
-    {
-      "column_name": "email",
-      "data_type": "character varying",
-      "is_nullable": "NO",
-      "column_default": null
-    }
-  ],
-  "sample_rows": [
-    {
-      "id": 1,
-      "email": "user1@example.com",
-      "created_at": "2024-01-15T10:30:00Z"
-    }
-  ]
-}
+**Returns:**
+- Column definitions (name, type, nullable, default)
+- Primary keys and constraints
+- Sample rows (up to 5)
+
+**Example:**
+```
+URI: postgres://table/public/users
+
+Returns:
+- Columns: id (integer), email (varchar), created_at (timestamp)
+- Sample data from the table
 ```
 
 ## Common Patterns
 
-### Exploratory Analysis
+### Database Analysis Workflow
 
 ```typescript
-// 1. List all tables
-// Use resource: postgres://tables
+// 1. Discover available tables
+// User: "What tables do I have?"
+// Agent reads: postgres://tables
 
-// 2. Inspect specific table
-// Use resource: postgres://table/public/users
+// 2. Inspect table structure
+// User: "Show me the users table structure"
+// Agent reads: postgres://table/public/users
 
-// 3. Run analytical query
+// 3. Query data
+// User: "Find all users created in the last week"
+// Agent calls: query tool
+{
+  "sql": "SELECT * FROM users WHERE created_at > NOW() - INTERVAL '7 days'"
+}
+```
+
+### Joining Multiple Tables
+
+```typescript
+// User: "Show me recent orders with customer details"
 {
   "sql": `
     SELECT 
-      DATE_TRUNC('month', created_at) as month,
-      COUNT(*) as new_users
-    FROM users
-    WHERE created_at >= NOW() - INTERVAL '12 months'
-    GROUP BY month
-    ORDER BY month DESC
+      o.id, 
+      o.created_at, 
+      o.total,
+      u.email, 
+      u.name
+    FROM orders o
+    JOIN users u ON o.user_id = u.id
+    WHERE o.created_at > NOW() - INTERVAL '1 day'
+    ORDER BY o.created_at DESC
+    LIMIT 50
   `
 }
 ```
 
-### Data Validation
+### Aggregation and Reporting
 
 ```typescript
-// Check for duplicates
-{
-  "sql": "SELECT email, COUNT(*) FROM users GROUP BY email HAVING COUNT(*) > 1"
-}
-
-// Find missing relationships
-{
-  "sql": "SELECT o.* FROM orders o LEFT JOIN users u ON o.user_id = u.id WHERE u.id IS NULL"
-}
-
-// Identify data quality issues
-{
-  "sql": "SELECT COUNT(*) FROM products WHERE price <= 0 OR name IS NULL"
-}
-```
-
-### Complex Joins
-
-```typescript
+// User: "What are our top-selling products this month?"
 {
   "sql": `
     SELECT 
-      u.email,
-      COUNT(DISTINCT o.id) as total_orders,
-      SUM(oi.quantity * oi.unit_price) as total_spent
-    FROM users u
-    LEFT JOIN orders o ON u.id = o.user_id
-    LEFT JOIN order_items oi ON o.id = oi.order_id
-    WHERE o.created_at >= NOW() - INTERVAL '30 days'
-    GROUP BY u.id, u.email
-    HAVING SUM(oi.quantity * oi.unit_price) > 100
-    ORDER BY total_spent DESC
-    LIMIT 20
+      p.name,
+      SUM(oi.quantity) as units_sold,
+      SUM(oi.quantity * oi.price) as revenue
+    FROM order_items oi
+    JOIN products p ON oi.product_id = p.id
+    JOIN orders o ON oi.order_id = o.id
+    WHERE o.created_at >= DATE_TRUNC('month', CURRENT_DATE)
+    GROUP BY p.id, p.name
+    ORDER BY revenue DESC
+    LIMIT 10
   `
 }
 ```
 
-### Prompt Examples
+### Safe Pagination
 
-Ask your AI agent:
+```typescript
+// User: "Show me the next page of users"
+{
+  "sql": "SELECT * FROM users ORDER BY id LIMIT 20 OFFSET 20"
+}
+```
 
-- "Show me the schema of the users table"
-- "List all tables in the database"
-- "Find the top 10 customers by order value this month"
-- "Check if there are any orphaned records in the orders table"
-- "Analyze the distribution of order statuses"
-- "Get sample data from the products table"
+## Development & Testing
+
+### Start Local PostgreSQL with Sample Data
+
+```bash
+# Start Docker container with sample schema
+bun run db:start
+
+# Database includes: users, products, orders, order_items tables
+```
+
+### Run MCP Inspector
+
+```bash
+# Test tools and resources interactively
+bun run inspector
+```
+
+### Stop PostgreSQL
+
+```bash
+bun run db:stop
+```
+
+### Run Tests
+
+```bash
+bun test
+```
+
+### Debug Mode
+
+```bash
+DEBUG=true bun run index.ts -- --transport=stdio
+```
 
 ## Troubleshooting
 
 ### Connection Issues
 
-**Problem**: `connection refused` or timeout errors
+**Problem:** `connection refused` or timeout errors
 
-**Solutions**:
-```bash
-# Test connection manually
-psql "$DATABASE_URL"
-
-# Check host/port accessibility
-telnet localhost 5432
-
-# Verify DATABASE_URL format
-echo $DATABASE_URL
-# Should be: postgresql://user:pass@host:port/dbname
-```
+**Solution:**
+- Verify `DATABASE_URL` is correct
+- Check PostgreSQL is running: `pg_isready -h localhost -p 5432`
+- Ensure network access (firewalls, security groups)
 
 ### SSL/TLS Errors
 
-**Problem**: SSL connection errors with cloud providers (AWS RDS, etc.)
+**Problem:** `SSL SYSCALL error` or certificate verification failures
 
-**Solution**:
-```bash
-# Download CA bundle (AWS RDS example)
-curl -o rds-ca-bundle.pem https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem
-
-# Set in environment
-export PG_SSL_ROOT_CERT=/path/to/rds-ca-bundle.pem
-```
-
-Or add to connection string:
-```
-postgresql://user:pass@host:5432/db?sslmode=require&sslrootcert=/path/to/ca.pem
+**Solution:**
+```json
+{
+  "env": {
+    "DATABASE_URL": "postgresql://user:pass@host:5432/db?sslmode=require",
+    "PG_SSL_ROOT_CERT": "/path/to/ca-bundle.pem"
+  }
+}
 ```
 
 ### Write Operations Blocked
 
-**Problem**: INSERT/UPDATE/DELETE queries return permission errors
+**Problem:** INSERT/UPDATE/DELETE queries fail
 
-**Solution**: Enable write operations explicitly
+**Solution:**
+Enable write operations explicitly:
 ```json
 {
   "env": {
-    "DATABASE_URL": "postgresql://localhost:5432/mydb",
+    "DATABASE_URL": "postgresql://...",
     "DANGEROUSLY_ALLOW_WRITE_OPS": "true"
   }
 }
 ```
 
-⚠️ **Warning**: Only enable writes for trusted databases. Consider using read-only database users.
+### Query Timeouts
 
-### Debug Mode
+**Problem:** Long-running queries hang
 
-Enable verbose logging:
-```json
-{
-  "env": {
-    "DATABASE_URL": "postgresql://localhost:5432/mydb",
-    "DEBUG": "true"
-  }
-}
+**Solution:**
+Add timeout to connection string:
+```
+postgresql://user:pass@host:5432/db?statement_timeout=30000
 ```
 
-Or when running directly:
-```bash
-DEBUG=true pg-mcp-server --transport=stdio
+### Permission Denied
+
+**Problem:** Cannot access certain tables or schemas
+
+**Solution:**
+- Check database user permissions
+- Grant necessary privileges:
+  ```sql
+  GRANT SELECT ON ALL TABLES IN SCHEMA public TO your_user;
+  ```
+
+## Example Prompts
+
+```
+"Show me the first 5 users from the database"
+"What tables are in my database?"
+"Analyze the orders table structure"
+"Find all products with price > 100"
+"Show me users who registered this week"
+"What's the total revenue by product category?"
+"List tables in the public schema"
 ```
 
-### Testing with Docker
+## Security Best Practices
 
-Quick local PostgreSQL setup:
-```bash
-# Clone repo and start test database
-git clone https://github.com/ericzakariasson/pg-mcp-server.git
-cd pg-mcp-server
-bun run db:start  # Starts PostgreSQL with sample data
-
-# Test with MCP Inspector
-bun run inspector
-
-# Clean up
-bun run db:stop
-```
-
-Sample schema includes: `users`, `products`, `orders`, `order_items` tables.
+1. **Use Read-Only by Default**: Only enable `DANGEROUSLY_ALLOW_WRITE_OPS` when necessary
+2. **Limited User Privileges**: Create a dedicated database user with minimal permissions
+3. **Connection String Security**: Store `DATABASE_URL` in secure environment configuration
+4. **SSL/TLS**: Use encrypted connections for production databases
+5. **Query Review**: Always review generated SQL before execution in write mode
