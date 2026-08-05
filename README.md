@@ -163,6 +163,7 @@ npx skills add Aradotso/mcp-skills --skill <skill-name>
 | [camoufox-reverse-mcp](skills/camoufox-reverse-mcp/) | [install](https://skills.sh/aradotso/mcp-skills/camoufox-reverse-mcp) | [WhiteNightShadow/camoufox-reverse-mcp](https://github.com/WhiteNightShadow/camoufox-reverse-mcp) | 2026-08-02 |
 | [mcpx-runtime](skills/mcpx-runtime/) | [install](https://skills.sh/aradotso/mcp-skills/mcpx-runtime) | [opentokenz/mcpx](https://github.com/opentokenz/mcpx) | 2026-08-03 |
 | [local-mcp-file-editing](skills/local-mcp-file-editing/) | [install](https://skills.sh/aradotso/mcp-skills/local-mcp-file-editing) | [nakasyou/local-mcp](https://github.com/nakasyou/local-mcp) | 2026-08-03 |
+| [postgres-mcp-server](skills/postgres-mcp-server/) | [install](https://skills.sh/aradotso/mcp-skills/postgres-mcp-server) | [ericzakariasson/pg-mcp-server](https://github.com/ericzakariasson/pg-mcp-server) | 2026-08-05 |
 <!-- SKILL_INDEX -->
 
 ---
